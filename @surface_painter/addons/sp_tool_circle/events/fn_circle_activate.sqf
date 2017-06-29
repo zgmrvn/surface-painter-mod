@@ -1,0 +1,33 @@
+/*
+	Activation of Circle tool.
+	This function will run everytime switching on a mode that uses this tool.
+*/
+
+systemChat "circle activated";
+
+SP_var_circle_circle = [];
+
+// compute relative positions of the cirle
+// these will be added to mouse world position
+for [{private _i = 0}, {_i < 360}, {_i = _i + 15}] do {
+	private _a = [];
+
+	_a set [0, (sin _i) * SP_var_circle_circleRadius];
+	_a set [1, (cos _i) * SP_var_circle_circleRadius];
+	_a set [2, SP_var_circle_circleDiameter * 0.015];
+
+	SP_var_circle_circle pushBack _a;
+};
+
+// on each frame, draw the circle
+["circle", "onEachFrame", {
+	_color = [[0, 1, 0, 1], [1, 0.5, 0, 1]] select SP_key_alt;
+	_i = (count SP_var_circle_circle) - 1;
+
+	drawLine3D [SP_var_mouseWorldPosition vectorAdd (SP_var_circle_circle select _i), SP_var_mouseWorldPosition vectorAdd (SP_var_circle_circle select 0), _color];
+
+	while {_i > 0} do {
+		drawLine3D [SP_var_mouseWorldPosition vectorAdd (SP_var_circle_circle select _i), SP_var_mouseWorldPosition vectorAdd (SP_var_circle_circle select (_i - 1)), _color];
+		_i = _i - 1;
+	};
+}] call BIS_fnc_addStackedEventHandler;

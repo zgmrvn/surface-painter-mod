@@ -32,12 +32,31 @@ class CfgFunctions {
 
 class CfgVehicles {
 	class Land_HelipadCivil_F;
-	class Land_SurfaceMapPixel: Land_HelipadCivil_F {
+
+	class Land_SurfaceMapPixel_1m: Land_HelipadCivil_F {
 		scope = 2;
-		_generalMacro = "Land_SurfaceMapPixel";
+		_generalMacro = "Land_SurfaceMapPixel_1m";
 		displayName = "Surface map pixel";
-		model = "x\surface_painter\addons\sp_mode_surface_painter\pixel.p3d";
+		model = "x\surface_painter\addons\sp_mode_surface_painter\pixels\pixel_1m.p3d";
 		hiddenSelections[] = {"texture"};
+	};
+
+	class Land_SurfaceMapPixel_2m: Land_SurfaceMapPixel_1m {
+		_generalMacro = "Land_SurfaceMapPixel_2m";
+		displayName = "Surface map pixel";
+		model = "x\surface_painter\addons\sp_mode_surface_painter\pixels\pixel_2m.p3d";
+	};
+
+	class Land_SurfaceMapPixel_3m: Land_SurfaceMapPixel_1m {
+		_generalMacro = "Land_SurfaceMapPixel_3m";
+		displayName = "Surface map pixel";
+		model = "x\surface_painter\addons\sp_mode_surface_painter\pixels\pixel_3m.p3d";
+	};
+
+	class Land_SurfaceMapPixel_4m: Land_SurfaceMapPixel_1m {
+		_generalMacro = "Land_SurfaceMapPixel_4m";
+		displayName = "Surface map pixel";
+		model = "x\surface_painter\addons\sp_mode_surface_painter\pixels\pixel_4m.p3d";
 	};
 };
 
@@ -49,6 +68,7 @@ class CfgSurfacePainter {
 			name	= "Surface Painter";
 			tools[]	= {"Circle"};
 			idc		= SP_SURFACE_PAINTER_SURFACE_PAINTER_OPTIONS_CTRL_GROUP;
+			icon		= "x\surface_painter\addons\sp_mode_surface_painter\icon.paa";
 
 			class Events {
 				// core

@@ -34,6 +34,7 @@ class CfgSurfacePainter {
 		class Export: DefaultModule {
 			name	= "Export";
 			idc		= SP_SURFACE_PAINTER_EXPORT_OPTIONS_CTRL_GROUP;
+			icon	= "x\surface_painter\addons\sp_extra_export\icon.paa";
 
 			class Events {
 				class OnInit { function = "SP_fnc_export_init"; };

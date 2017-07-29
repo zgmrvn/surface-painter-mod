@@ -11,7 +11,7 @@ systemChat str _modes;
 	SP_var_modes pushBack _modeEntry;
 	_modeEntry ctrlSetPosition [0, safeZoneH * SP_MODES_H * _forEachIndex, safeZoneW * SP_MODES_W, safeZoneH * SP_MODES_H];
 	_modeEntry ctrlCommit 0;
-	_modeEntry ctrlSetStructuredText (parseText format ["<t size='0'>%1:</t><t size='0.32'>&#160;</t><img image='x\surface_painter\addons\sp_core\icon.paa' size='1' shadow='0' />", _x]);
+	_modeEntry ctrlSetStructuredText (parseText format ["<t size='0'>%1:</t><t size='0.32'>&#160;</t><img image='%2' size='1' shadow='0' />", _x, getText (configFile >> "CfgSurfacePainter" >> "Modules" >> _x >> "icon")]);
 
 	if (_x == SP_var_mode) then {
 		_modeEntry ctrlSetBackgroundColor [0, 0, 0, 1];

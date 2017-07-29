@@ -41,6 +41,7 @@ class CfgSurfacePainter {
 			name	= "Edge";
 			tools[]	= {"Circle", "Pool"};
 			idc		= SP_SURFACE_PAINTER_EDGE_OPTIONS_CTRL_GROUP;
+			icon		= "x\surface_painter\addons\sp_mode_edge\icon.paa";
 
 			class Events {
 				// core

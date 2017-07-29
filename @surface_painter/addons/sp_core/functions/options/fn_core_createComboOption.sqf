@@ -15,7 +15,7 @@ _edit ctrlCommit 0;
 
 {
 	lbAdd [_idc, _x select 0];
-	lbSetData [_idc, _forEachIndex, _x select 1]
+	lbSetData [_idc, _forEachIndex, _x select 1];
 } forEach _values;
 
 lbSetCurSel [_idc, 0];

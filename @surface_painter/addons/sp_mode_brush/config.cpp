@@ -33,6 +33,7 @@ class CfgSurfacePainter {
 			tools[]		= {"Circle", "Pool"};
 			defaultMode	= 1;
 			idc			= SP_SURFACE_PAINTER_BRUSH_OPTIONS_CTRL_GROUP;
+			icon		= "x\surface_painter\addons\sp_mode_brush\icon.paa";
 
 			class Events {
 				class OnInit { function = "SP_fnc_brush_init"; };

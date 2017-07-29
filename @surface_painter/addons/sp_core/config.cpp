@@ -43,7 +43,7 @@ class CfgSurfacePainter {
 		tools[]		= {};
 		defaultMode	= 0;
 		idc			= -1;
-		icon		= "";
+		icon		= "x\surface_painter\addons\sp_core\icon.paa";
 
 		class Events {
 			/*

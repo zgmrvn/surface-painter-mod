@@ -23,12 +23,8 @@ private _optionExportTerrainBuilderButton = [
 	(((ctrlPosition _header) select 1) / safeZoneH) + SP_OPTION_CONTENT_H + SP_OPTION_CONTENT_M
 ] call SP_fnc_core_createButtonOption;
 
-/*
 _optionExportTerrainBuilderButton ctrlAddEventHandler ["ButtonClick", {
-	// if the object pool is not empty
-	if ((count SP_var_pool_finalPool) > 0) then {
-		// regenerate temp objects
-		SP_var_edge_tempObjects = [SP_var_edge_line, SP_var_edge_interval, SP_var_edge_spread, SP_var_pool_finalPool] call SP_fnc_edge_generate;
-	};
+	call SP_fnc_export_exportTerrainBuilder;
+
+	systemChat "Objects copied in clipboard"
 }];
-*/

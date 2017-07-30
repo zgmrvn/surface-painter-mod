@@ -3,19 +3,20 @@ camDestroy SP_var_camera;
 showCinemaBorder false;
 showHUD true;
 
-
 if !(isNil {SP_var_mode}) then {
-	_tools = getArray (missionConfigFile >> "CfgSurfacePainter" >> "Modules" >> SP_var_mode >> "Tools");
+	// desactivate tools
+	_tools = getArray (configFile >> "CfgSurfacePainter" >> "Modules" >> SP_var_mode >> "tools");
 
 	{
-		if (isClass (missionConfigFile >> "CfgSurfacePainter" >> "Modules" >> _x >> "Events" >> "OnDesactivate")) then {
-			_function = getText (missionConfigFile >> "CfgSurfacePainter" >> "Tools" >> _x >> "Events" >> "OnDesactivate" >> "function");
+		if (isClass (configFile >> "CfgSurfacePainter" >> "Tools" >> _x >> "Events" >> "OnDesactivate")) then {
+			_function = getText (configFile >> "CfgSurfacePainter" >> "Tools" >> _x >> "Events" >> "OnDesactivate" >> "function");
 			call compile (format ["call %1", _function]);
 		};
 	} forEach _tools;
 
-	if (isClass (missionConfigFile >> "CfgSurfacePainter" >> "Modules" >> SP_var_mode >> "Events" >> "OnDesactivate")) then {
-		_function = getText (missionConfigFile >> "CfgSurfacePainter" >> "Modules" >> SP_var_mode >> "Events" >> "OnDesactivate" >> "function");
+	// desactivate modules
+	if (isClass (configFile >> "CfgSurfacePainter" >> "Modules" >> SP_var_mode >> "Events" >> "OnDesactivate")) then {
+		_function = getText (configFile >> "CfgSurfacePainter" >> "Modules" >> SP_var_mode >> "Events" >> "OnDesactivate" >> "function");
 		call compile (format ["call %1", _function]);
 	};
 

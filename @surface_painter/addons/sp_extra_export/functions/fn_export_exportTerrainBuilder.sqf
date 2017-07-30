@@ -13,7 +13,6 @@ private _KK_fnc_floatToString = {
 };
 
 for "_i" from 0 to _count do {
-	systemChat str _i;
 	private _object = SP_var_createdObjects select _i;
 
 	private _data	= [_object] call BIS_fnc_simpleObjectData;

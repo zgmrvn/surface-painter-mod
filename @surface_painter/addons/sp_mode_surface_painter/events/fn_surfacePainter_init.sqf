@@ -29,10 +29,7 @@ SP_var_surfacePainter_lastPos	= [0, 0, 0];
 SP_var_surfacePainter_mapSize	= parseNumber ("corp_tls" callExtension "imgInfos");
 SP_var_surfacePainter_pixelSize	= worldSize / SP_var_surfacePainter_mapSize;
 
-
 _result = "corp_tls" callExtension "imgColorsList";
-	systemChat str _result;
-	diag_log _result;
 
 // header
 private _header = [_dialog, _optionsCtrlGroup, "Color", SP_MARGIN_Y] call SP_fnc_core_createHeaderOption;
@@ -136,14 +133,7 @@ _optionGenerateButton ctrlAddEventHandler ["ButtonClick", {
 
 		} forEach SP_var_surfacePainter_pixels;
 
-		systemChat str _pixels;
-
 		_result = "corp_tls" callExtension ["setPixelsColor", _pixels];
-		systemChat str _result;
-		diag_log _result;
-
 		_result = "corp_tls" callExtension "saveFile";
-		systemChat str _result;
-		diag_log _result;
 	};
 }];

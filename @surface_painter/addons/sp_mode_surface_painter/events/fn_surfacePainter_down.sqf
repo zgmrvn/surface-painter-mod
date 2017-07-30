@@ -10,8 +10,6 @@ if (!SP_var_surfacePainter_mutex) exitWith {};
 
 SP_var_surfacePainter_down = true;
 
-
-
 // if Alt key is pressed
 if (SP_key_alt) then {
 	if (SP_var_surfacePainter_mutex) then {

@@ -6,11 +6,6 @@ _actions = ["MoveForward", "MoveBack", "TurnLeft", "TurnRight", "LeanLeft", "Mov
 	};
 } forEach _actions;
 
-
-systemChat str ({[SP_var_cameraKeys, _x] call BIS_fnc_getFromPairs} count _actions);
-
 if (({[SP_var_cameraKeys, _x] call BIS_fnc_getFromPairs} count _actions) == 0) then {
 	SP_var_while = false;
-
-	systemChat str SP_var_while;
 };

@@ -1,40 +1,6 @@
 #define CAMERA_STEP 0.07
 #define CAMERA_SHIFT_SPEED_MULTIPLIER 3
 
-/*
-_pos = getPos SP_var_camera;
-
-if ((_this select 1) in actionKeys "MoveForward") then {
-	 _pos = ([_pos, CAMERA_STEP / diag_fps, getDir SP_var_camera] call BIS_fnc_relPos);
-};
-
-if ((_this select 1) in actionKeys "MoveBack") then {
-	_pos = ([_pos, CAMERA_STEP / diag_fps, (getDir SP_var_camera) + 180] call BIS_fnc_relPos);
-};
-
-if ((_this select 1) in actionKeys "TurnLeft") then {
-	_pos = ([_pos, CAMERA_STEP / diag_fps, (getDir SP_var_camera) - 90] call BIS_fnc_relPos);
-};
-
-if ((_this select 1) in actionKeys "TurnRight") then {
-	_pos = ([_pos, CAMERA_STEP / diag_fps, (getDir SP_var_camera) + 90] call BIS_fnc_relPos);
-};
-
-if ((_this select 1) in actionKeys "LeanLeft") then {
-	_pos set [2, (_pos select 2) + (CAMERA_STEP / diag_fps)];
-};
-
-if ((_this select 1) in actionKeys "LeanRight") then {
-	_pos set [2, (_pos select 2) - (CAMERA_STEP / diag_fps)];
-};
-
-SP_var_camera camSetPos _pos;
-SP_var_camera camCommit (1 / diag_fps);
-*/
-
-
-
-
 {
 	if ((_this select 1) in (actionKeys _x)) then {
 		[SP_var_cameraKeys, _x, true] call BIS_fnc_setToPairs;

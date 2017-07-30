@@ -4,8 +4,6 @@ SP_var_modes = [];
 // load modes list
 _modes = (configFile >> "CfgSurfacePainter" >> "Modules") call BIS_fnc_getCfgSubClasses;
 
-systemChat str _modes;
-
 {
 	private _modeEntry = _dialog ctrlCreate ["RscStructuredText", -1, _modeslist];
 	SP_var_modes pushBack _modeEntry;
@@ -48,8 +46,6 @@ systemChat str _modes;
 				};
 			} forEach _oldTools;
 
-			systemChat format ["tools to desactivate : %1", _toolsToDesactivate];
-
 			// find tools to activate
 			{
 				if !(_x in _oldTools) then {
@@ -57,14 +53,11 @@ systemChat str _modes;
 				};
 			} forEach _newTools;
 
-			systemChat format ["tools to activate : %1", _toolsToActivate];
-
 			// desactivating tools that are not used by the next mode
 			{
 				if (isClass (configFile >> "CfgSurfacePainter" >> "Tools" >> _x >> "Events" >> "OnDesactivate")) then {
 					_function = getText (configFile >> "CfgSurfacePainter" >> "Tools" >> _x >> "Events" >> "OnDesactivate" >> "function");
 					call compile (format ["call %1", _function]);
-					systemChat format ["desactivating %1", _x];
 				};
 			} forEach _toolsToDesactivate;
 
@@ -85,7 +78,6 @@ systemChat str _modes;
 				if (isClass (configFile >> "CfgSurfacePainter" >> "Tools" >> _x >> "Events" >> "OnActivate")) then {
 					_function = getText (configFile >> "CfgSurfacePainter" >> "Tools" >> _x >> "Events" >> "OnActivate" >> "function");
 					call compile (format ["call %1", _function]);
-					systemChat format ["activating %1", _x];
 				};
 			} forEach _toolsToActivate;
 

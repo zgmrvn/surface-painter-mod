@@ -3,8 +3,6 @@
 	This function will run everytime switching on a mode that uses this tool.
 */
 
-systemChat "circle activated";
-
 SP_var_circle_circle = [];
 
 // compute relative positions of the cirle

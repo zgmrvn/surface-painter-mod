@@ -22,7 +22,6 @@ if !(isNil {SP_var_mode}) then {
 	SP_var_mode = nil;
 };
 
-
 SP_var_primaryMouseButton = nil;
 SP_var_secondaryMouseButton = nil;
 SP_var_mouseScreenDelta = nil;

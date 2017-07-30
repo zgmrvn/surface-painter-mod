@@ -20,8 +20,6 @@ ctrlShow [SP_SURFACE_PAINTER_POOL_EVENT_EXIT_CTRL, false];
 
 // open enter panel
 _poolEnterEventCtrl ctrlAddEventHandler ["MouseEnter", {
-	systemChat str _this;
-
 	ctrlShow [SP_SURFACE_PAINTER_POOL_EVENT_ENTER_CTRL, false];
 	ctrlShow [SP_SURFACE_PAINTER_POOL_EVENT_EXIT_CTRL, true];
 
@@ -37,7 +35,6 @@ _poolEnterEventCtrl ctrlAddEventHandler ["MouseEnter", {
 
 // close pool panel
 _poolExitEventCtrl ctrlAddEventHandler ["MouseEnter", {
-	systemChat str _this;
 
 	ctrlShow [SP_SURFACE_PAINTER_POOL_EVENT_EXIT_CTRL, false];
 	ctrlShow [SP_SURFACE_PAINTER_POOL_EVENT_ENTER_CTRL, true];
@@ -62,12 +59,7 @@ _poolSearchField ctrlAddEventHandler ["KeyUp", {
 	_dialog				= findDisplay SP_SURFACE_PAINTER_IDD;
 	_poolSearchResult = _dialog displayCtrl SP_SURFACE_PAINTER_POOL_SEARCH_RESULT_LIST;
 
-
 	_classes = format ["['%1', getText (_x >> 'displayName')] call BIS_fnc_inString", ctrlText _control] configClasses (configFile >> "CfgVehicles");
-
-	systemChat str (count _classes);
-
-	systemChat str (_classes select 0);
 
 	lbClear _poolSearchResult;
 
@@ -78,7 +70,6 @@ _poolSearchField ctrlAddEventHandler ["KeyUp", {
 }];
 
 _poolSearchResult ctrlAddEventHandler ["LBDblClick", {
-
 	_dialog		= findDisplay SP_SURFACE_PAINTER_IDD;
 	_poolList 	= _dialog displayCtrl SP_SURFACE_PAINTER_POOL_LIST;
 
@@ -122,7 +113,6 @@ _poolSearchResult ctrlAddEventHandler ["LBDblClick", {
 				[SP_var_pool_pool, _data, _after] call BIS_fnc_setToPairs;
 				SP_var_pool_finalPool = SP_var_pool_pool call SP_fnc_pool_generatePool;
 
-				systemChat str SP_var_pool_finalPool;
 				_control ctrlSetText (str _after);
 
 				// then exec CHANGE event

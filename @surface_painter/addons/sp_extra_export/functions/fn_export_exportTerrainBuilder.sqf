@@ -1,7 +1,4 @@
 private _export = "";
-private _br = "
-";
-
 private _count = (count SP_var_createdObjects) - 1;
 
 private _KK_fnc_floatToString = {
@@ -39,7 +36,7 @@ for "_i" from 0 to _count do {
 		_z							// z ASL
 	];
 
-	_export = _export + _final + _br;
+	_export = _export + _final + endl;
 };
 
 copyToClipboard _export;

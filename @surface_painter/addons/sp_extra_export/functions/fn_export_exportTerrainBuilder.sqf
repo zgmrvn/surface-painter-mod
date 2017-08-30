@@ -12,10 +12,10 @@ private _KK_fnc_floatToString = {
 for "_i" from 0 to _count do {
 	private _object = SP_var_createdObjects select _i;
 
-	private _model	= (getModelInfo _object) select 0;
+	private _model = (getModelInfo _object) select 0;
 	_model = (_model splitString ".") select 0;
 
-	private _pos	= getPosATL _object;
+	private _pos = getPosATL _object;
 
 	private _x	= _pos select 0;
 	private _y	= _pos select 1;

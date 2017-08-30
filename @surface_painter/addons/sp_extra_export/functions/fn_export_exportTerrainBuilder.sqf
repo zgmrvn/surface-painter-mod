@@ -12,7 +12,9 @@ private _KK_fnc_floatToString = {
 for "_i" from 0 to _count do {
 	private _object = SP_var_createdObjects select _i;
 
-	private _data	= [_object] call BIS_fnc_simpleObjectData;
+	private _model	= (getModelInfo _object) select 0;
+	_model = (_model splitString ".") select 0;
+
 	private _pos	= getPosATL _object;
 
 	private _x	= _pos select 0;
@@ -26,7 +28,7 @@ for "_i" from 0 to _count do {
 	private _vectorUp = vectorUp _object;
 
 	private _final = format ["""%1"";%2;%3;%4;%5;%6;%7;%8;",
-		_data select 0,				// classname
+		_model,						// classname
 		_x,							// x
 		_y,							// y
 		getDir _object,				// yaw

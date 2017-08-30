@@ -38,7 +38,7 @@ for "_i" from 0 to _count do {
 		[360 - _pitch, _pitch] select (_pitch > 0),	// pitch
 		[_roll, 360 + _roll] select (_roll < 0),	// roll
 		1,											// scale
-		_z											// z ASL
+		_z											// z
 	];
 
 	_export = _export + _final + endl;

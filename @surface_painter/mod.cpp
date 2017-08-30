@@ -1,4 +1,4 @@
-name = "Suface Painter 0.1.0";
+name = "Suface Painter 0.1.1";
 picture = "icon.paa";
 actionName = "GitHub";
 action = "https://github.com/zgmrvn/surface-painter-mod";

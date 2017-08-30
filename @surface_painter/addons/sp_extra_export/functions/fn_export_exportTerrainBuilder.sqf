@@ -27,15 +27,18 @@ for "_i" from 0 to _count do {
 
 	private _vectorUp = vectorUp _object;
 
+	private _pitch = (_vectorUp select 1) atan2 (_vectorUp select 2);
+	private _roll = (_vectorUp select 0) atan2 (_vectorUp select 2);
+
 	private _final = format ["""%1"";%2;%3;%4;%5;%6;%7;%8;",
-		_model,						// classname
-		_x,							// x
-		_y,							// y
-		getDir _object,				// yaw
-		(_vectorUp select 0) * 180,	// pitch
-		(_vectorUp select 1) * 180,	// roll
-		1,							// scale
-		_z							// z ASL
+		_model,										// classname
+		_x,											// x
+		_y,											// y
+		getDir _object,								// yaw
+		[360 - _pitch, _pitch] select (_pitch > 0),	// pitch
+		[_roll, 360 + _roll] select (_roll < 0),	// roll
+		1,											// scale
+		_z											// z ASL
 	];
 
 	_export = _export + _final + endl;

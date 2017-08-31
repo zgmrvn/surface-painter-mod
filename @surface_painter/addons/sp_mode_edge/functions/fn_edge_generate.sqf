@@ -36,7 +36,11 @@ for [{private _i = 0}, {_i < _count}, {_i = _i + 1}] do {
 				_pos = [_pos, random _spread, random 360] call BIS_fnc_relPos;
 			};
 
-			_obj = [ATLToASL _pos, selectRandom _pool] call SP_fnc_core_createSimpleObject;
+			private _classname = selectRandom _pool;
+			private _keepHorizontal = getNumber (configFile >> "CfgVehicles" >> _classname >> "keepHorizontalPlacement");
+			_keepHorizontal = [true, false] select (_keepHorizontal == 0);
+
+			_obj = [ATLToASL _pos, _classname, _keepHorizontal] call SP_fnc_core_createSimpleObject;
 			_objects pushBack _obj;
 
 			_progression = _progression + _interval;

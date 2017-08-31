@@ -45,7 +45,11 @@
 
 				// then we create an object only if we've got a valid position
 				if (!isNil {_pos}) then {
-					_obj = [ATLToASL _pos, selectRandom SP_var_pool_finalPool] call SP_fnc_core_createSimpleObject;
+					private _classname = selectRandom SP_var_pool_finalPool;
+					private _keepHorizontal = getNumber (configFile >> "CfgVehicles" >> _classname >> "keepHorizontalPlacement");
+					_keepHorizontal = [true, false] select (_keepHorizontal == 0);
+
+					_obj = [ATLToASL _pos, _classname, _keepHorizontal] call SP_fnc_core_createSimpleObject;
 					SP_var_createdObjects pushBack _obj;
 				};
 			};

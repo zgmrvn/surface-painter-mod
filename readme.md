@@ -47,13 +47,12 @@ You can skip the steps 4 and 5 if you don't plan to use the Surface Painter tool
 
 # How to use
 
-In the editor, place a unit and run the mission. In the action menu you should see an action named "Surface Painter".
+In editor, place a unit and run the mission. In the action menu you should see an action named "Surface Painter".
 
 basically :
 - `WASD` to translate the camera
 - `right click` to turn the camera
 - `Shit + WASD` camera speed x10
-- `Shit + Alt + WASD` camera speed x100
 - `Alt + click` to use the alternative function of the current tool (eg. erasing with brush tool)
 - `mouse wheel` to set the size of the cursor
 - `Shift + mouse wheel` to set the size of the cursor x10

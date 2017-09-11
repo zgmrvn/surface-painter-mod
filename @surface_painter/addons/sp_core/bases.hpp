@@ -1,7 +1,3 @@
-class RscText;
-class RscControlsGroup;
-class RscCheckBox;
-
 // parent class for background controls
 class MenuBackground: RscText {
 	idc = -1;
@@ -21,7 +17,7 @@ class PanelControlsGroup: RscControlsGroup {
 	idc = -1;
 
 	x = safeZoneX;
-	y = safeZoneY;
+	y = safeZoneY * SP_MARGIN_Y;
 	w = safeZoneW;
 	h = safeZoneH;
 

@@ -1,4 +1,5 @@
 #include "idcs.hpp"
+#include "..\sp_core\sizes.hpp"
 
 class CfgPatches {
 	class SP_Mode_SurfacePainter {
@@ -32,6 +33,14 @@ class CfgFunctions {
 
 class CfgVehicles {
 	class Land_HelipadCivil_F;
+
+	class Land_SurfaceMapPixel: Land_HelipadCivil_F {
+		scope = 2;
+		_generalMacro = "Land_SurfaceMapPixel";
+		displayName = "Surface map pixel";
+		model = "x\surface_painter\addons\sp_mode_surface_painter\pixels\pixel.p3d";
+		hiddenSelections[] = {"texture"};
+	};
 
 	class Land_SurfaceMapPixel_1m: Land_HelipadCivil_F {
 		scope = 2;
@@ -75,15 +84,92 @@ class CfgSurfacePainter {
 				class OnInit { function = "SP_fnc_surfacePainter_init"; };
 				class OnPrimaryMouseButtonDown { function = "SP_fnc_surfacePainter_Down"; };
 				class OnPrimaryMouseButtonUp { function = "SP_fnc_surfacePainter_Up"; };
-				/*class OnActivate { function = "SP_fnc_edge_activate"; };
-				class OnDesactivate { function = "SP_fnc_edge_desactivate"; };*/
 				class OnMouseMove { function = "SP_fnc_surfacePainter_mouseMove"; };
+			};
 
-				/*
-				// pool
-				class OnPoolEntryAdd { function = "SP_fnc_edge_regenerate"; };
-				class OnPoolEntryDelete { function = "SP_fnc_edge_regenerate"; };
-				class OnPoolEntryProbabilityChange { function = "SP_fnc_edge_regenerate"; };*/
+			class Options {
+				class Header {
+					rsc = "HeaderBase";
+
+					values[] = {
+						{3, "STRING", "Surface Painter"}
+					};
+				};
+
+				class TitleInfos {
+					rsc = "TitleBase";
+
+					values[] = {
+						{3, "STRING", "Infos"}
+					};
+
+					margin = SP_OPTION_CONTENT_M;
+				};
+
+				class WorldSize {
+					rsc = "TextBase";
+					expose = 1;
+
+					values[] = {
+						{3, "STRING", "World size : %1x%1"}
+					};
+
+					margin = SP_OPTION_CONTENT_M_1_6TH;
+				};
+
+				class MaskSize {
+					rsc = "TextBase";
+					expose = 1;
+
+					values[] = {
+						{3, "STRING", "Mask size : %1x%1"}
+					};
+
+					margin = 0;
+				};
+
+				class PixelSize {
+					rsc = "TextBase";
+					expose = 1;
+
+					values[] = {
+						{3, "STRING", "Pixel size : %1m"}
+					};
+
+					margin = 0;
+				};
+
+				class TitleMask {
+					rsc = "TitleBase";
+
+					values[] = {
+						{3, "STRING", "Mask"}
+					};
+
+					margin = SP_OPTION_CONTENT_M;
+				};
+
+				class MaskColors {
+					rsc = "ListBoxBase";
+					expose = 1;
+
+					values[] = {
+						{3, "LIST", "FFFFFF"}
+					};
+
+					margin = SP_OPTION_CONTENT_M_1_6TH;
+				};
+
+				class Generate {
+					rsc = "ButtonBase";
+					expose = 1;
+
+					values[] = {
+						{3, "STRING", "generate"}
+					};
+
+					margin = SP_OPTION_CONTENT_M;
+				};
 			};
 		};
 	};

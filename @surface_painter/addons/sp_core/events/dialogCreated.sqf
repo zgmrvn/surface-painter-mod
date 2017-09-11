@@ -1,3 +1,5 @@
+#define MODULES configFile >> "CfgSurfacePainter" >> "Modules"
+
 // every modes controls so the color can be changed on mode selection
 SP_var_modes = [];
 
@@ -5,20 +7,101 @@ SP_var_modes = [];
 _modes = (configFile >> "CfgSurfacePainter" >> "Modules") call BIS_fnc_getCfgSubClasses;
 
 {
+	private _mode = _x;
+
 	private _modeEntry = _dialog ctrlCreate ["RscStructuredText", -1, _modeslist];
 	SP_var_modes pushBack _modeEntry;
 	_modeEntry ctrlSetPosition [0, safeZoneH * SP_MODES_H * _forEachIndex, safeZoneW * SP_MODES_W, safeZoneH * SP_MODES_H];
 	_modeEntry ctrlCommit 0;
 	_modeEntry ctrlSetStructuredText (parseText format ["<t size='0'>%1:</t><t size='0.32'>&#160;</t><img image='%2' size='1' shadow='0' />", _x, getText (configFile >> "CfgSurfacePainter" >> "Modules" >> _x >> "icon")]);
 
-	if (_x == SP_var_mode) then {
+	if (_mode == SP_var_mode) then {
 		_modeEntry ctrlSetBackgroundColor [0, 0, 0, 1];
 	};
 
 	// create options control group
-	private _optionCtrlGroup = _dialog ctrlCreate ["RscControlsGroup", getNumber (configFile >> "CfgSurfacePainter" >> "Modules" >> _x >> "idc"), _leftPanelCtrlGroup];
-	_optionCtrlGroup ctrlSetPosition [safeZoneW * SP_MODES_W, 0, safeZoneW * SP_OPTIONS_W, safeZoneH];
-	_optionCtrlGroup ctrlCommit 0;
+	private _optionsCtrlGroup = _dialog ctrlCreate ["RscControlsGroup", getNumber (configFile >> "CfgSurfacePainter" >> "Modules" >> _x >> "idc"), _leftPanelCtrlGroup];
+	_optionsCtrlGroup ctrlSetPosition [safeZoneW * SP_MODES_W, 0, safeZoneW * SP_OPTIONS_W, safeZoneH];
+	_optionsCtrlGroup ctrlCommit 0;
+
+
+
+
+
+
+
+	// create options
+	private _varName = format ["SP_var_%1_controls", toLower _mode];
+	missionNamespace setVariable [_varName, []];
+
+	private _options = (MODULES >> _mode >> "Options") call BIS_fnc_getCfgSubClasses;
+	private _prev = objNull;
+
+	{
+		private _classname = _x;
+
+		private _rsc = getText (MODULES >> _mode >> "Options" >> _classname >> "rsc");
+		private _optionCtrlGroup = _dialog ctrlCreate [_rsc, -1, _optionsCtrlGroup];
+
+		if (isNull _prev) then {
+			private _position = ctrlPosition _optionCtrlGroup;
+
+			_optionCtrlGroup ctrlSetPosition [
+				safeZoneW * SP_MARGIN_X,
+				safeZoneH * SP_MARGIN_Y,
+				safeZoneW * SP_OPTIONS_CONTENT_W,
+				_position select 3
+			];
+		} else {
+			private _positionPrevious = ctrlPosition _prev;
+			private _positionCurrent = ctrlPosition _optionCtrlGroup;
+
+			private _margin = getNumber (MODULES >> _mode >> "Options" >> _classname >> "margin");
+
+			_optionCtrlGroup ctrlSetPosition [
+				safeZoneW * SP_MARGIN_X,
+				(_positionPrevious select 1) + (_positionPrevious select 3) + safezoneH * _margin,
+				safeZoneW * SP_OPTIONS_CONTENT_W,
+				_positionCurrent select 3
+			];
+		};
+
+		_optionCtrlGroup ctrlCommit 0;
+
+		private _values = getarray (MODULES >> _mode >> "Options" >> _classname >> "values");
+
+		{
+			private _idc	= _x select 0;
+			private _type 	= _x select 1;
+			private _value 	= _x select 2;
+
+			private _childControl = _optionCtrlGroup controlsGroupCtrl _idc;
+
+
+			private _expose = (getNumber (MODULES >> _mode >> "Options" >> _classname >> "expose")) == 1;
+
+			if (_idc == 3 && {_expose}) then {
+				(missionNamespace getVariable _varName) pushBack [_classname, _childControl];
+			};
+
+			switch (_type) do {
+				case "STRING": {_childControl ctrlSetText _value};
+				case "NUMBER": {_childControl ctrlSetText str _value};
+				case "BOOL": {_childControl cbSetChecked (_value > 0)};
+				case "LIST": {_childControl lbAdd _value};
+			};
+		} forEach _values;
+
+		_prev = _optionCtrlGroup;
+	} forEach _options;
+
+
+
+
+
+
+
+
 
 	_modeEntry ctrlAddEventHandler ["MouseButtonDown", {
 		private _control = _this select 0;

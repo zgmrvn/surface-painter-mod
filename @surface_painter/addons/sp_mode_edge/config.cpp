@@ -1,4 +1,5 @@
 #include "idcs.hpp"
+#include "..\sp_core\sizes.hpp"
 
 class CfgPatches {
 	class SP_Mode_Edge {
@@ -55,6 +56,119 @@ class CfgSurfacePainter {
 				class OnPoolEntryAdd { function = "SP_fnc_edge_regenerate"; };
 				class OnPoolEntryDelete { function = "SP_fnc_edge_regenerate"; };
 				class OnPoolEntryProbabilityChange { function = "SP_fnc_edge_regenerate"; };
+			};
+
+			class Options {
+				class Header {
+					rsc = "HeaderBase";
+
+					values[] = {
+						{3, "STRING", "Edge"}
+					};
+				};
+
+				class TitleMode {
+					rsc = "TitleBase";
+
+					values[] = {
+						{3, "STRING", "Mode"}
+					};
+
+					margin = SP_OPTION_CONTENT_M;
+				};
+
+				class Default {
+					rsc = "CheckBoxBase";
+					expose = 1;
+
+					values[] = {
+						{3, "BOOL", 1},
+						{4, "STRING", "Default"}
+					};
+
+					margin = SP_OPTION_CONTENT_M_1_6TH;
+				};
+
+				class Lower {
+					rsc = "CheckBoxBase";
+					expose = 1;
+
+					values[] = {
+						{3, "BOOL", 0},
+						{4, "STRING", "Lower"}
+					};
+
+					margin = SP_OPTION_CONTENT_M_1_6TH;
+				};
+
+				class Higher {
+					rsc = "CheckBoxBase";
+					expose = 1;
+
+					values[] = {
+						{3, "BOOL", 0},
+						{4, "STRING", "Higher"}
+					};
+
+					margin = SP_OPTION_CONTENT_M_1_6TH;
+				};
+
+				class Cliff {
+					rsc = "CheckBoxBase";
+					expose = 1;
+
+					values[] = {
+						{3, "BOOL", 0},
+						{4, "STRING", "Cliff"}
+					};
+
+					margin = SP_OPTION_CONTENT_M_1_6TH;
+				};
+
+				class TitlePlacement {
+					rsc = "TitleBase";
+
+					values[] = {
+						{3, "STRING", "Placement"}
+					};
+
+					margin = SP_OPTION_CONTENT_M;
+				};
+
+				class Interval {
+					rsc = "EditBase";
+					expose = 1;
+
+					values[] = {
+						{3, "NUMBER", 10},
+						{4, "STRING", "Interval"}
+					};
+
+					margin = SP_OPTION_CONTENT_M_1_6TH;
+				};
+
+				class Spread {
+					rsc = "EditBase";
+					expose = 1;
+
+					values[] = {
+						{3, "NUMBER", 0},
+						{4, "STRING", "Spread"}
+					};
+
+					margin = SP_OPTION_CONTENT_M_1_6TH;
+				};
+
+				class Generate {
+					rsc = "ButtonBase";
+					expose = 1;
+
+					values[] = {
+						{3, "STRING", "generate"}
+					};
+
+					margin = SP_OPTION_CONTENT_M;
+				};
 			};
 		};
 	};

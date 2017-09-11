@@ -1,4 +1,5 @@
 #include "idcs.hpp"
+#include "..\sp_core\sizes.hpp"
 
 class CfgPatches {
 	class SP_Mode_Brush {
@@ -39,6 +40,50 @@ class CfgSurfacePainter {
 				class OnInit { function = "SP_fnc_brush_init"; };
 				class OnPrimaryMouseButtonDown { function = "SP_fnc_brush_Down"; };
 				class OnPrimaryMouseButtonUp { function = "SP_fnc_brush_Up"; };
+			};
+
+			class Options {
+				class Header {
+					rsc = "HeaderBase";
+
+					values[] = {
+						{3, "STRING", "Brush"}
+					};
+				};
+
+				class TitlePlacement {
+					rsc = "TitleBase";
+
+					values[] = {
+						{3, "STRING", "Placement"}
+					};
+
+					margin = SP_OPTION_CONTENT_M;
+				};
+
+				class Distance {
+					rsc = "EditBase";
+					expose = 1;
+
+					values[] = {
+						{3, "NUMBER", 0},
+						{4, "STRING", "Distance between objects"}
+					};
+
+					margin = SP_OPTION_CONTENT_M_1_6TH;
+				};
+
+				class Flow {
+					rsc = "EditBase";
+					expose = 1;
+
+					values[] = {
+						{3, "NUMBER", 20},
+						{4, "STRING", "Object flow"}
+					};
+
+					margin = SP_OPTION_CONTENT_M_1_6TH;
+				};
 			};
 		};
 	};

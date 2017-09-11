@@ -1,4 +1,5 @@
 #include "idcs.hpp"
+#include "..\sp_core\sizes.hpp"
 
 class CfgPatches {
 	class SP_Extra_Export {
@@ -38,6 +39,27 @@ class CfgSurfacePainter {
 
 			class Events {
 				class OnInit { function = "SP_fnc_export_init"; };
+			};
+
+			class Options {
+				class Header {
+					rsc = "HeaderBase";
+
+					values[] = {
+						{3, "STRING", "Export"}
+					};
+				};
+
+				class Export {
+					rsc = "ButtonBase";
+					expose = 1;
+
+					values[] = {
+						{3, "STRING", "export"}
+					};
+
+					margin = SP_OPTION_CONTENT_M;
+				};
 			};
 		};
 	};

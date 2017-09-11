@@ -1,5 +1,3 @@
-class RscListBox;
-
 #include "idcs.hpp"
 #include "sizes.hpp"
 

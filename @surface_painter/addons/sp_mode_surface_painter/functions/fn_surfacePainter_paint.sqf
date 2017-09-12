@@ -20,8 +20,18 @@ for [{private _i = SP_var_circle_circleRadius}, {_i >= -SP_var_circle_circleRadi
 
 		if (_pos inArea _area) then {
 			if (([SP_var_surfacePainter_pixels, _key] call BIS_fnc_findInPairs) == -1) then {
-				_obj = createSimpleObject [format ["Land_SurfaceMapPixel_%1m", round SP_var_surfacePainter_pixelSize], ATLToASL _pos];
+				private _obj = createSimpleObject ["Land_SurfaceMapPixel", ATLToASL _pos];
 				_obj setObjectTexture [0, format ["#(rgb,8,8,3)color(%1,%2,%3,1)", SP_var_surfacePainter_color select 0, SP_var_surfacePainter_color select 1, SP_var_surfacePainter_color select 2]];
+
+				{
+					_obj animate [_x, (SP_var_surfacePainter_pixelSize - 1) / 2 - 0.025, true];
+				} forEach [
+					"fl_x",
+					"fr_x",
+					"fl_y",
+					"rl_y"
+				];
+
 				_obj setVariable ["SP_var_pixelPosition", _key];
 				_obj setVariable ["SP_var_pixelColor", SP_var_surfacePainter_colorHex];
 

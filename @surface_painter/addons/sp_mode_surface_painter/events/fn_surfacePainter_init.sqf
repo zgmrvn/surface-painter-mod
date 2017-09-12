@@ -37,28 +37,35 @@ private _maskColorsControl = [SP_var_surfacePainter_controls, "MaskColors"] call
 
 lbClear _maskColorsControl;
 
+private _colors = (("corp_tls" callExtension "imgColorsList") splitString "|");
+
 {
-	private _control = _maskColorsControl lbAdd (format ["#%1", toUpper _x]);
-	lbSetData [_control, _forEachIndex, toUpper _x];
+	_maskColorsControl lbAdd (format ["#%1", toUpper _x]);
+	_maskColorsControl lbSetData [_forEachIndex, toUpper _x];
 	_maskColorsControl lbSetPicture [_forEachIndex, "x\surface_painter\addons\sp_core\data\default.paa"];
 
 	private _color = _x call SP_fnc_surfacePainter_hexToDecColor;
 	_color pushBack 1;
 	_maskColorsControl lbSetPictureColor [_forEachIndex, _color];
-} forEach (("corp_tls" callExtension "imgColorsList") splitString "|");
+} forEach _colors;
 
-lbSetCurSel [_maskColorsControl, 0];
+// set default selected if a
+if (count _colors > 0) then {
+	_maskColorsControl lbSetCurSel 0;
+	SP_var_surfacePainter_colorHex = _maskColorsControl lbData 0;
+
+	private _color = SP_var_surfacePainter_colorHex call SP_fnc_surfacePainter_hexToDecColor;
+	_color pushBack 1;
+	SP_var_surfacePainter_color = _color;
+};
 
 _maskColorsControl ctrlAddEventHandler ["LBSelChanged", {
 	private _data = (_this select 0) lbData (_this select 1);
-
 	private _color = _data call SP_fnc_surfacePainter_hexToDecColor;
 	_color pushBack 1;
 
-	systemChat str _color;
-
-	SP_var_surfacePainter_color = _color;
 	SP_var_surfacePainter_colorHex = _data;
+	SP_var_surfacePainter_color = _color;
 }];
 
 // world size

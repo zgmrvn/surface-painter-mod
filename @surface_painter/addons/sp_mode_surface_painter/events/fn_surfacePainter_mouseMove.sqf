@@ -1,5 +1,3 @@
-#define PIXELS ["pixel_1m.p3d", "pixel_2m.p3d", "pixel_3m.p3d", "pixel_4m.p3d"]
-
 if (SP_var_surfacePainter_down && {SP_var_surfacePainter_mutex}) then {
 	if ((SP_var_surfacePainter_lastPos distance SP_var_mouseWorldPosition) > 1) then {
 
@@ -12,7 +10,7 @@ if (SP_var_surfacePainter_down && {SP_var_surfacePainter_mutex}) then {
 				private _pixels = nearestObjects [SP_var_mouseWorldPosition, [], SP_var_circle_circleRadius, true];
 
 				{
-					if (((getModelInfo _x) select 0) in PIXELS) then {
+					if (((getModelInfo _x) select 0)  == "pixel.p3d") then {
 						[SP_var_surfacePainter_pixels, _x getVariable "SP_var_pixelPosition"] call BIS_fnc_removeFromPairs;
 
 						deleteVehicle _x;

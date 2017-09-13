@@ -14,9 +14,9 @@ SP_var_brush_loop = false; // controls the brush loop
 // behaviour
 private _distanceControl = [SP_var_brush_controls, "Distance"] call BIS_fnc_getFromPairs;
 _distanceControl ctrlAddEventHandler ["MouseZChanged", {
-	private _mouseWheel	= [-1, 1] select ((_this select 1) > 0);
-	private _distance	= parseNumber (ctrlText (_this select 0));
-	_distance			= (_distance + _mouseWheel) max 0;
+	_mouseWheel	= [-1, 1] select ((_this select 1) > 0);
+	_distance	= parseNumber (ctrlText (_this select 0));
+	_distance	= (_distance + _mouseWheel) max 0;
 
 	SP_var_brush_distance = _distance;
 	(_this select 0) ctrlSetText (str _distance);
@@ -24,9 +24,9 @@ _distanceControl ctrlAddEventHandler ["MouseZChanged", {
 
 private _flowControl = [SP_var_brush_controls, "Flow"] call BIS_fnc_getFromPairs;
 _flowControl ctrlAddEventHandler ["MouseZChanged", {
-	private _mouseWheel	= [-1, 1] select ((_this select 1) > 0);
-	private _flow		= parseNumber (ctrlText (_this select 0));
-	_flow				= (_flow + _mouseWheel) max 1;
+	_mouseWheel	= [-1, 1] select ((_this select 1) > 0);
+	_flow		= parseNumber (ctrlText (_this select 0));
+	_flow		= (_flow + _mouseWheel) max 1;
 
 	SP_var_brush_flow = _flow;
 	(_this select 0) ctrlSetText (str _flow);

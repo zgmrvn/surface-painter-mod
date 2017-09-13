@@ -31,7 +31,7 @@ for "_i" from 0 to _count do {
 	private _roll = (_vectorUp select 0) atan2 (_vectorUp select 2);
 
 	private _final = format ["""%1"";%2;%3;%4;%5;%6;%7;%8;",
-		_model,										// classname
+		_model,										// model
 		_x,											// x
 		_y,											// y
 		getDir _object,								// yaw

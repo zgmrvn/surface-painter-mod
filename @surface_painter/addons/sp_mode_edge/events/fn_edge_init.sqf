@@ -4,7 +4,7 @@
 */
 
 // exposed
-// SP_var_edge_controls	= 0; // contains editable controls
+// SP_var_edge_controls	= []; // contains editable controls
 SP_var_edge_line		= []; // contains the positions that represents the line
 SP_var_edge_interval	= 10; // inteval between objects created on the line
 SP_var_edge_spread		= 0; // spread of created objects according to their origin position

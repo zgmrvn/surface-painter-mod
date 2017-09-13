@@ -3,6 +3,8 @@
 	This function will run everytime switching on a mode that uses this tool.
 */
 
+#include "..\defines.hpp"
+
 SP_var_circle_circle = [];
 
 // computes relative positions of the cirle's points
@@ -12,7 +14,7 @@ for [{private _i = 0}, {_i < 360}, {_i = _i + 15}] do {
 
 	_a set [0, (sin _i) * SP_var_circle_circleRadius];
 	_a set [1, (cos _i) * SP_var_circle_circleRadius];
-	_a set [2, SP_var_circle_circleDiameter * 0.015];
+	_a set [2, SP_var_circle_circleDiameter * Z_FACTOR];
 
 	SP_var_circle_circle pushBack _a;
 };

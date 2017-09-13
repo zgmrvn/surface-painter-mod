@@ -13,7 +13,7 @@
 	while {SP_var_brush_loop} do {
 		// if ALT pressed, we want to erase
 		if (SP_key_alt) then {
-			private _vehs = nearestObjects [SP_var_mouseWorldPosition, [], SP_var_circle_circleRadius];
+			private _vehs = nearestObjects [SP_var_mouseWorldPosition, [], SP_var_circle_circleRadius, true];
 			if ((count _vehs) > 0) then {
 				_obj = selectRandom _vehs;
 				SP_var_createdObjects deleteAt (SP_var_createdObjects find _obj);

@@ -29,11 +29,7 @@ if (isNil {SP_var_createdObjects}) then {
 
 // mode
 _modes = (configFile >> "CfgSurfacePainter" >> "Modules") call BIS_fnc_getCfgSubClasses;
-
-// todo : if brush is not present, no mode is selected as default and it results in a script error
-{
-	if (getNumber (configFile >> "CfgSurfacePainter" >> "Modules" >> _x >> "defaultMode") == 1) exitWith { SP_var_mode = _x };
-} forEach _modes;
+SP_var_mode = _modes select 0;
 
 // camera control keys
 SP_var_cameraKeys = [];

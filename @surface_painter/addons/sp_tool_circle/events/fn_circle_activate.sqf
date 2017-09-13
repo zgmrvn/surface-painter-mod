@@ -5,8 +5,8 @@
 
 SP_var_circle_circle = [];
 
-// compute relative positions of the cirle
-// these will be added to mouse world position
+// computes relative positions of the cirle's points
+// they will be vector-added to the actual world position of the mouse
 for [{private _i = 0}, {_i < 360}, {_i = _i + 15}] do {
 	private _a = [];
 

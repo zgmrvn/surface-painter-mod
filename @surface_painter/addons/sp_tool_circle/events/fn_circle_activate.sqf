@@ -22,10 +22,18 @@ for [{private _i = 0}, {_i < 360}, {_i = _i + 15}] do {
 	_color = [[0, 1, 0, 1], [1, 0.5, 0, 1]] select SP_key_alt;
 	_i = (count SP_var_circle_circle) - 1;
 
-	drawLine3D [SP_var_mouseWorldPosition vectorAdd (SP_var_circle_circle select _i), SP_var_mouseWorldPosition vectorAdd (SP_var_circle_circle select 0), _color];
+	drawLine3D [
+		SP_var_mouseWorldPosition vectorAdd (SP_var_circle_circle select _i),
+		SP_var_mouseWorldPosition vectorAdd (SP_var_circle_circle select 0),
+		_color
+	];
 
 	while {_i > 0} do {
-		drawLine3D [SP_var_mouseWorldPosition vectorAdd (SP_var_circle_circle select _i), SP_var_mouseWorldPosition vectorAdd (SP_var_circle_circle select (_i - 1)), _color];
+		drawLine3D [
+			SP_var_mouseWorldPosition vectorAdd (SP_var_circle_circle select _i),
+			SP_var_mouseWorldPosition vectorAdd (SP_var_circle_circle select (_i - 1)),
+			_color
+		];
 		_i = _i - 1;
 	};
 }] call BIS_fnc_addStackedEventHandler;

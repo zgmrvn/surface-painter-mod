@@ -16,7 +16,7 @@ SP_var_edge_tempObjects	= []; // temporary objects for the refresh when options 
 
 // checkboxes
 {
-	private _checkBoxControl = [SP_var_edge_controls, _x] call BIS_fnc_getFromPairs;
+	_checkBoxControl = [SP_var_edge_controls, _x] call BIS_fnc_getFromPairs;
 
 	_checkBoxControl ctrlAddEventHandler ["CheckedChanged", {
 		{
@@ -43,9 +43,9 @@ SP_var_edge_tempObjects	= []; // temporary objects for the refresh when options 
 // interval
 private _intervalControl = [SP_var_edge_controls, "Interval"] call BIS_fnc_getFromPairs;
 _intervalControl ctrlAddEventHandler ["MouseZChanged", {
-	private _mouseWheel	= [-1, 1] select ((_this select 1) > 0);
-	private _before		= parseNumber (ctrlText (_this select 0));
-	private _after		= (_before + _mouseWheel) max 1;
+	_mouseWheel	= [-1, 1] select ((_this select 1) > 0);
+	_before		= parseNumber (ctrlText (_this select 0));
+	_after		= (_before + _mouseWheel) max 1;
 
 	// if the previous interval is different of the new
 	if (_after != _before) then {
@@ -63,9 +63,9 @@ _intervalControl ctrlAddEventHandler ["MouseZChanged", {
 // spread
 private _spreadControl = [SP_var_edge_controls, "Spread"] call BIS_fnc_getFromPairs;
 _spreadControl ctrlAddEventHandler ["MouseZChanged", {
-	private _mouseWheel	= [-1, 1] select ((_this select 1) > 0);
-	private _before		= parseNumber (ctrlText (_this select 0));
-	private _after		= (_before + _mouseWheel) max 0;
+	_mouseWheel	= [-1, 1] select ((_this select 1) > 0);
+	_before		= parseNumber (ctrlText (_this select 0));
+	_after		= (_before + _mouseWheel) max 0;
 
 	// if the previous spread is different from the new
 	if (_after != _before) then {

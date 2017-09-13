@@ -1,13 +1,6 @@
 [] spawn {
 	SP_fnc_core_addAction				= compile preprocessFileLineNumbers "x\surface_painter\addons\sp_core\functions\actions\fn_core_addAction.sqf";
 	SP_fnc_core_createSimpleObject		= compile preprocessFileLineNumbers "x\surface_painter\addons\sp_core\functions\objects\fn_core_createSimpleObject.sqf";
-	SP_fnc_core_createEditOption		= compile preprocessFileLineNumbers "x\surface_painter\addons\sp_core\functions\options\fn_core_createEditOption.sqf";
-	SP_fnc_core_createButtonOption		= compile preprocessFileLineNumbers "x\surface_painter\addons\sp_core\functions\options\fn_core_createButtonOption.sqf";
-	SP_fnc_core_createCheckBoxOption	= compile preprocessFileLineNumbers "x\surface_painter\addons\sp_core\functions\options\fn_core_createCheckBoxOption.sqf";
-	SP_fnc_core_createHeaderOption		= compile preprocessFileLineNumbers "x\surface_painter\addons\sp_core\functions\options\fn_core_createHeaderOption.sqf";
-	SP_fnc_core_createTextOption		= compile preprocessFileLineNumbers "x\surface_painter\addons\sp_core\functions\options\fn_core_createTextOption.sqf";
-	SP_fnc_core_createComboOption		= compile preprocessFileLineNumbers "x\surface_painter\addons\sp_core\functions\options\fn_core_createComboOption.sqf";
-	SP_fnc_core_createListOption		= compile preprocessFileLineNumbers "x\surface_painter\addons\sp_core\functions\options\fn_core_createListOption.sqf";
 
 	// brush
 	SP_fnc_brush_init			= compile preprocessFileLineNumbers "x\surface_painter\addons\sp_mode_brush\events\fn_Brush_init.sqf";

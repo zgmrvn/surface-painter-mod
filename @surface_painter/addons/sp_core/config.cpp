@@ -21,14 +21,6 @@ class CfgFunctions {
 			class Core_CreateSimpleObject {};
 		};
 
-		class Options {
-			file = "x\surface_painter\addons\sp_core\functions\options";
-			class Core_CreateEditOption {};
-			class Core_CreateButtonOption {};
-			class Core_CreateCheckBoxOption {};
-			class Core_CreateHeaderOption {};
-		};
-
 		class Compile {
 			file = "x\surface_painter\addons\sp_core\functions\compile";
 			class Core_CompileFunctions { postInit = 1; };

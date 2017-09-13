@@ -9,7 +9,7 @@ SP_var_circle_circleDiameter = (SP_var_circle_circleDiameter + (_this select 1) 
 SP_var_circle_circleRadius = SP_var_circle_circleDiameter * 0.5;
 
 // compute new relative positions of the cirle
-for [{ private _i = 0; private _a = 0; }, { _i < 24 }, { _i = _i + 1; _a = _a + 15; }] do {
+for [{private _i = 0; private _a = 0;}, {_i < 24}, {_i = _i + 1; _a = _a + 15;}] do {
 	private _r = [0, 0, 0];
 
 	_r set [0, (sin _a) * SP_var_circle_circleRadius];

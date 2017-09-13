@@ -11,7 +11,7 @@ SP_var_brush_flow			= 20; // how many objects can be created in 1 second
 // internal
 SP_var_brush_loop = false; // controls the brush loop
 
-// behaviour
+// distance
 private _distanceControl = [SP_var_brush_controls, "Distance"] call BIS_fnc_getFromPairs;
 _distanceControl ctrlAddEventHandler ["MouseZChanged", {
 	_mouseWheel	= [-1, 1] select ((_this select 1) > 0);
@@ -22,6 +22,7 @@ _distanceControl ctrlAddEventHandler ["MouseZChanged", {
 	(_this select 0) ctrlSetText (str _distance);
 }];
 
+// flow
 private _flowControl = [SP_var_brush_controls, "Flow"] call BIS_fnc_getFromPairs;
 _flowControl ctrlAddEventHandler ["MouseZChanged", {
 	_mouseWheel	= [-1, 1] select ((_this select 1) > 0);

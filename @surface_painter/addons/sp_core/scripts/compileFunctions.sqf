@@ -26,6 +26,7 @@
 
 	SP_fnc_surfacePainter_paint			= compile preprocessFileLineNumbers "x\surface_painter\addons\sp_mode_surface_painter\functions\fn_surfacePainter_paint.sqf";
 	SP_fnc_surfacePainter_hexToDecColor	= compile preprocessFileLineNumbers "x\surface_painter\addons\sp_mode_surface_painter\functions\fn_surfacePainter_hexToDecColor.sqf";
+	SP_fnc_surfacePainter_createPixel	= compile preprocessFileLineNumbers "x\surface_painter\addons\sp_mode_surface_painter\functions\fn_surfacePainter_createPixel.sqf";
 
 	// circle
 	SP_fnc_circle_init			= compile preprocessFileLineNumbers "x\surface_painter\addons\sp_tool_circle\events\fn_circle_init.sqf";

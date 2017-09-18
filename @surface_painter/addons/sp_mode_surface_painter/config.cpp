@@ -66,7 +66,7 @@ class CfgSurfacePainter {
 					rsc = "HeaderBase";
 
 					values[] = {
-						{3, "STRING", "Surface Painter"}
+						{3, "STRING", $STR_SP_SURFACE_PAINTER_HEADER}
 					};
 				};
 
@@ -74,7 +74,7 @@ class CfgSurfacePainter {
 					rsc = "TitleBase";
 
 					values[] = {
-						{3, "STRING", "Infos"}
+						{3, "STRING", $STR_SP_SURFACE_PAINTER_INFOS}
 					};
 
 					margin = SP_OPTION_CONTENT_M;
@@ -85,7 +85,7 @@ class CfgSurfacePainter {
 					expose = 1;
 
 					values[] = {
-						{3, "STRING", "World size : %1x%1"}
+						{3, "STRING", $STR_SP_SURFACE_PAINTER_WORLD_SIZE}
 					};
 
 					margin = SP_OPTION_CONTENT_M_1_6TH;
@@ -96,7 +96,7 @@ class CfgSurfacePainter {
 					expose = 1;
 
 					values[] = {
-						{3, "STRING", "Mask size : %1x%1"}
+						{3, "STRING", $STR_SP_SURFACE_PAINTER_MASK_SIZE}
 					};
 
 					margin = 0;
@@ -107,7 +107,7 @@ class CfgSurfacePainter {
 					expose = 1;
 
 					values[] = {
-						{3, "STRING", "Pixel size : %1m"}
+						{3, "STRING", $STR_SP_SURFACE_PAINTER_PIXEL_SIZE}
 					};
 
 					margin = 0;
@@ -117,7 +117,7 @@ class CfgSurfacePainter {
 					rsc = "TitleBase";
 
 					values[] = {
-						{3, "STRING", "Mask"}
+						{3, "STRING", $STR_SP_SURFACE_PAINTER_MASK}
 					};
 
 					margin = SP_OPTION_CONTENT_M;
@@ -139,7 +139,7 @@ class CfgSurfacePainter {
 					expose = 1;
 
 					values[] = {
-						{3, "STRING", "generate"}
+						{3, "STRING", $STR_SP_SURFACE_PAINTER_GENERATE}
 					};
 
 					margin = SP_OPTION_CONTENT_M;

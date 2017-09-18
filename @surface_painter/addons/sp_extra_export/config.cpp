@@ -46,7 +46,7 @@ class CfgSurfacePainter {
 					rsc = "HeaderBase";
 
 					values[] = {
-						{3, "STRING", "Export"}
+						{3, "STRING", $STR_SP_EXPORT_HEADER}
 					};
 				};
 
@@ -55,7 +55,7 @@ class CfgSurfacePainter {
 					expose = 1;
 
 					values[] = {
-						{3, "STRING", "export"}
+						{3, "STRING", $STR_SP_EXPORT_EXPORT}
 					};
 
 					margin = SP_OPTION_CONTENT_M;

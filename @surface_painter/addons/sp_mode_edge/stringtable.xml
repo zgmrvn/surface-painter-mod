@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project name="Surface Painter">
+	<Package name="Edge">
+
+		<container name="Options">
+
+			<Key ID="STR_SP_EDGE_HEADER">
+				<Original>Edge</Original>
+			</Key>
+
+			<Key ID="STR_SP_EDGE_TITLE_MODE">
+				<Original>Mode</Original>
+				<French>Mode</French>
+			</Key>
+
+			<Key ID="STR_SP_EDGE_DEFAULT">
+				<Original>Default</Original>
+				<French>Defaut</French>
+			</Key>
+
+			<Key ID="STR_SP_EDGE_LOWER">
+				<Original>Lower</Original>
+				<French>Bas</French>
+			</Key>
+
+			<Key ID="STR_SP_EDGE_HIGHER">
+				<Original>Higher</Original>
+				<French>Haut</French>
+			</Key>
+
+			<Key ID="STR_SP_EDGE_CLIFF">
+				<Original>Cliff</Original>
+				<French>Falaise</French>
+			</Key>
+
+			<Key ID="STR_SP_EDGE_POSITIONING">
+				<Original>Positioning</Original>
+				<French>Placement</French>
+			</Key>
+
+			<Key ID="STR_SP_EDGE_INTERVAL">
+				<Original>Interval</Original>
+				<French>Interval</French>
+			</Key>
+
+			<Key ID="STR_SP_EDGE_SPREAD">
+				<Original>Spread</Original>
+				<French>Dispersion</French>
+			</Key>
+
+			<Key ID="STR_SP_EDGE_GENERATE">
+				<Original>Generate</Original>
+				<French>Générer</French>
+			</Key>
+
+		</container>
+
+	</Package>
+</Project>

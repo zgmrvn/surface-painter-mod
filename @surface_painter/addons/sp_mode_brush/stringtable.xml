@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project name="Surface Painter">
+	<Package name="Brush">
+
+		<container name="Options">
+
+			<Key ID="STR_SP_BRUSH_HEADER">
+				<Original>Brush</Original>
+			</Key>
+
+			<Key ID="STR_SP_BRUSH_POSITIONING">
+				<Original>Positioning</Original>
+				<French>Placement</French>
+			</Key>
+
+			<Key ID="STR_SP_BRUSH_DISTANCE_BETWEEN_OBJECTS">
+				<Original>Distance between objects</Original>
+				<French>Distance entre les objets</French>
+			</Key>
+
+			<Key ID="STR_SP_BRUSH_FLOW">
+				<Original>Object flow</Original>
+				<French>Flux d'objet</French>
+			</Key>
+
+		</container>
+
+	</Package>
+</Project>

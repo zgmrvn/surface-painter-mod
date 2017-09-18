@@ -46,7 +46,7 @@ class CfgSurfacePainter {
 					rsc = "HeaderBase";
 
 					values[] = {
-						{3, "STRING", "Brush"}
+						{3, "STRING", $STR_SP_BRUSH_HEADER}
 					};
 				};
 
@@ -54,7 +54,7 @@ class CfgSurfacePainter {
 					rsc = "TitleBase";
 
 					values[] = {
-						{3, "STRING", "Placement"}
+						{3, "STRING", $STR_SP_BRUSH_POSITIONING}
 					};
 
 					margin = SP_OPTION_CONTENT_M;
@@ -66,7 +66,7 @@ class CfgSurfacePainter {
 
 					values[] = {
 						{3, "NUMBER", 0},
-						{4, "STRING", "Distance between objects"}
+						{4, "STRING", $STR_SP_BRUSH_DISTANCE_BETWEEN_OBJECTS}
 					};
 
 					margin = SP_OPTION_CONTENT_M_1_6TH;
@@ -78,7 +78,7 @@ class CfgSurfacePainter {
 
 					values[] = {
 						{3, "NUMBER", 20},
-						{4, "STRING", "Object flow"}
+						{4, "STRING", $STR_SP_BRUSH_FLOW}
 					};
 
 					margin = SP_OPTION_CONTENT_M_1_6TH;

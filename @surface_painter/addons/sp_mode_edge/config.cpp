@@ -63,7 +63,7 @@ class CfgSurfacePainter {
 					rsc = "HeaderBase";
 
 					values[] = {
-						{3, "STRING", "Edge"}
+						{3, "STRING", $STR_SP_EDGE_HEADER}
 					};
 				};
 
@@ -71,7 +71,7 @@ class CfgSurfacePainter {
 					rsc = "TitleBase";
 
 					values[] = {
-						{3, "STRING", "Mode"}
+						{3, "STRING", $STR_SP_EDGE_TITLE_MODE}
 					};
 
 					margin = SP_OPTION_CONTENT_M;
@@ -83,7 +83,7 @@ class CfgSurfacePainter {
 
 					values[] = {
 						{3, "BOOL", 1},
-						{4, "STRING", "Default"}
+						{4, "STRING", $STR_SP_EDGE_DEFAULT}
 					};
 
 					margin = SP_OPTION_CONTENT_M_1_6TH;
@@ -95,7 +95,7 @@ class CfgSurfacePainter {
 
 					values[] = {
 						{3, "BOOL", 0},
-						{4, "STRING", "Lower"}
+						{4, "STRING", $STR_SP_EDGE_LOWER}
 					};
 
 					margin = SP_OPTION_CONTENT_M_1_6TH;
@@ -107,7 +107,7 @@ class CfgSurfacePainter {
 
 					values[] = {
 						{3, "BOOL", 0},
-						{4, "STRING", "Higher"}
+						{4, "STRING", $STR_SP_EDGE_HIGHER}
 					};
 
 					margin = SP_OPTION_CONTENT_M_1_6TH;
@@ -119,7 +119,7 @@ class CfgSurfacePainter {
 
 					values[] = {
 						{3, "BOOL", 0},
-						{4, "STRING", "Cliff"}
+						{4, "STRING", $STR_SP_EDGE_CLIFF}
 					};
 
 					margin = SP_OPTION_CONTENT_M_1_6TH;
@@ -129,7 +129,7 @@ class CfgSurfacePainter {
 					rsc = "TitleBase";
 
 					values[] = {
-						{3, "STRING", "Placement"}
+						{3, "STRING", $STR_SP_EDGE_POSITIONING}
 					};
 
 					margin = SP_OPTION_CONTENT_M;
@@ -141,7 +141,7 @@ class CfgSurfacePainter {
 
 					values[] = {
 						{3, "NUMBER", 10},
-						{4, "STRING", "Interval"}
+						{4, "STRING", $STR_SP_EDGE_INTERVAL}
 					};
 
 					margin = SP_OPTION_CONTENT_M_1_6TH;
@@ -153,7 +153,7 @@ class CfgSurfacePainter {
 
 					values[] = {
 						{3, "NUMBER", 0},
-						{4, "STRING", "Spread"}
+						{4, "STRING", $STR_SP_EDGE_SPREAD}
 					};
 
 					margin = SP_OPTION_CONTENT_M_1_6TH;
@@ -164,7 +164,7 @@ class CfgSurfacePainter {
 					expose = 1;
 
 					values[] = {
-						{3, "STRING", "generate"}
+						{3, "STRING", $STR_SP_EDGE_GENERATE}
 					};
 
 					margin = SP_OPTION_CONTENT_M;

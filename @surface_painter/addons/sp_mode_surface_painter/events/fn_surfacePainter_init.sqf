@@ -20,7 +20,7 @@ if (isNil {SP_var_surfacePainter_pixels}) then {
 };
 
 if (isNil {SP_var_surfacePainter_workingFile}) then {
-	_result = "corp_tls" callExtension ["setWorkingFile", ["surface"]];
+	_result = "sp" callExtension ["setWorkingFile", ["surface"]];
 	SP_var_surfacePainter_workingFile = true;
 };
 
@@ -30,7 +30,7 @@ SP_var_surfacePainter_colorProc	= "#(rgb,8,8,3)color(%1,%2,%3,1)";
 SP_var_surfacePainter_down		= false; // controls the brush loop
 SP_var_surfacePainter_mutex		= true;
 SP_var_surfacePainter_lastPos	= [0, 0, 0];
-SP_var_surfacePainter_maskSize	= parseNumber ("corp_tls" callExtension "imgInfos");
+SP_var_surfacePainter_maskSize	= parseNumber ("sp" callExtension "imgInfos");
 SP_var_surfacePainter_pixelSize	= worldSize / SP_var_surfacePainter_maskSize;
 
 // colors
@@ -38,7 +38,7 @@ private _maskColorsControl = [SP_var_surfacePainter_controls, "MaskColors"] call
 
 lbClear _maskColorsControl;
 
-private _colors = (("corp_tls" callExtension "imgColorsList") splitString "|");
+private _colors = (("sp" callExtension "imgColorsList") splitString "|");
 
 {
 	_maskColorsControl lbAdd (format ["#%1", toUpper _x]);
@@ -109,7 +109,7 @@ _generateControl ctrlAddEventHandler ["ButtonClick", {
 			_pixels pushBack (_pixel getVariable "SP_var_pixelColor");
 		} forEach SP_var_surfacePainter_pixels;
 
-		_result = "corp_tls" callExtension ["setPixelsColor", _pixels];
-		_result = "corp_tls" callExtension "saveFile";
+		_result = "sp" callExtension ["setPixelsColor", _pixels];
+		_result = "sp" callExtension "saveFile";
 	};
 }];

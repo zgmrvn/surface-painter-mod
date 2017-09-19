@@ -32,17 +32,11 @@ You can skip the steps 4 and 5 if you don't plan to use the Surface Painter tool
 
 32 bits :
 ```
-\Arma 3\corp_tls.dll
-\Arma 3\libgcc_s_dw2-1.dll
-\Arma 3\libstdc++-6.dll
-\Arma 3\libwinpthread-1.dll
+\Arma 3\sp.dll
 ```
 64 bits :
 ```
-\Arma 3\corp_tls_x64.dll
-\Arma 3\libgcc_s_seh-1.dll
-\Arma 3\libstdc++-6.dll
-\Arma 3\libwinpthread-1.dll
+\Arma 3\sp_x64.dll
 ```
 
 # How to use

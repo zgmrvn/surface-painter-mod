@@ -3,8 +3,6 @@
 	This function will run everytime mouse button is pressed.
 */
 
-#define PIXELS ["pixel_1m.p3d", "pixel_2m.p3d", "pixel_3m.p3d", "pixel_4m.p3d"]
-
 // if there is a paint loop running, exit
 if (!SP_var_surfacePainter_mutex) exitWith {};
 
@@ -18,8 +16,10 @@ if (SP_key_alt) then {
 		private _pixels = nearestObjects [SP_var_mouseWorldPosition, [], SP_var_circle_circleRadius, true];
 
 		{
-			if (((getModelInfo _x) select 0) in PIXELS) then {
-				[SP_var_surfacePainter_pixels, _x getVariable "SP_var_pixelPosition"] call BIS_fnc_removeFromPairs;
+			if (((getModelInfo _x) select 0) == "pixel.p3d") then {
+				private _index = SP_var_surfacePainter_keys find (_x getVariable "SP_var_pixelPosition");
+				SP_var_surfacePainter_pixels deleteAt _index;
+				SP_var_surfacePainter_keys deleteAt _index;
 
 				deleteVehicle _x;
 			};

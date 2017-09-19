@@ -10,8 +10,10 @@ if (SP_var_surfacePainter_down && {SP_var_surfacePainter_mutex}) then {
 				private _pixels = nearestObjects [SP_var_mouseWorldPosition, [], SP_var_circle_circleRadius, true];
 
 				{
-					if (((getModelInfo _x) select 0)  == "pixel.p3d") then {
-						[SP_var_surfacePainter_pixels, _x getVariable "SP_var_pixelPosition"] call BIS_fnc_removeFromPairs;
+					if (((getModelInfo _x) select 0) == "pixel.p3d") then {
+						private _index = SP_var_surfacePainter_keys find (_x getVariable "SP_var_pixelPosition");
+						SP_var_surfacePainter_pixels deleteAt _index;
+						SP_var_surfacePainter_keys deleteAt _index;
 
 						deleteVehicle _x;
 					};

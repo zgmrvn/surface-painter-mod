@@ -15,7 +15,8 @@ private _optionsCtrlGroup	= _leftPanelCtrlGroup controlsGroupCtrl SP_SURFACE_PAI
 // SP_var_surfacePainter_controls = []; // contains editable controls
 
 // internal
-if (isNil {SP_var_surfacePainter_pixels}) then {
+if (isNil "SP_var_surfacePainter_keys" && {isNil "SP_var_surfacePainter_pixels"}) then {
+	SP_var_surfacePainter_keys = [];
 	SP_var_surfacePainter_pixels = [];
 };
 

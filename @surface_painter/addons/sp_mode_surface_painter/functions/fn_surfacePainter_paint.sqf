@@ -20,14 +20,15 @@ for [{private _i = SP_var_circle_circleRadius}, {_i >= -SP_var_circle_circleRadi
 
 		if (_pos inArea _area) then {
 			// color
-			if (([SP_var_surfacePainter_pixels, _key] call BIS_fnc_findInPairs) == -1) then {
+			if ((SP_var_surfacePainter_keys find _key) == -1) then {
 				// create pixel
 				private _pixel = (ATLToASL _pos) call SP_fnc_surfacePainter_createPixel;
 
 				// store pixel
-				[SP_var_surfacePainter_pixels, _key, _pixel] call BIS_fnc_setToPairs;
+				SP_var_surfacePainter_keys pushBack _key;
+				SP_var_surfacePainter_pixels pushBack _pixel;
 			} else {
-				private _pixel = [SP_var_surfacePainter_pixels, _key] call BIS_fnc_getFromPairs;
+				private _pixel = SP_var_surfacePainter_pixels select (SP_var_surfacePainter_keys find _key);
 				_pixel setObjectTexture [0, SP_var_surfacePainter_colorProc];
 				_pixel setVariable ["SP_var_pixelColor", SP_var_surfacePainter_colorHex];
 			};

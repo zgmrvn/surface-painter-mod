@@ -101,14 +101,13 @@ _generateControl ctrlAddEventHandler ["ButtonClick", {
 		_pixels = [];
 
 		{
-			private _key			= _x select 0;
-			private _pixel			= _x select 1;
-			private _splitedString	= [_key, ":"] call BIS_fnc_splitString;
+			_splitString = _x splitString ":";
+			_pixel = SP_var_surfacePainter_pixels select _forEachIndex;
 
-			_pixels pushBack (parseNumber (_splitedString select 0));
-			_pixels pushBack (parseNumber (_splitedString select 1));
+			_pixels pushBack (parseNumber (_splitString select 0));
+			_pixels pushBack (parseNumber (_splitString select 1));
 			_pixels pushBack (_pixel getVariable "SP_var_pixelColor");
-		} forEach SP_var_surfacePainter_pixels;
+		} forEach SP_var_surfacePainter_keys;
 
 		_result = "sp" callExtension ["setPixelsColor", _pixels];
 		_result = "sp" callExtension "saveFile";

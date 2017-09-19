@@ -26,7 +26,7 @@ if (isNil {SP_var_surfacePainter_workingFile}) then {
 
 SP_var_surfacePainter_color		= [0, 0, 0];
 SP_var_surfacePainter_colorHex	= "FFFFFF";
-SP_var_surfacePainter_colorProc	= "#(rgb,8,8,3)color(%1,%2,%3,1)";
+SP_var_surfacePainter_colorProc	= "#(rgb,8,8,3)color(1,1,1,1,co)";
 SP_var_surfacePainter_down		= false; // controls the brush loop
 SP_var_surfacePainter_mutex		= true;
 SP_var_surfacePainter_lastPos	= [0, 0, 0];
@@ -59,7 +59,7 @@ if (count _colors > 0) then {
 	_color pushBack 1;
 	SP_var_surfacePainter_color = _color;
 	SP_var_surfacePainter_colorProc = format [
-		"#(rgb,8,8,3)color(%1,%2,%3,1)",
+		"#(rgb,8,8,3)color(%1,%2,%3,1,co)",
 		_color select 0,
 		_color select 1,
 		_color select 2
@@ -74,7 +74,7 @@ _maskColorsControl ctrlAddEventHandler ["LBSelChanged", {
 	SP_var_surfacePainter_colorHex = _data;
 	SP_var_surfacePainter_color = _color;
 	SP_var_surfacePainter_colorProc = format [
-		"#(rgb,8,8,3)color(%1,%2,%3,1)",
+		"#(rgb,8,8,3)color(%1,%2,%3,1,co)",
 		_color select 0,
 		_color select 1,
 		_color select 2

@@ -9,7 +9,7 @@ private _border	 = SP_var_surfacePainter_pixelSize / 100 * PIXEL_BORDER_PERCENT;
 // create pixel object
 private _pixel = createSimpleObject [
 	"Land_SurfaceMapPixel",
-	_pos vectorAdd [0, 0, PIXEL_Z_MARGIN]
+	_this vectorAdd [0, 0, PIXEL_Z_MARGIN]
 ];
 
 // set pixel color

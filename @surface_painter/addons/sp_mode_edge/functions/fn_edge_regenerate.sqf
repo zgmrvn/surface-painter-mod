@@ -1,3 +1,24 @@
+/*
+	Function: SP_fnc_edge_regenerate
+
+	Description:
+		Regenerate objects, this function is a wrapper for a pre-configured call of SP_fnc_edge_generate.
+
+	Parameters:
+		none
+
+	Example:
+		(begin example)
+		call SP_fnc_edge_regenerate;
+		(end)
+
+	Returns:
+		nothing
+
+	Author:
+		zgmrvn
+*/
+
 // if the temp array contains objects, delete them and regen
 if ((count SP_var_edge_tempObjects) > 0) then {
 	{

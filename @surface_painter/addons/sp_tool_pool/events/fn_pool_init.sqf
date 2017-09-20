@@ -1,3 +1,8 @@
+/*
+	Pool - Init
+	This function runs when Surface Painter inteface is open.
+*/
+
 #include "\x\surface_painter\addons\sp_core\idcs.hpp"
 #include "..\idcs.hpp"
 #include "\x\surface_painter\addons\sp_core\sizes.hpp"

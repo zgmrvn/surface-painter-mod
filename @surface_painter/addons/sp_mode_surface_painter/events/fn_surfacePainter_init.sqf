@@ -1,6 +1,6 @@
 /*
-	Init for Brush mode.
-	This function will run when Surface Painter interface is opened.
+	Surface Painter - Init
+	This function runs when Surface Painter interface is open.
 */
 
 #include "\x\surface_painter\addons\sp_core\idcs.hpp"

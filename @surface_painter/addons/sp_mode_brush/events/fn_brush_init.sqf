@@ -1,6 +1,6 @@
 /*
-	Init for Brush mode.
-	This function will run when Surface Painter interface is open.
+	Brush - Init
+	This function runs when Surface Painter interface is open.
 */
 
 // exposed

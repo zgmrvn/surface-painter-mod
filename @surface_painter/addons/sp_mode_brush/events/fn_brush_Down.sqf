@@ -1,6 +1,6 @@
 /*
-	Mouse down for Brush mode.
-	This function will run everytime mouse button is pressed.
+	Brush - Mouse down
+	This function runs when mouse button is pressed down on world.
 */
 
 #define DISTANCE_MARGIN				15

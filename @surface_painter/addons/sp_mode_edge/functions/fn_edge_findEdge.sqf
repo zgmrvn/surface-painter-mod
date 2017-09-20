@@ -1,3 +1,27 @@
+/*
+	Function: SP_fnc_edge_findEdge
+
+	Description:
+		Find a suitable position around _center according to _distance and _mode.
+
+	Parameters:
+		_center: position array
+		_distance: search radius
+		_mode: search mod, possible values : "DRAW", "HIGHER", "CLIFF", "LOWER"
+		_dir: the direction in which to search for a suitable position
+
+	Example:
+		(begin example)
+		_pos = [[5821, 2820, 0], 15, "DRAW", 45] call SP_fnc_edge_findEdge;
+		(end)
+
+	Returns:
+		_position: ATL position array
+
+	Author:
+		zgmrvn, commy2, cptnnick
+*/
+
 private _center		= param [0, [0, 0, 0], [[]], 3];
 private _distance	= param [1, 1, [0]];
 private _mode		= param [2, "DRAW", [""]];

@@ -1,5 +1,6 @@
 /*
-	Resize Circle when mouse wheel change.
+	Circle - Mouse Z change
+	This function runs when mouse wheel changes.
 */
 
 #include "..\defines.hpp"

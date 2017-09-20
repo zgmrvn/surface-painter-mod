@@ -1,6 +1,6 @@
 /*
-	Mouse move for Edge mode.
-	This function will run everytime the mouse move.
+	Edge - Mouse move
+	This function runs when the mouse moves
 */
 
 #include "..\defines.hpp"

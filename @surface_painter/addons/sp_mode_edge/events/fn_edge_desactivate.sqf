@@ -1,6 +1,6 @@
 /*
-	Edge activation.
-	This function will run everytime you leave this mode.
+	Edge - desactivation
+	This function runs when you leave for a mode that doesn't uses this tool.
 */
 
 // save temp objects and reset temporary objects array

@@ -1,6 +1,6 @@
 /*
-	Edge activation.
-	This function will run everytime you switch on this mode.
+	Edge - Activation
+	This function runs when you switch to this mode.
 */
 
 // line reset

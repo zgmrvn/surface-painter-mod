@@ -1,3 +1,24 @@
+/*
+	Function: SP_fnc_export_exportTerrainBuilder
+
+	Description:
+		Export objects in Terain Builder format.
+
+	Parameters:
+		none
+
+	Example:
+		(begin example)
+		call SP_fnc_export_exportTerrainBuilder;
+		(end)
+
+	Returns:
+		nothing
+
+	Author:
+		zgmrvn, commy2, cptnnick
+*/
+
 #define DECIMALS_POS 4
 #define DECIMALS_ANG 3
 

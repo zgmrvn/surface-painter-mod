@@ -1,3 +1,8 @@
+/*
+	Surface Painter - Mouse move
+	This function runs when the mouse moves
+*/
+
 if (SP_var_surfacePainter_down && {SP_var_surfacePainter_mutex}) then {
 	if ((SP_var_surfacePainter_lastPos distance SP_var_mouseWorldPosition) > 1) then {
 

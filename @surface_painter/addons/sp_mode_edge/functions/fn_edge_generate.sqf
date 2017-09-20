@@ -1,3 +1,32 @@
+/*
+	Function: SP_fnc_edge_generate
+
+	Description:
+		Generate objects along the line.
+
+	Parameters:
+		_line: array of positions describing a line
+		_interval: interval between objects
+		_spread: max spread for objects
+		_pool: array of possible classnames
+
+	Example:
+		(begin example)
+		SP_var_edge_tempObjects = [
+			[[0, 0, 0], [10, 10, 0]],
+			10,
+			0,
+			["Land_Ficus_01_F", "Land_Ficus_02_F"]
+		] call SP_fnc_edge_generate;
+		(end)
+
+	Returns:
+		_objects: array of created objects
+
+	Author:
+		zgmrvn
+*/
+
 private _line		= param [0, [], [[]]];
 private _interval	= param [1, 10, [0]];
 private _spread		= param [2, 0, [0]];

@@ -1,6 +1,6 @@
 /*
-	Init for Edge mode.
-	This function will run when Surface Painter interface is open.
+	Edge - Init
+	This function runs when Surface Painter interface is open.
 */
 
 // exposed

@@ -1,3 +1,24 @@
+/*
+	Function: SP_fnc_surfacePainter_createPixel
+
+	Description:
+		Create and set the simple object representing a mask pixel.
+
+	Parameters:
+		_this: ATL position array
+
+	Example:
+		(begin example)
+		_pixel = [5685.9, 3745.8, 0] call SP_fnc_surfacePainter_createPixel;
+		(end)
+
+	Returns:
+		_pixel: the pixel simple object
+
+	Author:
+		zgmrvn
+*/
+
 #define PIXEL_BORDER_PERCENT	1
 #define PIXEL_Z_MARGIN			0.2
 

@@ -1,6 +1,6 @@
 /*
-	Init for Export extra.
-	This function will run when Surface Painter interface is opened.
+	Export - Init
+	This function runs when Surface Painter interface is open.
 */
 
 // exposed

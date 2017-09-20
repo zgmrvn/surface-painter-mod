@@ -1,6 +1,6 @@
 /*
-	Activation of Circle tool.
-	This function will run everytime switching on a mode that uses this tool.
+	Circle - Activation
+	This function runs when switching on a mode that uses this tool.
 */
 
 #include "..\defines.hpp"

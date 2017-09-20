@@ -1,6 +1,6 @@
 /*
-	Initialization of Circle tool.
-	This function will run when Surface Painter dialog is opened.
+	Circle - Init
+	This function runs when Surface Painter inteface is open.
 */
 
 SP_var_circle_circleDiameter = 3;

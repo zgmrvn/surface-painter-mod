@@ -1,6 +1,6 @@
 /*
-	Mouse down for Edge mode.
-	This function will run everytime mouse button is pressed.
+	Edge - Mouse down
+	This function runs when mouse button is pressed down on world.
 */
 
 #include "..\defines.hpp"

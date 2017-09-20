@@ -1,3 +1,24 @@
+/*
+	Function: SP_fnc_surfacePainter_paint
+
+	Description:
+		Handle if pixels should be created, called by Sp_fnc_surfacePainter_mouseMove.
+
+	Parameters:
+		none
+
+	Example:
+		(begin example)
+		[] spawn SP_fnc_surfacePainter_paint;
+		(end)
+
+	Returns:
+		nothing
+
+	Author:
+		zgmrvn
+*/
+
 SP_var_surfacePainter_lastPos = SP_var_mouseWorldPosition;
 
 _area = [SP_var_surfacePainter_lastPos, SP_var_circle_circleRadius, SP_var_circle_circleRadius, 0, false, -1];

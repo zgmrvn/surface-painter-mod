@@ -1,6 +1,6 @@
 /*
-	Mouse down for Surface Painter mode.
-	This function will run everytime mouse button is pressed.
+	Surface Painter - Mouse down
+	This function runs when mouse button is pressed down on world.
 */
 
 // if there is a paint loop running, exit

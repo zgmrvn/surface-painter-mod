@@ -31,7 +31,6 @@ class CfgFunctions {
 class CfgSurfacePainter {
 	// default module class
 	class DefaultModule {
-		name		= "Module name";
 		tools[]		= {};
 		idc			= -1;
 		icon		= "x\surface_painter\addons\sp_core\icon.paa";
@@ -56,8 +55,7 @@ class CfgSurfacePainter {
 
 	// default tool class
 	class DefaultTool {
-		name		= "Tool name";
-		description	= "Description";
+		description = "Description";
 
 		class Events {
 			/*

@@ -48,7 +48,6 @@ class CfgSurfacePainter {
 
 	class Modules {
 		class SurfacePainter: DefaultModule {
-			name	= "Surface Painter";
 			tools[]	= {"Circle"};
 			idc		= SP_SURFACE_PAINTER_SURFACE_PAINTER_OPTIONS_CTRL_GROUP;
 			icon	= "x\surface_painter\addons\sp_mode_surface_painter\icon.paa";

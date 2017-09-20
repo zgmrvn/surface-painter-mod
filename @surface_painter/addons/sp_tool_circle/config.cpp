@@ -28,7 +28,6 @@ class CfgSurfacePainter {
 
 	class Tools {
 		class Circle: DefaultTool {
-			name = "Circle";
 			description = "";
 
 			class Events {

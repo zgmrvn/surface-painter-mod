@@ -30,7 +30,6 @@ class CfgSurfacePainter {
 
 	class Tools {
 		class Pool: DefaultTool {
-			name = "Pool";
 			description = "";
 
 			class Events {

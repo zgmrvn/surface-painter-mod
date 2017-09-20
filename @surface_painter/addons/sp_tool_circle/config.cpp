@@ -17,7 +17,7 @@ class CfgFunctions {
 			class Circle_Init {};
 			class Circle_Activate {};
 			class Circle_Desactivate {};
-			class Circle_ZChange {};
+			class Circle_mouseZChange {};
 		};
 	};
 };
@@ -34,7 +34,7 @@ class CfgSurfacePainter {
 				class OnInit { function = "SP_fnc_circle_init"; };
 				class OnActivate { function = "SP_fnc_circle_activate"; };
 				class OnDesactivate { function = "SP_fnc_circle_desactivate"; };
-				class OnMouseZChange { function = "SP_fnc_circle_zChange"; };
+				class OnMouseZChange { function = "SP_fnc_circle_mouseZChange"; };
 			};
 		};
 	};

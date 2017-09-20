@@ -32,7 +32,7 @@
 	SP_fnc_circle_init			= compile preprocessFileLineNumbers "x\surface_painter\addons\sp_tool_circle\events\fn_circle_init.sqf";
 	SP_fnc_circle_activate		= compile preprocessFileLineNumbers "x\surface_painter\addons\sp_tool_circle\events\fn_circle_activate.sqf";
 	SP_fnc_circle_desactivate	= compile preprocessFileLineNumbers "x\surface_painter\addons\sp_tool_circle\events\fn_circle_desactivate.sqf";
-	SP_fnc_circle_zChange		= compile preprocessFileLineNumbers "x\surface_painter\addons\sp_tool_circle\events\fn_circle_zChange.sqf";
+	SP_fnc_circle_mouseZChange	= compile preprocessFileLineNumbers "x\surface_painter\addons\sp_tool_circle\events\fn_circle_mouseZChange.sqf";
 
 	// export
 	SP_fnc_export_init	= compile preprocessFileLineNumbers "x\surface_painter\addons\sp_extra_export\events\fn_export_init.sqf";

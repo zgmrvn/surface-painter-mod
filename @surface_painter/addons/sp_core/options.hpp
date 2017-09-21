@@ -1,237 +1,60 @@
 #include "sizes.hpp"
-#include "styles.hpp"
 
-class HeaderBase: RscControlsGroup {
-	idc = -1;
-
-	x = safeZoneW * SP_MARGIN_X;
-	y = 0;
-	w = safeZoneW * SP_OPTIONS_CONTENT_W;
-	h = safeZoneH * 0.033;
-
-	class Controls {
-		class Text: RscText {
-			idc = 3;
-			style = ST_CENTER;
-
-			x = 0;
-			y = -0.007;
-			w = safeZoneW * SP_OPTIONS_CONTENT_W;
-			h = safeZoneH * 0.025;
-
-			text = "text";
-
-			SizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1.4)";
-		};
-
-		class Underline: RscText {
-			idc = 4;
-
-			x = 0;
-			y = safeZoneH * 0.03;
-			w = safeZoneW * SP_OPTIONS_CONTENT_W;
-			h = pixelH * 2;
-
-			colorBackground[] = {
-				"(profilenamespace getvariable ['GUI_BCG_RGB_R', 0.5])",
-				"(profilenamespace getvariable ['GUI_BCG_RGB_G', 0.5])",
-				"(profilenamespace getvariable ['GUI_BCG_RGB_B', 0.5])",
-				1
-			};
-		};
-	};
+class OptionBase {
+	rsc = "HeaderBase";
+	expose = 0;
+	margin = 0;
 };
 
-class TitleBase: RscControlsGroup {
-	idc = -1;
-
-	x = safeZoneW * SP_MARGIN_X;
-	y = 0;
-	w = safeZoneW * SP_OPTIONS_CONTENT_W;
-	h = safeZoneH * 0.023;
-
-	class Controls {
-		class Text: RscText {
-			idc = 3;
-
-			x = -0.005;
-			y = -0.009;
-			w = safeZoneW * SP_OPTIONS_CONTENT_W;
-			h = safeZoneH * 0.023;
-
-			text = "text";
-
-			SizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1.2)";
-		};
-
-		class Underline: RscText {
-			idc = 4;
-
-			x = 0;
-			y = safeZoneH * 0.020;
-			w = safeZoneW * SP_OPTIONS_CONTENT_W;
-			h = pixelH;
-
-			colorBackground[] = {
-				0.4,
-				0.4,
-				0.4,
-				1
-			};
-		};
-	};
+// options types
+class OptionHeader: OptionBase {
+	rsc = "HeaderBase";
+	expose = 0;
 };
 
-class EditBase: RscControlsGroup {
-	idc = -1;
-
-	x = safeZoneW * SP_MARGIN_X;
-	y = 0;
-	w = safeZoneW * SP_OPTIONS_CONTENT_W;
-	h = safeZoneH * SP_OPTION_CONTENT_H + pixelH;
-
-	class Controls {
-		class Edit: RscEdit {
-			idc = 3;
-			style = 0x02 + 0x0C;
-
-			x = pixelW;
-			y = pixelH;
-			w = safeZoneW * SP_OPTIONS_CONTENT_W * SP_OPTION_EDIT_EDIT_W;
-			h = safeZoneH * SP_OPTION_CONTENT_H;
-
-			text = "0";
-
-			canModify = 0;
-			colorBackground[] = {0.1, 0.1, 0.1, 1};
-		};
-
-		class Text: RscText {
-			idc = 4;
-
-			x = safeZoneW * SP_OPTION_EDIT_EDIT_W * SP_OPTIONS_CONTENT_W;
-			y = 0;
-			w = safeZoneW * SP_OPTIONS_CONTENT_W * SP_OPTION_EDIT_TEXT_W;
-			h = safeZoneH * SP_OPTION_CONTENT_H;
-
-			text = "text";
-
-			colorBackground[] = {0.1, 0.1, 0.1, 1};
-		};
-	};
+class OptionTitle: OptionBase {
+	rsc = "TitleBase";
+	expose = 0;
+	margin = SP_OPTION_CONTENT_M;
 };
 
-class CheckBoxBase: RscControlsGroup {
-	idc = -1;
-
-	x = safeZoneW * SP_MARGIN_X;
-	y = 0;
-	w = safeZoneW * SP_OPTIONS_CONTENT_W;
-	h = safeZoneH * SP_OPTION_CONTENT_H + pixelH;
-
-	class Controls {
-		class Edit: RscCheckBox {
-			idc = 3;
-			style = 0x02 + 0x0C;
-
-			x = pixelW;
-			y = pixelH;
-			w = safeZoneW * SP_OPTIONS_CONTENT_W * SP_OPTION_CHECKBOX_CHECKBOX_W;
-			h = safeZoneH * SP_OPTION_CONTENT_H;
-
-			text = "0";
-
-			colorBackground[] = {0.1, 0.1, 0.1, 1};
-		};
-
-		class Text: RscText {
-			idc = 4;
-
-			x = safeZoneW * SP_OPTION_CHECKBOX_CHECKBOX_W * SP_OPTIONS_CONTENT_W;
-			y = 0;
-			w = safeZoneW * SP_OPTIONS_CONTENT_W * SP_OPTION_CHECKBOX_TEXT_W;
-			h = safeZoneH * SP_OPTION_CONTENT_H;
-
-			text = "text";
-
-			colorBackground[] = {0.1, 0.1, 0.1, 1};
-		};
-	};
+class OptionEdit: OptionBase {
+	rsc = "EditBase";
+	expose = 1;
+	margin = SP_OPTION_CONTENT_M_1_6TH;
 };
 
-class ButtonBase: RscControlsGroup {
-	idc = -1;
-
-	x = safeZoneW * SP_MARGIN_X;
-	y = 0;
-	w = safeZoneW * SP_OPTIONS_CONTENT_W;
-	h = safeZoneH * 0.05;
-
-	class Controls {
-		class Button: RscButton {
-			idc = 3;
-
-			x = 0;
-			y = 0;
-			w = safeZoneW * SP_OPTIONS_CONTENT_W;
-			h = safeZoneH * 0.05;
-
-			text = "text";
-
-			SizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1.2)";
-			colorBackground[] = {0.2, 0.2, 0.2, 1};
-			colorBackgroundActive[] = {
-				"(profilenamespace getvariable ['GUI_BCG_RGB_R', 0.5])",
-				"(profilenamespace getvariable ['GUI_BCG_RGB_G', 0.5])",
-				"(profilenamespace getvariable ['GUI_BCG_RGB_B', 0.5])",
-				1
-			};
-		};
-	};
+class OptionButton: OptionBase {
+	rsc = "ButtonBase";
+	expose = 1;
+	margin = SP_OPTION_CONTENT_M;
 };
 
-class ListBoxBase: RscControlsGroup {
-	idc = -1;
-
-	x = safeZoneW * SP_MARGIN_X;
-	y = 0;
-	w = safeZoneW * SP_OPTIONS_CONTENT_W;
-	h = safeZoneH * SP_OPTION_CONTENT_H * 8;
-
-	class Controls {
-		class ListBox: RscListBox {
-			idc = 3;
-
-			x = 0;
-			y = 0;
-			w = safeZoneW * SP_OPTIONS_CONTENT_W;
-			h = safeZoneH * SP_OPTION_CONTENT_H * 8;
-
-			colorBackground[] = {0.1, 0.1, 0.1, 1};
-			rowHeight = safeZoneH * SP_OPTION_CONTENT_H;
-		};
-	};
+class OptionCheckBox: OptionBase {
+	rsc = "CheckBoxBase";
+	expose = 1;
+	margin = SP_OPTION_CONTENT_M_1_6TH;
 };
 
-class TextBase: RscControlsGroup {
-	idc = -1;
+class OptionText: OptionBase {
+	rsc = "TextBase";
+	expose = 0;
+	margin = SP_OPTION_CONTENT_M_1_6TH;
+};
 
-	x = safeZoneW * SP_MARGIN_X;
-	y = 0;
-	w = safeZoneW * SP_OPTIONS_CONTENT_W;
-	h = safeZoneH * SP_OPTION_CONTENT_H;
+class OptionList: OptionBase {
+	rsc = "ListBoxBase";
+	expose = 1;
+	margin = SP_OPTION_CONTENT_M_1_6TH;
+};
 
-	class Controls {
-		class Text: RscText {
-			idc = 3;
+// options rsc
+// usually the main control, the one with data
+class Main {
+	idc = 3;
+};
 
-			x = 0;
-			y = 0;
-			w = safeZoneW * SP_OPTIONS_CONTENT_W;
-			h = safeZoneH * SP_OPTION_CONTENT_H;
-
-			colorBackground[] = {0.1, 0.1, 0.1, 1};
-			text = "text";
-		};
-	};
+// usually a description text
+class Second {
+	idc = 4;
 };

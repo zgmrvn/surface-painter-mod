@@ -31,6 +31,11 @@ class CfgFunctions {
 class CfgSurfacePainter {
 	class DefaultModule;
 
+	class OptionHeader;
+	class OptionButton;
+
+	class Main;
+
 	class Modules {
 		class Export: DefaultModule {
 			idc		= SP_SURFACE_PAINTER_EXPORT_OPTIONS_CTRL_GROUP;
@@ -41,24 +46,7 @@ class CfgSurfacePainter {
 			};
 
 			class Options {
-				class Header {
-					rsc = "HeaderBase";
-
-					values[] = {
-						{3, "STRING", $STR_SP_EXPORT_HEADER}
-					};
-				};
-
-				class Export {
-					rsc = "ButtonBase";
-					expose = 1;
-
-					values[] = {
-						{3, "STRING", $STR_SP_EXPORT_EXPORT}
-					};
-
-					margin = SP_OPTION_CONTENT_M;
-				};
+				#include "options.hpp"
 			};
 		};
 	};

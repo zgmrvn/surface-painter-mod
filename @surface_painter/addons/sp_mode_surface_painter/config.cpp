@@ -46,6 +46,14 @@ class CfgVehicles {
 class CfgSurfacePainter {
 	class DefaultModule;
 
+	class OptionHeader;
+	class OptionTitle;
+	class OptionText;
+	class OptionList;
+	class OptionButton;
+
+	class Main;
+
 	class Modules {
 		class SurfacePainter: DefaultModule {
 			tools[]	= {"Circle"};
@@ -61,88 +69,7 @@ class CfgSurfacePainter {
 			};
 
 			class Options {
-				class Header {
-					rsc = "HeaderBase";
-
-					values[] = {
-						{3, "STRING", $STR_SP_SURFACE_PAINTER_HEADER}
-					};
-				};
-
-				class TitleInfos {
-					rsc = "TitleBase";
-
-					values[] = {
-						{3, "STRING", $STR_SP_SURFACE_PAINTER_INFOS}
-					};
-
-					margin = SP_OPTION_CONTENT_M;
-				};
-
-				class WorldSize {
-					rsc = "TextBase";
-					expose = 1;
-
-					values[] = {
-						{3, "STRING", $STR_SP_SURFACE_PAINTER_WORLD_SIZE}
-					};
-
-					margin = SP_OPTION_CONTENT_M_1_6TH;
-				};
-
-				class MaskSize {
-					rsc = "TextBase";
-					expose = 1;
-
-					values[] = {
-						{3, "STRING", $STR_SP_SURFACE_PAINTER_MASK_SIZE}
-					};
-
-					margin = 0;
-				};
-
-				class PixelSize {
-					rsc = "TextBase";
-					expose = 1;
-
-					values[] = {
-						{3, "STRING", $STR_SP_SURFACE_PAINTER_PIXEL_SIZE}
-					};
-
-					margin = 0;
-				};
-
-				class TitleMask {
-					rsc = "TitleBase";
-
-					values[] = {
-						{3, "STRING", $STR_SP_SURFACE_PAINTER_MASK}
-					};
-
-					margin = SP_OPTION_CONTENT_M;
-				};
-
-				class MaskColors {
-					rsc = "ListBoxBase";
-					expose = 1;
-
-					values[] = {
-						{3, "LIST", "FFFFFF"}
-					};
-
-					margin = SP_OPTION_CONTENT_M_1_6TH;
-				};
-
-				class Generate {
-					rsc = "ButtonBase";
-					expose = 1;
-
-					values[] = {
-						{3, "STRING", $STR_SP_SURFACE_PAINTER_GENERATE}
-					};
-
-					margin = SP_OPTION_CONTENT_M;
-				};
+				#include "options.hpp"
 			};
 		};
 	};

@@ -35,12 +35,15 @@ _modes = (configFile >> "CfgSurfacePainter" >> "Modules") call BIS_fnc_getCfgSub
 	missionNamespace setVariable [_varName, []];
 
 	private _options = (MODULES >> _mode >> "Options") call BIS_fnc_getCfgSubClasses;
+
 	private _prev = objNull;
 
+	// cycle throught options
 	{
 		private _classname = _x;
 
 		private _rsc = getText (MODULES >> _mode >> "Options" >> _classname >> "rsc");
+
 		private _optionCtrlGroup = _dialog ctrlCreate [_rsc, -1, _optionsCtrlGroup];
 
 		if (isNull _prev) then {
@@ -68,15 +71,20 @@ _modes = (configFile >> "CfgSurfacePainter" >> "Modules") call BIS_fnc_getCfgSub
 
 		_optionCtrlGroup ctrlCommit 0;
 
-		private _values = getarray (MODULES >> _mode >> "Options" >> _classname >> "values");
+		private _values = (MODULES >> _mode >> "Options" >> _classname >> "values") call BIS_fnc_getCfgSubClasses;
 
 		{
-			private _idc	= _x select 0;
-			private _type 	= _x select 1;
-			private _value 	= _x select 2;
+			private _idc	= getNumber (MODULES >> _mode >> "Options" >> _classname >> "values" >> _x >> "idc");
+			private _type 	= getText (MODULES >> _mode >> "Options" >> _classname >> "values" >> _x >> "typeName");
+
+			private _value = switch (true) do {
+				case (_type == "STRING"): {getText (MODULES >> _mode >> "Options" >> _classname >> "values" >> _x >> "value")};
+				case (_type == "NUMBER"): {getNumber (MODULES >> _mode >> "Options" >> _classname >> "values" >> _x >> "value")};
+				case (_type == "LIST"): {getText (MODULES >> _mode >> "Options" >> _classname >> "values" >> _x >> "value")};
+				case (_type == "BOOL"): {getNumber (MODULES >> _mode >> "Options" >> _classname >> "values" >> _x >> "value")};
+			};
 
 			private _childControl = _optionCtrlGroup controlsGroupCtrl _idc;
-
 
 			private _expose = (getNumber (MODULES >> _mode >> "Options" >> _classname >> "expose")) == 1;
 

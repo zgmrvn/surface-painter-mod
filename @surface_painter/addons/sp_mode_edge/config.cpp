@@ -37,6 +37,15 @@ class CfgFunctions {
 class CfgSurfacePainter {
 	class DefaultModule;
 
+	class OptionHeader;
+	class OptionTitle;
+	class OptionCheckBox;
+	class OptionEdit;
+	class OptionButton;
+
+	class Main;
+	class Second;
+
 	class Modules {
 		class Edge: DefaultModule {
 			tools[]	= {"Circle", "Pool"};
@@ -58,116 +67,7 @@ class CfgSurfacePainter {
 			};
 
 			class Options {
-				class Header {
-					rsc = "HeaderBase";
-
-					values[] = {
-						{3, "STRING", $STR_SP_EDGE_HEADER}
-					};
-				};
-
-				class TitleMode {
-					rsc = "TitleBase";
-
-					values[] = {
-						{3, "STRING", $STR_SP_EDGE_TITLE_MODE}
-					};
-
-					margin = SP_OPTION_CONTENT_M;
-				};
-
-				class Default {
-					rsc = "CheckBoxBase";
-					expose = 1;
-
-					values[] = {
-						{3, "BOOL", 1},
-						{4, "STRING", $STR_SP_EDGE_DEFAULT}
-					};
-
-					margin = SP_OPTION_CONTENT_M_1_6TH;
-				};
-
-				class Lower {
-					rsc = "CheckBoxBase";
-					expose = 1;
-
-					values[] = {
-						{3, "BOOL", 0},
-						{4, "STRING", $STR_SP_EDGE_LOWER}
-					};
-
-					margin = SP_OPTION_CONTENT_M_1_6TH;
-				};
-
-				class Higher {
-					rsc = "CheckBoxBase";
-					expose = 1;
-
-					values[] = {
-						{3, "BOOL", 0},
-						{4, "STRING", $STR_SP_EDGE_HIGHER}
-					};
-
-					margin = SP_OPTION_CONTENT_M_1_6TH;
-				};
-
-				class Cliff {
-					rsc = "CheckBoxBase";
-					expose = 1;
-
-					values[] = {
-						{3, "BOOL", 0},
-						{4, "STRING", $STR_SP_EDGE_CLIFF}
-					};
-
-					margin = SP_OPTION_CONTENT_M_1_6TH;
-				};
-
-				class TitlePlacement {
-					rsc = "TitleBase";
-
-					values[] = {
-						{3, "STRING", $STR_SP_EDGE_POSITIONING}
-					};
-
-					margin = SP_OPTION_CONTENT_M;
-				};
-
-				class Interval {
-					rsc = "EditBase";
-					expose = 1;
-
-					values[] = {
-						{3, "NUMBER", 10},
-						{4, "STRING", $STR_SP_EDGE_INTERVAL}
-					};
-
-					margin = SP_OPTION_CONTENT_M_1_6TH;
-				};
-
-				class Spread {
-					rsc = "EditBase";
-					expose = 1;
-
-					values[] = {
-						{3, "NUMBER", 0},
-						{4, "STRING", $STR_SP_EDGE_SPREAD}
-					};
-
-					margin = SP_OPTION_CONTENT_M_1_6TH;
-				};
-
-				class Generate {
-					rsc = "ButtonBase";
-					expose = 1;
-
-					values[] = {
-						{3, "STRING", $STR_SP_EDGE_GENERATE}
-					};
-
-					margin = SP_OPTION_CONTENT_M;
-				};
+				#include "options.hpp"
 			};
 		};
 	};

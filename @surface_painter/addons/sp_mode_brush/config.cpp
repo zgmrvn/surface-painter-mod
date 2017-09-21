@@ -28,6 +28,13 @@ class CfgFunctions {
 class CfgSurfacePainter {
 	class DefaultModule;
 
+	class OptionHeader;
+	class OptionTitle;
+	class OptionEdit;
+
+	class Main;
+	class Second;
+
 	class Modules {
 		class Brush: DefaultModule {
 			tools[]		= {"Circle", "Pool"};
@@ -41,47 +48,7 @@ class CfgSurfacePainter {
 			};
 
 			class Options {
-				class Header {
-					rsc = "HeaderBase";
-
-					values[] = {
-						{3, "STRING", $STR_SP_BRUSH_HEADER}
-					};
-				};
-
-				class TitlePlacement {
-					rsc = "TitleBase";
-
-					values[] = {
-						{3, "STRING", $STR_SP_BRUSH_POSITIONING}
-					};
-
-					margin = SP_OPTION_CONTENT_M;
-				};
-
-				class Distance {
-					rsc = "EditBase";
-					expose = 1;
-
-					values[] = {
-						{3, "NUMBER", 0},
-						{4, "STRING", $STR_SP_BRUSH_DISTANCE_BETWEEN_OBJECTS}
-					};
-
-					margin = SP_OPTION_CONTENT_M_1_6TH;
-				};
-
-				class Flow {
-					rsc = "EditBase";
-					expose = 1;
-
-					values[] = {
-						{3, "NUMBER", 20},
-						{4, "STRING", $STR_SP_BRUSH_FLOW}
-					};
-
-					margin = SP_OPTION_CONTENT_M_1_6TH;
-				};
+				#include "options.hpp"
 			};
 		};
 	};

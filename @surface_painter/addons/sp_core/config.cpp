@@ -29,6 +29,7 @@ class CfgFunctions {
 };
 
 class CfgSurfacePainter {
+
 	// default module class
 	class DefaultModule {
 		tools[]		= {};
@@ -51,6 +52,8 @@ class CfgSurfacePainter {
 			class OnPoolEntryProbabilityChange {};	// run when a pool entry probability change
 			*/
 		};
+
+		class Options {};
 	};
 
 	// default tool class
@@ -68,6 +71,8 @@ class CfgSurfacePainter {
 		};
 	};
 
+	#include "options.hpp"
+
 	class Modules {};
 	class Tools {};
 };
@@ -80,6 +85,6 @@ class RscButton;
 class RscListBox;
 
 #include "bases.hpp"
-#include "options.hpp"
+#include "rscOptions.hpp"
 
 #include "ui.hpp"

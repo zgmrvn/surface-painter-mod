@@ -87,5 +87,7 @@ _generateControl ctrlAddEventHandler ["ButtonClick", {
 	if ((count SP_var_pool_finalPool) > 0) then {
 		// regenerate temp objects
 		SP_var_edge_tempObjects = [SP_var_edge_line, SP_var_edge_interval, SP_var_edge_spread, SP_var_pool_finalPool] call SP_fnc_edge_generate;
+	} else {
+		["NOK", localize "STR_SP_CORE_NOTIFICATION_OBJECT_POOL_EMPTY"] call SP_fnc_core_pushNotification;
 	};
 }];

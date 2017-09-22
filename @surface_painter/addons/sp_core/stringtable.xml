@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project name="Surface Painter">
+	<Package name="Core">
+
+		<container name="Notifications">
+
+			<Key ID="STR_SP_CORE_NOTIFICATION_OBJECT_POOL_EMPTY">
+				<Original>Objects pool is empty.</Original>
+				<French>Le pool d'objets est vide.</French>
+			</Key>
+
+		</container>
+
+	</Package>
+</Project>

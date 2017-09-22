@@ -15,5 +15,19 @@
 
 		</container>
 
+		<container name="Notifications">
+
+			<Key ID="STR_SP_EXPORT_NOTIFICATION_NO_OBJECT">
+				<Original>There are no object to copy.</Original>
+				<French>Il n'y a aucun object à copier.</French>
+			</Key>
+
+			<Key ID="STR_SP_EXPORT_EXPORT_NOTIFICATION_OBJECTS_COPIED">
+				<Original>Objects were copied to clipboard.</Original>
+				<French>Les objects ont été copiés dans le presse-papier.</French>
+			</Key>
+
+		</container>
+
 	</Package>
 </Project>

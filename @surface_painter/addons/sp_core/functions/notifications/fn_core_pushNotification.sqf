@@ -63,12 +63,14 @@ _imageCtrl ctrlSetText _image;
 _textCtrl ctrlSetText _text;
 
 // delay fade out
-_notification spawn {
+[_notification] spawn {
 	disableSerialization;
 
+	params ["_notification"];
+
 	sleep FADE_DURATION;
-	_this ctrlSetFade 0;
-	_this ctrlCommit FADE_DURATION;
+	_notification ctrlSetFade 0;
+	_notification ctrlCommit FADE_DURATION;
 };
 
 // push the stack
@@ -86,8 +88,10 @@ _notification spawn {
 } forEach SP_var_notifications;
 
 // timer then delete the notification
-_notification spawn {
+[_notification] spawn {
 	disableSerialization;
+
+	params ["_notification"];
 
 	_dialog					= findDisplay SP_SURFACE_PAINTER_IDD;
 	_notificationsCtrlGroup	= _dialog displayCtrl SP_SURFACE_PAINTER_NOTIFICATIONS_CTRL_GROUP;
@@ -96,8 +100,8 @@ _notification spawn {
 	sleep NOTIFICATION_LIFESPAN;
 
 	// notification fade in
-	_this ctrlSetFade 1;
-	_this ctrlCommit FADE_DURATION;
+	_notification ctrlSetFade 1;
+	_notification ctrlCommit FADE_DURATION;
 	sleep FADE_DURATION;
 
 	// delete notification
@@ -114,5 +118,5 @@ _notification spawn {
 
 	_notificationsCtrlGroup ctrlCommit 0;
 
-	ctrlDelete _this;
+	ctrlDelete _notification;
 };

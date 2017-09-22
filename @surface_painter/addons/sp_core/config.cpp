@@ -83,8 +83,10 @@ class RscCheckBox;
 class RscText;
 class RscButton;
 class RscListBox;
+class rscPicture;
 
 #include "bases.hpp"
 #include "rscOptions.hpp"
+#include "rscNotification.hpp"
 
 #include "ui.hpp"

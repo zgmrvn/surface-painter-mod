@@ -87,5 +87,31 @@ class RscDisplaySurfacePainterCamera {
 				};
 			};
 		};
+
+		//////////////////////////////////////////////
+		//////////////////////////////////////////////
+		///// NOTIFICATION LIST //////////////////////
+		//////////////////////////////////////////////
+		//////////////////////////////////////////////
+
+		class NotificationList: RscControlsGroup {
+			idc = SP_SURFACE_PAINTER_NOTIFICATIONS_CTRL_GROUP;
+
+			x = safeZoneX + safeZoneW * (0.5 - SP_NOTIFICATION_W / 2);
+			y = safeZoneY + safeZoneH * SP_MARGIN_Y;
+			w = safeZoneW * SP_NOTIFICATION_W;
+			h = 0;
+
+			class VScrollbar {
+				color[] = {0, 0, 0, 0};
+				width = 0;
+				autoScrollEnabled = 0;
+			};
+
+			class HScrollbar {
+				color[] = {0, 0, 0, 0};
+				height = 0;
+			};
+		};
 	};
 };

@@ -27,6 +27,9 @@ if (isNil {SP_var_createdObjects}) then {
 	SP_var_createdObjects = [];
 };
 
+// notifications
+SP_var_notifications = [];
+
 // mode
 _modes = (configFile >> "CfgSurfacePainter" >> "Modules") call BIS_fnc_getCfgSubClasses;
 SP_var_mode = _modes select 0;

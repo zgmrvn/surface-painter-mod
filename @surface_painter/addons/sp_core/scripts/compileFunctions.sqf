@@ -1,6 +1,7 @@
 [] spawn {
 	SP_fnc_core_addAction				= compile preprocessFileLineNumbers "x\surface_painter\addons\sp_core\functions\actions\fn_core_addAction.sqf";
 	SP_fnc_core_createSimpleObject		= compile preprocessFileLineNumbers "x\surface_painter\addons\sp_core\functions\objects\fn_core_createSimpleObject.sqf";
+	SP_fnc_core_pushNotification		= compile preprocessFileLineNumbers "x\surface_painter\addons\sp_core\functions\notifications\fn_core_pushNotification.sqf";
 
 	// brush
 	SP_fnc_brush_init			= compile preprocessFileLineNumbers "x\surface_painter\addons\sp_mode_brush\events\fn_Brush_init.sqf";

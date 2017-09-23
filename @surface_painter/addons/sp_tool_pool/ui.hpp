@@ -16,6 +16,8 @@ class RscDisplaySurfacePainterCamera {
 
 			x = safeZoneX + safeZoneW * SP_POOL_FOLDED_X;
 			w = safeZoneW * SP_FOLDED_W;
+
+			colorBackground[] = {0.1, 0.1, 0.1, 0.8};
 		};
 	};
 
@@ -32,6 +34,8 @@ class RscDisplaySurfacePainterCamera {
 			w = safeZoneW * SP_FOLDED_W;
 			h = safeZoneH;
 
+			fade = 1;
+
 			class Controls {
 				class PoolSearchField: RscEdit {
 					idc = SP_SURFACE_PAINTER_POOL_SEARCH_FIELD;
@@ -39,9 +43,9 @@ class RscDisplaySurfacePainterCamera {
 					x = safeZoneW * SP_MARGIN_X;
 					y = safeZoneH * SP_POOL_SEARCH_Y;
 					w = safeZoneW * SP_POOL_CONTENT_W;
-					h = safeZoneH * SP_CONTENT_H;
+					h = safeZoneH * SP_POOL_SEARCH_H;
 
-					colorBackground[] = {0, 0, 0, 0.25};
+					colorBackground[] = {0.1, 0.1, 0.1, 1};
 				};
 
 				class PoolSearchResult: RscListBox {
@@ -52,7 +56,8 @@ class RscDisplaySurfacePainterCamera {
 					w = safeZoneW * SP_POOL_CONTENT_W;
 					h = safeZoneH * SP_POOL_RESULT_H;
 
-					colorBackground[] = {0, 0, 0, 0.25};
+					colorBackground[] = {0.1, 0.1, 0.1, 1};
+					rowHeight = safeZoneH * SP_OPTION_CONTENT_H;
 				};
 
 				class Pool: RscControlsGroup {

@@ -23,7 +23,7 @@ private _poolSearchResult		= _dialog displayCtrl SP_SURFACE_PAINTER_POOL_SEARCH_
 // hide the exit event control
 ctrlShow [SP_SURFACE_PAINTER_POOL_EVENT_EXIT_CTRL, false];
 
-// open enter panel
+// open pool panel
 _poolEnterEventCtrl ctrlAddEventHandler ["MouseEnter", {
 	ctrlShow [SP_SURFACE_PAINTER_POOL_EVENT_ENTER_CTRL, false];
 	ctrlShow [SP_SURFACE_PAINTER_POOL_EVENT_EXIT_CTRL, true];
@@ -34,6 +34,9 @@ _poolEnterEventCtrl ctrlAddEventHandler ["MouseEnter", {
 
 	_poolPanelCtrlGroup ctrlSetPosition [safeZoneX + safeZoneW * SP_POOL_UNFOLDED_X, safeZoneY, safeZoneW * SP_UNFOLDED_W, safeZoneH];
 	_poolBackground ctrlSetPosition [safeZoneX + safeZoneW * SP_POOL_UNFOLDED_X, safeZoneY, safeZoneW * SP_UNFOLDED_W, safeZoneH];
+	_poolBackground ctrlSetBackgroundColor [0, 0, 0, 1];
+	_poolBackground ctrlSetFade 0;
+	_poolPanelCtrlGroup ctrlSetFade 0;
 	_poolPanelCtrlGroup ctrlCommit 0.1;
 	_poolBackground ctrlCommit 0.1;
 }];
@@ -54,6 +57,9 @@ _poolExitEventCtrl ctrlAddEventHandler ["MouseEnter", {
 
 	_poolPanelCtrlGroup ctrlSetPosition [safeZoneX + safeZoneW * SP_POOL_FOLDED_X, safeZoneY, safeZoneW * SP_FOLDED_W, safeZoneH];
 	_poolBackground ctrlSetPosition [safeZoneX + safeZoneW * SP_POOL_FOLDED_X, safeZoneY, safeZoneW * SP_FOLDED_W, safeZoneH];
+	_poolBackground ctrlSetBackgroundColor [0.1, 0.1, 0.1, 1];
+	_poolBackground ctrlSetFade 0.2;
+	_poolPanelCtrlGroup ctrlSetFade 1;
 	_poolPanelCtrlGroup ctrlCommit 0.1;
 	_poolBackground ctrlCommit 0.1;
 }];
@@ -74,6 +80,7 @@ _poolSearchField ctrlAddEventHandler ["KeyUp", {
 	} forEach _classes;
 }];
 
+// add pool entry
 _poolSearchResult ctrlAddEventHandler ["LBDblClick", {
 	_dialog		= findDisplay SP_SURFACE_PAINTER_IDD;
 	_poolList 	= _dialog displayCtrl SP_SURFACE_PAINTER_POOL_LIST;
@@ -87,13 +94,18 @@ _poolSearchResult ctrlAddEventHandler ["LBDblClick", {
 		// pool entry controls group
 		_idc = (count SP_var_pool_poolControls) + 1;
 		_poolEntry = _dialog ctrlCreate ["RscControlsGroup", _idc, _poolList];
-		_poolEntry ctrlSetPosition [0, safeZoneH * (count SP_var_pool_poolControls) * (SP_POOL_ENTRY_H + SP_POOL_ENTRY_M), safeZoneW * SP_POOL_CONTENT_W, safeZoneH * SP_POOL_ENTRY_H];
+		_poolEntry ctrlSetPosition [
+			0,
+			safeZoneH * (count SP_var_pool_poolControls) * (SP_POOL_ENTRY_H + SP_POOL_ENTRY_M),
+			safeZoneW * SP_POOL_CONTENT_W,
+			safeZoneH * SP_POOL_ENTRY_H
+		];
 		_poolEntry ctrlCommit 0;
 		SP_var_pool_poolControls pushBack _idc;
 
 		_classname = _dialog ctrlCreate ["RscText", 9955, _poolEntry];
 		_classname ctrlSetPosition [0, 0, safeZoneW * SP_POOL_ENTRY_TEXT * SP_POOL_CONTENT_W, safeZoneH * SP_POOL_ENTRY_H];
-		_classname ctrlSetBackgroundColor SP_POOL_ENTRY_TEXT_BACKGROUND;
+		_classname ctrlSetBackgroundColor [0.1, 0.1, 0.1, 1];
 		_classname ctrlCommit 0;
 		_classname ctrlSetText _data;
 
@@ -101,7 +113,7 @@ _poolSearchResult ctrlAddEventHandler ["LBDblClick", {
 		_probability ctrlSetPosition [safeZoneW * SP_POOL_ENTRY_TEXT * SP_POOL_CONTENT_W, 0, safeZoneW * SP_POOL_ENTRY_PROBABILITY * SP_POOL_CONTENT_W, safeZoneH * SP_POOL_ENTRY_H];
 		_probability ctrlSetBackgroundColor [0, 0, 0, 1];
 		_probability ctrlCommit 0;
-		_probability ctrlSetText "1";
+		_probability ctrlSetText "1.0";
 
 		_probability ctrlAddEventHandler ["MouseZChanged", {
 			_control = _this select 0;
@@ -118,7 +130,7 @@ _poolSearchResult ctrlAddEventHandler ["LBDblClick", {
 				[SP_var_pool_pool, _data, _after] call BIS_fnc_setToPairs;
 				SP_var_pool_finalPool = SP_var_pool_pool call SP_fnc_pool_generatePool;
 
-				_control ctrlSetText (str _after);
+				_control ctrlSetText (_after toFixed 1);
 
 				// then exec CHANGE event
 				if (isClass (configFile >> "CfgSurfacePainter" >> "Modules" >> SP_var_mode >> "Events" >> "OnPoolEntryProbabilityChange")) then {

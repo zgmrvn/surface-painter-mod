@@ -72,12 +72,7 @@ class TitleBase: RscControlsGroup {
 			w = safeZoneW * SP_OPTIONS_CONTENT_W;
 			h = pixelH;
 
-			colorBackground[] = {
-				0.4,
-				0.4,
-				0.4,
-				1
-			};
+			colorBackground[] = {0.4, 0.4, 0.4, 1};
 		};
 	};
 };

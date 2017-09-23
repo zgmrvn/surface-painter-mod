@@ -12,6 +12,6 @@ _exportControl ctrlAddEventHandler ["ButtonClick", {
 		call SP_fnc_export_exportTerrainBuilder;
 		["OK", localize "STR_SP_EXPORT_EXPORT_NOTIFICATION_OBJECTS_COPIED"] call SP_fnc_core_pushNotification;
 	} else {
-		["WARNING", localize "STR_SP_EXPORT_NOTIFICATION_NO_OBJECT"] call SP_fnc_core_pushNotification;
+		["NOK", localize "STR_SP_EXPORT_NOTIFICATION_NO_OBJECT"] call SP_fnc_core_pushNotification;
 	};
 }];

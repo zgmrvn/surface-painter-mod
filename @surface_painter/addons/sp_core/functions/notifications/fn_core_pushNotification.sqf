@@ -60,9 +60,9 @@ if (!SP_var_notificationsLoop) then {
 
 		// set new notification
 		_image = switch (_data select 0) do {
-			case ("WARNING"): {"x\surface_painter\addons\sp_core\data\notification_yellow.paa"};
-			case ("NOK"): {"x\surface_painter\addons\sp_core\data\notification_red.paa"};
-			default {"x\surface_painter\addons\sp_core\data\notification_green.paa"};
+			case ("WARNING"): {"x\surface_painter\addons\sp_core\data\notification_yellow_co.paa"};
+			case ("NOK"): {"x\surface_painter\addons\sp_core\data\notification_red_co.paa"};
+			default {"x\surface_painter\addons\sp_core\data\notification_green_co.paa"};
 		};
 
 		(_notification controlsGroupCtrl 3) ctrlSetText _image;

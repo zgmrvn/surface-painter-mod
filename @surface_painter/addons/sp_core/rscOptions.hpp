@@ -88,7 +88,7 @@ class EditBase: RscControlsGroup {
 	class Controls {
 		class Edit: RscEdit {
 			idc = 3;
-			style = 0x02 + 0x0C;
+			style = ST_CENTER + ST_VCENTER;
 
 			x = pixelW;
 			y = pixelH;
@@ -122,16 +122,15 @@ class CheckBoxBase: RscControlsGroup {
 	x = safeZoneW * SP_MARGIN_X;
 	y = 0;
 	w = safeZoneW * SP_OPTIONS_CONTENT_W;
-	h = safeZoneH * SP_OPTION_CONTENT_H + pixelH;
+	h = safeZoneH * SP_OPTION_CONTENT_H;
 
 	class Controls {
 		class Edit: RscCheckBox {
 			idc = 3;
-			style = 0x02 + 0x0C;
 
-			x = pixelW;
-			y = pixelH;
-			w = safeZoneW * SP_OPTIONS_CONTENT_W * SP_OPTION_CHECKBOX_CHECKBOX_W;
+			x = 0;
+			y = 0;
+			w = safeZoneH * SP_OPTION_CONTENT_H * (pixelW / pixelH);
 			h = safeZoneH * SP_OPTION_CONTENT_H;
 
 			text = "0";
@@ -142,9 +141,9 @@ class CheckBoxBase: RscControlsGroup {
 		class Text: RscText {
 			idc = 4;
 
-			x = safeZoneW * SP_OPTION_CHECKBOX_CHECKBOX_W * SP_OPTIONS_CONTENT_W;
+			x = safeZoneH * SP_OPTION_CONTENT_H * (pixelW / pixelH);
 			y = 0;
-			w = safeZoneW * SP_OPTIONS_CONTENT_W * SP_OPTION_CHECKBOX_TEXT_W;
+			w = safeZoneW * SP_OPTIONS_CONTENT_W - safeZoneH * SP_OPTION_CONTENT_H * (pixelW / pixelH);
 			h = safeZoneH * SP_OPTION_CONTENT_H;
 
 			text = "text";
@@ -204,6 +203,7 @@ class ListBoxBase: RscControlsGroup {
 
 			colorBackground[] = {0.1, 0.1, 0.1, 1};
 			rowHeight = safeZoneH * SP_OPTION_CONTENT_H;
+			pictureColorSelect[] = {1, 0, 0, 1};
 		};
 	};
 };

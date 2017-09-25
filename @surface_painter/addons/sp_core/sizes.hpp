@@ -19,9 +19,6 @@
 #define SP_OPTION_EDIT_EDIT_W	0.2
 #define SP_OPTION_EDIT_TEXT_W	0.8
 
-#define SP_OPTION_CHECKBOX_CHECKBOX_W	0.1
-#define SP_OPTION_CHECKBOX_TEXT_W		0.9
-
 // notifications
 #define SP_NOTIFICATION_W				0.3
 #define SP_NOTIFICATION_H				0.035

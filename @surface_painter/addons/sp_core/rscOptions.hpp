@@ -203,7 +203,6 @@ class ListBoxBase: RscControlsGroup {
 
 			colorBackground[] = {0.1, 0.1, 0.1, 1};
 			rowHeight = safeZoneH * SP_OPTION_CONTENT_H;
-			pictureColorSelect[] = {1, 0, 0, 1};
 		};
 	};
 };

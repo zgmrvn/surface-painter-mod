@@ -28,6 +28,6 @@ if ((count SP_var_edge_tempObjects) > 0) then {
 	SP_var_edge_tempObjects = [SP_var_edge_line, SP_var_edge_interval, SP_var_edge_spread, SP_var_pool_finalPool] call SP_fnc_edge_generate;
 
 	if ((count SP_var_pool_finalPool) == 0) then {
-		["NOK", localize "STR_SP_CORE_NOTIFICATION_OBJECT_POOL_EMPTY"] call SP_fnc_core_pushNotification;
+		["NOK", localize "STR_SP_CORE_NOTIFICATION_OBJECT_POOL_EMPTY"] spawn SP_fnc_core_pushNotification;
 	};
 };

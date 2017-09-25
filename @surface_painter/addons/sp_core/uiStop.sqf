@@ -29,6 +29,5 @@ SP_var_mouseScreenDelta = nil;
 SP_var_mouseScreenPosition = nil;
 SP_var_cameraDir = nil;
 SP_var_cameraPitch = nil;
-SP_var_cameraKeys = nil;
 SP_var_while = nil;
 SP_var_leftPanelOpen = nil;

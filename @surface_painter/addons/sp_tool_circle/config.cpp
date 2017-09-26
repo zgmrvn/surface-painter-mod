@@ -9,7 +9,6 @@ class CfgPatches {
 	};
 };
 
-/*
 class CfgFunctions {
 	class SP {
 		class SurfacePainterToolCircle {
@@ -17,11 +16,10 @@ class CfgFunctions {
 			class Circle_Init {};
 			class Circle_Activate {};
 			class Circle_Desactivate {};
-			class Circle_mouseZChange {};
+			class Circle_MouseZChange {};
 		};
 	};
 };
-*/
 
 class CfgSurfacePainter {
 	class DefaultTool;
@@ -29,6 +27,7 @@ class CfgSurfacePainter {
 	class Tools {
 		class Circle: DefaultTool {
 			description = "";
+			recompile	= "x\surface_painter\addons\sp_tool_circle\recompile.sqf";
 
 			class Events {
 				class OnInit { function = "SP_fnc_circle_init"; };

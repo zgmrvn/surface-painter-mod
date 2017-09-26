@@ -12,7 +12,6 @@ class CfgPatches {
 	};
 };
 
-/*
 class CfgFunctions {
 	class SP {
 		class SurfacePainterExtraExportEvents {
@@ -26,7 +25,6 @@ class CfgFunctions {
 		};
 	};
 };
-*/
 
 class CfgSurfacePainter {
 	class DefaultModule;
@@ -37,9 +35,10 @@ class CfgSurfacePainter {
 	class Main;
 
 	class Modules {
-		class Export: DefaultModule {
-			idc		= SP_SURFACE_PAINTER_EXPORT_OPTIONS_CTRL_GROUP;
-			icon	= "x\surface_painter\addons\sp_extra_export\icon.paa";
+		class Export: DefaultExtra {
+			idc			= SP_SURFACE_PAINTER_EXPORT_OPTIONS_CTRL_GROUP;
+			icon		= "x\surface_painter\addons\sp_extra_export\icon.paa";
+			recompile	= "x\surface_painter\addons\sp_extra_export\recompile.sqf";
 
 			class Events {
 				class OnInit { function = "SP_fnc_export_init"; };

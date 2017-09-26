@@ -12,7 +12,6 @@ class CfgPatches {
 	};
 };
 
-/*
 class CfgFunctions {
 	class SP {
 		class SurfacePainterModeEdgeEvents {
@@ -32,7 +31,6 @@ class CfgFunctions {
 		};
 	};
 };
-*/
 
 class CfgSurfacePainter {
 	class DefaultModule;
@@ -48,9 +46,10 @@ class CfgSurfacePainter {
 
 	class Modules {
 		class Edge: DefaultModule {
-			tools[]	= {"Circle", "Pool"};
-			idc		= SP_SURFACE_PAINTER_EDGE_OPTIONS_CTRL_GROUP;
+			tools[]		= {"Circle", "Pool"};
+			idc			= SP_SURFACE_PAINTER_EDGE_OPTIONS_CTRL_GROUP;
 			icon		= "x\surface_painter\addons\sp_mode_edge\icon.paa";
+			recompile	= "x\surface_painter\addons\sp_mode_edge\recompile.sqf";
 
 			class Events {
 				// core

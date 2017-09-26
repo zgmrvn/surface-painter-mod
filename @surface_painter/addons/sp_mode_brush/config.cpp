@@ -12,7 +12,6 @@ class CfgPatches {
 	};
 };
 
-/*
 class CfgFunctions {
 	class SP {
 		class SurfacePainterModeBrushEvents {
@@ -23,7 +22,6 @@ class CfgFunctions {
 		};
 	};
 };
-*/
 
 class CfgSurfacePainter {
 	class DefaultModule;
@@ -40,6 +38,7 @@ class CfgSurfacePainter {
 			tools[]		= {"Circle", "Pool"};
 			idc			= SP_SURFACE_PAINTER_BRUSH_OPTIONS_CTRL_GROUP;
 			icon		= "x\surface_painter\addons\sp_mode_brush\icon.paa";
+			recompile	= "x\surface_painter\addons\sp_mode_brush\recompile.sqf";
 
 			class Events {
 				class OnInit { function = "SP_fnc_brush_init"; };

@@ -12,24 +12,26 @@ class CfgPatches {
 	};
 };
 
-/*
 class CfgFunctions {
 	class SP {
 		class SurfacePainterModeSurfacePainterEvents {
 			file = "x\surface_painter\addons\sp_mode_surface_painter\events";
 			class SurfacePainter_Init {};
+			class SurfacePainter_Activate {};
+			class SurfacePainter_Desactivate {};
 			class SurfacePainter_Down {};
 			class SurfacePainter_Up {};
+			class SurfacePainter_MouseMove {};
 		};
 
 		class SurfacePainterModeSurfacePainterFunctions {
 			file = "x\surface_painter\addons\sp_mode_surface_painter\functions";
 			class SurfacePainter_Paint {};
-			class SurfacePainter_HexToDecColor {};
+			class SurfacePainter_CreatePixel {};
+			class SurfacePainter_LoadProject {};
 		};
 	};
 };
-*/
 
 class CfgVehicles {
 	class Land_HelipadCivil_F;
@@ -56,9 +58,10 @@ class CfgSurfacePainter {
 
 	class Modules {
 		class SurfacePainter: DefaultModule {
-			tools[]	= {"Circle"};
-			idc		= SP_SURFACE_PAINTER_SURFACE_PAINTER_OPTIONS_CTRL_GROUP;
-			icon	= "x\surface_painter\addons\sp_mode_surface_painter\icon.paa";
+			tools[]		= {"Circle"};
+			idc			= SP_SURFACE_PAINTER_SURFACE_PAINTER_OPTIONS_CTRL_GROUP;
+			icon		= "x\surface_painter\addons\sp_mode_surface_painter\icon.paa";
+			recompile	= "x\surface_painter\addons\sp_mode_surface_painter\recompile.sqf";
 
 			class Events {
 				// core

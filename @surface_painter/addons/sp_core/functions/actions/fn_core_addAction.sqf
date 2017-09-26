@@ -1,9 +1,13 @@
+#define DEV true
+
 player addAction [
 	"Surface Painter",
 	{ createDialog "RscDisplaySurfacePainterCamera" }
 ];
 
-player addAction [
-	"Compile functions",
-	{ [] execVM "x\surface_painter\addons\sp_core\scripts\compileFunctions.sqf" }
-];
+if (DEV) then {
+	player addAction [
+		"Recompile functions",
+		{ [] spawn SP_fnc_core_recompileFunctions }
+	];
+};

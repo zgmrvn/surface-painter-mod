@@ -9,7 +9,6 @@ class CfgPatches {
 	};
 };
 
-/*
 class CfgFunctions {
 	class SP {
 		class SurfacePainterToolPoolEvents {
@@ -23,7 +22,6 @@ class CfgFunctions {
 		};
 	};
 };
-*/
 
 class CfgSurfacePainter {
 	class DefaultTool;
@@ -31,6 +29,7 @@ class CfgSurfacePainter {
 	class Tools {
 		class Pool: DefaultTool {
 			description = "";
+			recompile	= "x\surface_painter\addons\sp_tool_pool\recompile.sqf";
 
 			class Events {
 				class OnInit { function = "SP_fnc_pool_init"; };

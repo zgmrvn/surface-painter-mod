@@ -13,7 +13,12 @@ class CfgFunctions {
 	class SP {
 		class Actions {
 			file = "x\surface_painter\addons\sp_core\functions\actions";
-			class Core_AddAction { postInit = 1; };
+			class Core_AddAction { postInit = 1; recompile = 1; };
+		};
+
+		class Recompile {
+			file = "x\surface_painter\addons\sp_core\functions\recompile";
+			class Core_RecompileFunctions { recompile = 1; };
 		};
 
 		class Objects {
@@ -21,9 +26,9 @@ class CfgFunctions {
 			class Core_CreateSimpleObject {};
 		};
 
-		class Compile {
-			file = "x\surface_painter\addons\sp_core\functions\compile";
-			class Core_CompileFunctions { postInit = 1; };
+		class Notifications {
+			file = "x\surface_painter\addons\sp_core\functions\notifications";
+			class Core_PushNotification {};
 		};
 	};
 };
@@ -35,6 +40,7 @@ class CfgSurfacePainter {
 		tools[]		= {};
 		idc			= -1;
 		icon		= "x\surface_painter\addons\sp_core\icon.paa";
+		recompile	= "";
 
 		class Events {
 			/*
@@ -59,6 +65,7 @@ class CfgSurfacePainter {
 	// default tool class
 	class DefaultTool {
 		description = "Description";
+		recompile	= "";
 
 		class Events {
 			/*

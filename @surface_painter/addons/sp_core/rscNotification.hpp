@@ -18,7 +18,7 @@ class RscSpNotification: RscControlsGroup {
 			w = safeZoneH * SP_NOTIFICATION_H * (pixelW / pixelH);
 			h = safeZoneH * SP_NOTIFICATION_H;
 
-			text = "x\surface_painter\addons\sp_core\data\notification_green_ca.paa";
+			text = "x\surface_painter\addons\sp_core\data\notification_green_co.paa";
 		};
 
 		class Text: RscText {

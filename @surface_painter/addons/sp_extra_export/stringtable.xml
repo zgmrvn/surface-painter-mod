@@ -19,7 +19,7 @@
 
 			<Key ID="STR_SP_EXPORT_NOTIFICATION_NO_OBJECT">
 				<Original>There are no object to copy.</Original>
-				<French>Il n'y a aucun object à copier.</French>
+				<French>Il n'y a aucun objet à copier.</French>
 			</Key>
 
 			<Key ID="STR_SP_EXPORT_EXPORT_NOTIFICATION_OBJECTS_COPIED">

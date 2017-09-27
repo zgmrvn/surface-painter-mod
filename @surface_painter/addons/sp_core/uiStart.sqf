@@ -31,8 +31,15 @@ if (isNil {SP_var_createdObjects}) then {
 SP_var_notifications = [];
 
 // mode
-_modes = (configFile >> "CfgSurfacePainter" >> "Modules") call BIS_fnc_getCfgSubClasses;
-SP_var_mode = _modes select 0;
+if (isNil "SP_var_mode") then {
+	_modes = (configFile >> "CfgSurfacePainter" >> "Modules") call BIS_fnc_getCfgSubClasses;
+
+	{
+		if (getNumber (configFile >> "CfgSurfacePainter" >> "Modules" >> _x >> "extra") != 1) exitWith {
+			SP_var_mode = _x;
+		};
+	} forEach _modes;
+};
 
 // camera control keys
 SP_var_cameraKeys = [];

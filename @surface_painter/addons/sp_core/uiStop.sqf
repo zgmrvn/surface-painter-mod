@@ -19,8 +19,6 @@ if !(isNil {SP_var_mode}) then {
 		_function = getText (configFile >> "CfgSurfacePainter" >> "Modules" >> SP_var_mode >> "Events" >> "OnDesactivate" >> "function");
 		call compile (format ["call %1", _function]);
 	};
-
-	SP_var_mode = nil;
 };
 
 SP_var_primaryMouseButton = nil;

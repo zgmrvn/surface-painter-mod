@@ -5,13 +5,23 @@ SP_var_modes = [];
 
 // load modes list
 _modes = (configFile >> "CfgSurfacePainter" >> "Modules") call BIS_fnc_getCfgSubClasses;
+private _extraCount = 0;
 
 {
 	private _mode = _x;
 
+	private _isExtra = getNumber (configFile >> "CfgSurfacePainter" >> "Modules" >> _x >> "extra") == 1;
+
 	private _modeEntry = _dialog ctrlCreate ["RscStructuredText", -1, _modeslist];
 	SP_var_modes pushBack _modeEntry;
-	_modeEntry ctrlSetPosition [0, safeZoneH * SP_MODES_H * _forEachIndex, safeZoneW * SP_MODES_W, safeZoneH * SP_MODES_H];
+
+	if (_isExtra) then {
+		_extraCount = _extraCount + 1;
+		_modeEntry ctrlSetPosition [0, safeZoneH - safeZoneH * SP_MODES_H * _extraCount, safeZoneW * SP_MODES_W, safeZoneH * SP_MODES_H];
+	} else {
+		_modeEntry ctrlSetPosition [0, safeZoneH * SP_MODES_H * (_forEachIndex - _extraCount), safeZoneW * SP_MODES_W, safeZoneH * SP_MODES_H];
+	};
+
 	_modeEntry ctrlCommit 0;
 	_modeEntry ctrlSetStructuredText (parseText format ["<t size='0'>%1:</t><t size='0.32'>&#160;</t><img image='%2' size='1' shadow='0' />", _x, getText (configFile >> "CfgSurfacePainter" >> "Modules" >> _x >> "icon")]);
 

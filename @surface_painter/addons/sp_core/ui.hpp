@@ -73,7 +73,7 @@ class RscDisplaySurfacePainterCamera {
 					x = 0;
 					y = 0;
 					w = safeZoneW * SP_FOLDED_W;
-					h = safeZoneH * 0.5;
+					h = safeZoneH;
 				};
 
 				// MUST BE AT THE END TO BE OVER ALL OTHER CONTROLS

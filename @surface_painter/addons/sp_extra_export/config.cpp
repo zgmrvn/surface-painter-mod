@@ -27,7 +27,7 @@ class CfgFunctions {
 };
 
 class CfgSurfacePainter {
-	class DefaultModule;
+	class DefaultExtra;
 
 	class OptionHeader;
 	class OptionButton;

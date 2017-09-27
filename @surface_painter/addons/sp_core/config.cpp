@@ -62,6 +62,14 @@ class CfgSurfacePainter {
 		class Options {};
 	};
 
+	// default extra class
+	// a special type of module that is not directly related to object placement nor creation stuff
+	// e.g project manager, object exporter
+	// they will be created in the bottom-left corner in a dedicated list
+	class DefaultExtra: DefaultModule {
+		extra = 1;
+	};
+
 	// default tool class
 	class DefaultTool {
 		description = "Description";

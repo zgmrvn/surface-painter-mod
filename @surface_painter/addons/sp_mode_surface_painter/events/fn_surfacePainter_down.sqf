@@ -6,6 +6,14 @@
 // if there is a paint loop running, exit
 if (!SP_var_surfacePainter_mutex) exitWith {};
 
+// if no color to paint with, exit with notification
+if (SP_var_surfacePainter_colorCount == 0) exitWith {
+	[
+		"NOK",
+		format [localize "STR_SP_SURFACE_PAINTER_NOTIFICATION_NO_COLOR", SP_var_surfacePainter_project]
+	] spawn SP_fnc_core_pushNotification;
+};
+
 SP_var_surfacePainter_down = true;
 
 // if Alt key is pressed

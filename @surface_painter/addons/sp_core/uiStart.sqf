@@ -28,7 +28,9 @@ if (isNil {SP_var_createdObjects}) then {
 };
 
 // notifications
-SP_var_notifications = [];
+SP_var_notificationsStack 	= [];
+SP_var_notificationsLoop	= false;
+SP_var_notifications		= [];
 
 // mode
 if (isNil "SP_var_mode") then {

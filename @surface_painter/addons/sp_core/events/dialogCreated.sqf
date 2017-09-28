@@ -69,13 +69,38 @@ private _extraCount = 0;
 			private _positionPrevious = ctrlPosition _prev;
 			private _positionCurrent = ctrlPosition _optionCtrlGroup;
 
+			// custom option height
+			_height = getNumber (MODULES >> _mode >> "Options" >> _classname >> "height");
+
+			if (_height != 0) then {
+				private _values = (MODULES >> _mode >> "Options" >> _classname >> "values") call BIS_fnc_getCfgSubClasses;
+
+				{
+					private _idc = getNumber (MODULES >> _mode >> "Options" >> _classname >> "values" >> _x >> "idc");
+					private _ctrl = _optionCtrlGroup controlsGroupCtrl _idc;
+					private _position = ctrlPosition _ctrl;
+
+					_ctrl ctrlSetPosition [
+						_position select 0,
+						_position select 1,
+						_position select 2,
+						_height
+					];
+
+					_ctrl ctrlCommit 0;
+				} forEach _values;
+			} else {
+				_height = _positionCurrent select 3;
+			};
+
+			// margin
 			private _margin = getNumber (MODULES >> _mode >> "Options" >> _classname >> "margin");
 
 			_optionCtrlGroup ctrlSetPosition [
 				safeZoneW * SP_MARGIN_X,
 				(_positionPrevious select 1) + (_positionPrevious select 3) + safezoneH * _margin,
 				safeZoneW * SP_OPTIONS_CONTENT_W,
-				_positionCurrent select 3
+				_height
 			];
 		};
 

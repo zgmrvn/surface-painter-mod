@@ -5,7 +5,7 @@ class RscSpNotification: RscControlsGroup {
 	idc = -1;
 
 	x = 0;
-	y = -(safeZoneH * SP_NOTIFICATION_H + SP_NOTIFICATION_MARGIN);
+	y = -(safeZoneH * SP_NOTIFICATION_H);
 	w = safeZoneW * SP_NOTIFICATION_W;
 	h = safeZoneW * SP_NOTIFICATION_H;
 

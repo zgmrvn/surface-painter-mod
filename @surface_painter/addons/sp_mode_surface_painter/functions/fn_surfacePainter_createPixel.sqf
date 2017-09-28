@@ -38,7 +38,7 @@ _pixel setObjectTexture [0, SP_var_surfacePainter_colorProc];
 
 // set pixel properties
 _pixel setVariable ["SP_var_pixelPosition", _key];
-_pixel setVariable ["SP_var_pixelColor", SP_var_surfacePainter_colorHex];
+_pixel setVariable ["SP_var_pixelColor", SP_var_surfacePainter_color];
 
 // x, -y, -x, y translations
 {

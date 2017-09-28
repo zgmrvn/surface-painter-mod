@@ -66,6 +66,8 @@ class CfgSurfacePainter {
 			class Events {
 				// core
 				class OnInit { function = "SP_fnc_surfacePainter_init"; };
+				class OnActivate { function = "SP_fnc_surfacePainter_activate"; };
+				class OnDesactivate { function = "SP_fnc_surfacePainter_desactivate"; };
 				class OnPrimaryMouseButtonDown { function = "SP_fnc_surfacePainter_Down"; };
 				class OnPrimaryMouseButtonUp { function = "SP_fnc_surfacePainter_Up"; };
 				class OnMouseMove { function = "SP_fnc_surfacePainter_mouseMove"; };

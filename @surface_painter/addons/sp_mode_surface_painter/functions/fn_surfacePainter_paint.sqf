@@ -51,7 +51,7 @@ for [{private _i = SP_var_circle_circleRadius}, {_i >= -SP_var_circle_circleRadi
 			} else {
 				private _pixel = SP_var_surfacePainter_pixels select (SP_var_surfacePainter_keys find _key);
 				_pixel setObjectTexture [0, SP_var_surfacePainter_colorProc];
-				_pixel setVariable ["SP_var_pixelColor", SP_var_surfacePainter_colorHex];
+				_pixel setVariable ["SP_var_pixelColor", SP_var_surfacePainter_color];
 			};
 		};
 	};

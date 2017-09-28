@@ -8,24 +8,49 @@
 				<Original>Surface Painter</Original>
 			</Key>
 
+			<Key ID="STR_SP_SURFACE_PAINTER_PROJECTS">
+				<Original>Projects</Original>
+				<French>Projets</French>
+			</Key>
+
+			<Key ID="STR_SP_SURFACE_PAINTER_NO_PROJECT">
+				<Original>No project</Original>
+				<French>Aucun projet</French>
+			</Key>
+
+			<Key ID="STR_SP_SURFACE_PAINTER_RELOAD">
+				<Original>Reload</Original>
+				<French>Recharger</French>
+			</Key>
+
 			<Key ID="STR_SP_SURFACE_PAINTER_INFOS">
 				<Original>Infos</Original>
 				<French>Infos</French>
 			</Key>
 
 			<Key ID="STR_SP_SURFACE_PAINTER_WORLD_SIZE">
-				<Original>World size : %1x%1</Original>
-				<French>Dimensions du monde : %1x%1</French>
+				<Original>World : %1x%1</Original>
+				<French>Monde : %1x%1</French>
+			</Key>
+
+			<Key ID="STR_SP_SURFACE_PAINTER_MASK_SIZE_NO_PROJECT">
+				<Original>Mask : ?</Original>
+				<French>Masque : ?</French>
 			</Key>
 
 			<Key ID="STR_SP_SURFACE_PAINTER_MASK_SIZE">
-				<Original>Mask size : %1x%1</Original>
-				<French>Dimensions du masque : %1x%1</French>
+				<Original>Mask : %1x%1</Original>
+				<French>Masque : %1x%1</French>
+			</Key>
+
+			<Key ID="STR_SP_SURFACE_PAINTER_PIXEL_SIZE_NO_PROJECT">
+				<Original>Pixel : ?</Original>
+				<French>Pixel : ?</French>
 			</Key>
 
 			<Key ID="STR_SP_SURFACE_PAINTER_PIXEL_SIZE">
-				<Original>Pixel size : %1m</Original>
-				<French>Dimensions du pixel : %1m</French>
+				<Original>Pixel : %1m</Original>
+				<French>Pixel : %1m</French>
 			</Key>
 
 			<Key ID="STR_SP_SURFACE_PAINTER_MASK">
@@ -36,6 +61,65 @@
 			<Key ID="STR_SP_SURFACE_PAINTER_GENERATE">
 				<Original>Generate</Original>
 				<French>Générer</French>
+			</Key>
+
+			<Key ID="STR_SP_SURFACE_PAINTER_CLEAR">
+				<Original>Clear</Original>
+				<French>Nettoyer</French>
+			</Key>
+
+		</container>
+
+		<container name="Notifications">
+
+			<Key ID="STR_SP_SURFACE_PAINTER_NOTIFICATION_NO_PROJECT_FOUND">
+				<Original>No valid project found.</Original>
+				<French>Aucun projet valide trouvé.</French>
+			</Key>
+
+			<Key ID="STR_SP_SURFACE_PAINTER_NOTIFICATION_NO_PROJECT_SELECTED">
+				<Original>No project selected."</Original>
+				<French>Aucun projet sélectionné.</French>
+			</Key>
+
+			<Key ID="STR_SP_SURFACE_PAINTER_NOTIFICATION_NO_PIXELS">
+				<Original>No Pixel to write."</Original>
+				<French>Aucun pixel à écrire.</French>
+			</Key>
+
+			<Key ID="STR_SP_SURFACE_PAINTER_NOTIFICATION_DEFAULT_PROJECT">
+				<Original>"%1" selected as default project.</Original>
+				<French>"%1" sélectionné comme projet par défaut.</French>
+			</Key>
+
+			<Key ID="STR_SP_SURFACE_PAINTER_NOTIFICATION_PROJECT_RELOADED">
+				<Original>Project "%1" successfully reloaded.</Original>
+				<French>Projet "%1" rechargé avec succès.</French>
+			</Key>
+
+			<Key ID="STR_SP_SURFACE_PAINTER_NOTIFICATION_NO_COLOR">
+				<Original>No color found in %1.cfg.</Original>
+				<French>Aucune couleur trouvée dans %1.cfg.</French>
+			</Key>
+
+			<Key ID="STR_SP_SURFACE_PAINTER_NOTIFICATION_PIXELS_WRITTING_STARTED">
+				<Original>Pixel writing is in progress. This may take several seconds.</Original>
+				<French>L'écriture des pixels est en cours. Cela peut prendre plusieurs secondes.</French>
+			</Key>
+
+			<Key ID="STR_SP_SURFACE_PAINTER_NOTIFICATION_PIXELS_WRITTEN">
+				<Original>Pixels have been successfully written.</Original>
+				<French>Les pixels ont été écrit avec succès.</French>
+			</Key>
+
+			<Key ID="STR_SP_SURFACE_PAINTER_NOTIFICATION_PIXELS_WRITTING_ERROR">
+				<Original>Error occurred while writing pixels.</Original>
+				<French>Une érreur s'est produite lors de l'écriture des pixels.</French>
+			</Key>
+
+			<Key ID="STR_SP_SURFACE_PAINTER_NOTIFICATION_PIXELS_REMOVED">
+				<Original>Pixels have been removed.</Original>
+				<French>Les pixels ont été supprimés.</French>
 			</Key>
 
 		</container>

@@ -3,113 +3,183 @@
 	This function runs when Surface Painter interface is open.
 */
 
-#include "\x\surface_painter\addons\sp_core\idcs.hpp"
-#include "..\idcs.hpp"
-#include "\x\surface_painter\addons\sp_core\sizes.hpp"
-
-private _dialog				= findDisplay SP_SURFACE_PAINTER_IDD;
-private _leftPanelCtrlGroup	= _dialog displayCtrl SP_SURFACE_PAINTER_LEFT_PANEL_CTRL_GROUP;
-private _optionsCtrlGroup	= _leftPanelCtrlGroup controlsGroupCtrl SP_SURFACE_PAINTER_SURFACE_PAINTER_OPTIONS_CTRL_GROUP;
-
 // exposed
 // SP_var_surfacePainter_controls = []; // contains editable controls
 
 // internal
+if (isNil "SP_var_surfacePainter_project") then {
+	SP_var_surfacePainter_project = "";
+};
+
 if (isNil "SP_var_surfacePainter_keys" && {isNil "SP_var_surfacePainter_pixels"}) then {
 	SP_var_surfacePainter_keys = [];
 	SP_var_surfacePainter_pixels = [];
 };
 
-if (isNil {SP_var_surfacePainter_workingFile}) then {
-	_result = "sp" callExtension ["setWorkingFile", ["surface"]];
-	SP_var_surfacePainter_workingFile = true;
+if (isNil "SP_var_surfacePainter_color") then {
+	SP_var_surfacePainter_color			= [0, 0, 0];
+	SP_var_surfacePainter_colorProc		= "#(rgb,8,8,3)color(1,1,1,1,co)";
+	SP_var_surfacePainter_colorCount	= 0;
 };
 
-SP_var_surfacePainter_color		= [0, 0, 0];
-SP_var_surfacePainter_colorHex	= "FFFFFF";
-SP_var_surfacePainter_colorProc	= "#(rgb,8,8,3)color(1,1,1,1,co)";
-SP_var_surfacePainter_down		= false; // controls the brush loop
-SP_var_surfacePainter_mutex		= true;
-SP_var_surfacePainter_lastPos	= [0, 0, 0];
-SP_var_surfacePainter_maskSize	= parseNumber ("sp" callExtension "imgInfos");
-SP_var_surfacePainter_pixelSize	= worldSize / SP_var_surfacePainter_maskSize;
+SP_var_surfacePainter_down			= false; // controls the brush loop
+SP_var_surfacePainter_mutex			= true;
+SP_var_surfacePainter_lastPos		= [0, 0, 0];
 
-// colors
+/************************
+***** projects list *****
+************************/
+private _projectsControl = [SP_var_surfacePainter_controls, "Projects"] call BIS_fnc_getFromPairs;
+
+// we register the event handler fist
+// so when we set the default lbCurSel
+// it loads automatically the corresponding project
+_projectsControl ctrlAddEventHandler ["LBSelChanged", {
+	SP_var_surfacePainter_project = (_this select 0) lbData (_this select 1);
+	call SP_fnc_surfacePainter_loadProject;
+}];
+
+/*************************
+***** reload project *****
+*************************/
+private _reloadControl = [SP_var_surfacePainter_controls, "Reload"] call BIS_fnc_getFromPairs;
+_reloadControl ctrlAddEventHandler ["ButtonClick", {
+	if (SP_var_surfacePainter_project != "") then {
+		[
+			"OK",
+			format [localize "STR_SP_SURFACE_PAINTER_NOTIFICATION_PROJECT_RELOADED", SP_var_surfacePainter_project]
+		] spawn SP_fnc_core_pushNotification;
+
+		call SP_fnc_surfacePainter_loadProject;
+	} else {
+		["NOK", localize "STR_SP_SURFACE_PAINTER_NOTIFICATION_NO_PROJECT_SELECTED"] spawn SP_fnc_core_pushNotification;
+	};
+}];
+
+/**********************
+***** colors list *****
+**********************/
 private _maskColorsControl = [SP_var_surfacePainter_controls, "MaskColors"] call BIS_fnc_getFromPairs;
 
 lbClear _maskColorsControl;
 
-private _colors = (("sp" callExtension "imgColorsList") splitString "|");
-
-{
-	_maskColorsControl lbAdd (format ["#%1", toUpper _x]);
-	_maskColorsControl lbSetData [_forEachIndex, toUpper _x];
-	_maskColorsControl lbSetPicture [_forEachIndex, "x\surface_painter\addons\sp_core\data\default.paa"];
-
-	private _color = _x call SP_fnc_surfacePainter_hexToDecColor;
-	_color pushBack 1;
-	_maskColorsControl lbSetPictureColor [_forEachIndex, _color];
-} forEach _colors;
-
-// set default selected if a
-if (count _colors > 0) then {
-	_maskColorsControl lbSetCurSel 0;
-	SP_var_surfacePainter_colorHex = _maskColorsControl lbData 0;
-
-	private _color = SP_var_surfacePainter_colorHex call SP_fnc_surfacePainter_hexToDecColor;
-	_color pushBack 1;
-	SP_var_surfacePainter_color = _color;
-	SP_var_surfacePainter_colorProc = format [
-		"#(rgb,8,8,3)color(%1,%2,%3,1,co)",
-		_color select 0,
-		_color select 1,
-		_color select 2
-	];
-};
-
 _maskColorsControl ctrlAddEventHandler ["LBSelChanged", {
-	private _data = (_this select 0) lbData (_this select 1);
-	private _color = _data call SP_fnc_surfacePainter_hexToDecColor;
-	_color pushBack 1;
+	params ["_control", "_index"];
 
-	SP_var_surfacePainter_colorHex = _data;
-	SP_var_surfacePainter_color = _color;
+	_data = _control lbData _index;
+
+	SP_var_surfacePainter_color = call compile _data;
+
+	_pictureColor = SP_var_surfacePainter_color apply {_x / 255};
+	_pictureColor pushBack 1;
+
+	_control lbSetPictureColorSelected [_index, _pictureColor];
+
 	SP_var_surfacePainter_colorProc = format [
 		"#(rgb,8,8,3)color(%1,%2,%3,1,co)",
-		_color select 0,
-		_color select 1,
-		_color select 2
+		(SP_var_surfacePainter_color select 0) / 255,
+		(SP_var_surfacePainter_color select 1) / 255,
+		(SP_var_surfacePainter_color select 2) / 255
 	];
 }];
 
-// world size
+/*********************
+***** world size *****
+*********************/
 private _worldSizeControl = [SP_var_surfacePainter_controls, "WorldSize"] call BIS_fnc_getFromPairs;
 _worldSizeControl ctrlSetText (format [ctrlText _worldSizeControl, worldSize]);
 
-// mask size
-private _maskSizeControl = [SP_var_surfacePainter_controls, "MaskSize"] call BIS_fnc_getFromPairs;
-_maskSizeControl ctrlSetText (format [ctrlText _maskSizeControl, SP_var_surfacePainter_maskSize]);
-
-// pixel size
-private _pixelSizeControl = [SP_var_surfacePainter_controls, "PixelSize"] call BIS_fnc_getFromPairs;
-_pixelSizeControl ctrlSetText (format [ctrlText _pixelSizeControl, SP_var_surfacePainter_pixelSize]);
-
-// generate
+/*******************
+***** generate *****
+*******************/
 private _generateControl = [SP_var_surfacePainter_controls, "Generate"] call BIS_fnc_getFromPairs;
 _generateControl ctrlAddEventHandler ["ButtonClick", {
-	if ((count SP_var_surfacePainter_pixels) > 0) then {
-		_pixels = [];
+	_generateControl = _this select 0;
 
-		{
-			_splitString = _x splitString ":";
-			_pixel = SP_var_surfacePainter_pixels select _forEachIndex;
+	if (SP_var_surfacePainter_project != "") then {
+		if ((count SP_var_surfacePainter_pixels) > 0) then {
+			// we check if image file is still there
+			_imageExists = "sp" callExtension ["imageExists", [SP_var_surfacePainter_project]];
 
-			_pixels pushBack (parseNumber (_splitString select 0));
-			_pixels pushBack (parseNumber (_splitString select 1));
-			_pixels pushBack (_pixel getVariable "SP_var_pixelColor");
-		} forEach SP_var_surfacePainter_keys;
+			if ((_imageExists select 1) > 0) then { // >0 means the image exists
+				// lock button
+				_generateControl ctrlEnable false;
 
-		_result = "sp" callExtension ["setPixelsColor", _pixels];
-		_result = "sp" callExtension "saveFile";
+				["WARNING", localize "STR_SP_SURFACE_PAINTER_NOTIFICATION_PIXELS_WRITTING_STARTED"] spawn SP_fnc_core_pushNotification;
+
+				// prepare string
+				_pixels = [];
+
+				{
+					// we send pixels grouped by 1024 because of the limit of arguments of callExtension
+					if (count _pixels == 1024) then {
+						"sp" callExtension ["addModifs", _pixels];
+						_pixels = [];
+					};
+
+					_splitString = _x splitString ":";
+					_pixel = SP_var_surfacePainter_pixels select _forEachIndex;
+					_color = _pixel getVariable "SP_var_pixelColor";
+
+					_string = format [
+						"%1;%2|%3;%4;%5",
+						_splitString select 0,	// x
+						_splitString select 1,	// y
+						_color select 0,		// r
+						_color select 1,		// g
+						_color select 2			// b
+					];
+
+					_pixels pushBack _string;
+				} forEach SP_var_surfacePainter_keys;
+
+				"sp" callExtension ["addModifs", _pixels];
+
+				// write pixels
+				"sp" callExtension ["applyModifs", [SP_var_surfacePainter_project]];
+
+				// check status
+				[] spawn {
+					disableSerialization;
+
+					while {true} do {
+						sleep 1;
+
+						_result = ("sp" callExtension ["checkTaskDone", []]) select 1;
+
+						if (_result == -1) exitWith {
+							["NOK", localize "STR_SP_SURFACE_PAINTER_NOTIFICATION_PIXELS_WRITTING_ERROR"] spawn SP_fnc_core_pushNotification;
+						};
+
+						if (_result == 1) exitWith {
+							["OK", localize "STR_SP_SURFACE_PAINTER_NOTIFICATION_PIXELS_WRITTEN"] spawn SP_fnc_core_pushNotification;
+						};
+					};
+
+					// unlock button
+					_generateControl = [SP_var_surfacePainter_controls, "Generate"] call BIS_fnc_getFromPairs;
+					_generateControl ctrlEnable true;
+				};
+			};
+		} else {
+			["NOK", localize "STR_SP_SURFACE_PAINTER_NOTIFICATION_NO_PIXELS"] spawn SP_fnc_core_pushNotification;
+		};
+	} else {
+		["NOK", localize "STR_SP_SURFACE_PAINTER_NOTIFICATION_NO_PROJECT_SELECTED"] spawn SP_fnc_core_pushNotification;
 	};
+}];
+
+/****************
+***** clear *****
+****************/
+private _clearControl = [SP_var_surfacePainter_controls, "Clear"] call BIS_fnc_getFromPairs;
+_clearControl ctrlAddEventHandler ["ButtonClick", {
+	{
+		deleteVehicle _x;
+	} forEach SP_var_surfacePainter_pixels;
+
+	SP_var_surfacePainter_pixels = [];
+	SP_var_surfacePainter_keys = [];
+
+	["OK", localize "STR_SP_SURFACE_PAINTER_NOTIFICATION_PIXELS_REMOVED"] spawn SP_fnc_core_pushNotification;
 }];

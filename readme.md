@@ -5,8 +5,8 @@ Surface Painter is a simple toolbox to help map makers in specific tasks. It's n
 # Features
  
 ## Surface Painter
-This tool lets you tweak the surface map directly in Arma using a dll that replicates your actions in a bitmap file.
-Copy the corresponding dlls and your surface.bmp in your Arma installation directory.
+This tool lets you tweak the surface map directly in Arma using a dll that replicates your actions in an image file.
+Follow instructions in `@surface_painter/masks/readme.txt`.
 Run Arma with Battleye disabled. Take manual backups of your surface map.
  
 ## Object Pool
@@ -28,15 +28,13 @@ Draw lines and create objects along them, can be set to detect terrain and follo
 
 You can skip the steps 4 and 5 if you don't plan to use the Surface Painter tool, the tool that lets you paint your surface map directly in Arma.
 
-4. Copy the corresponding dlls in your Arma 3 directory :
+4. Copy your `mask.tif` and your `layers.cfg` in `@surface_painter/masks`. The dll only supports TIF format as input and will always output 8bits LZW compressed TIF.
 
-32 bits :
+5. rename your `layers.cfg` as your `mask.tif` :
+
 ```
-\Arma 3\sp.dll
-```
-64 bits :
-```
-\Arma 3\sp_x64.dll
+my_awsome_map.tif
+my_awsome_map.cfg
 ```
 
 # How to use

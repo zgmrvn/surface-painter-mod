@@ -60,3 +60,53 @@ class PanelEventCheckBox: RscCheckBox {
 	textureDisabledChecked = "";
 	textureDisabledUnchecked = "";
 };
+
+// mode button
+class ModeButton: RscControlsGroup {
+	idc = -1;
+
+	x = 0;
+	y = 0;
+	w = safeZoneW * SP_MODES_W;
+	h = safeZoneH * SP_MODES_H;
+
+	class Controls {
+		class Background: RscText {
+			idc = 3;
+
+			x = 0;
+			y = 0;
+			w = safeZoneW * SP_MODES_W;
+			h = safeZoneH * SP_MODES_H;
+
+			text = "";
+			sizeEx = 0;
+			colorBackground[] = {0, 0, 0, 0};
+		};
+
+		class Icon: RscPicture {
+			idc = 4;
+
+			x = 0;
+			y = 0;
+			w = safeZoneW * SP_MODES_W;
+			h = safeZoneH * SP_MODES_H;
+
+			text = "";
+		};
+
+		class Event: RscListBox {
+			idc = 5;
+
+			x = 0;
+			y = 0;
+			w = safeZoneW * SP_MODES_W;
+			h = safeZoneH * SP_MODES_H;
+
+			colorBackground[] = {0, 0, 0, 0};
+			itemSpacing = 0;
+			text = "";
+			rowHeight = 0;
+		};
+	};
+};

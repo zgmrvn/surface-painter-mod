@@ -30,6 +30,7 @@ class RscSpNotification: RscControlsGroup {
 			h = safeZoneH * SP_NOTIFICATION_H;
 
 			text = "notification text";
+			SizeEx = safezoneH / SP_OPTION_COMMON_TEXT_H_DIVIDER;
 
 			colorBackground[] = {0, 0, 0, 1};
 		};

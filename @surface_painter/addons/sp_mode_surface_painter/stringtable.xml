@@ -113,8 +113,8 @@
 			</Key>
 
 			<Key ID="STR_SP_SURFACE_PAINTER_NOTIFICATION_PIXELS_WRITTING_ERROR">
-				<Original>Error occurred while writing pixels.</Original>
-				<French>Une érreur s'est produite lors de l'écriture des pixels.</French>
+				<Original>Error occurred while writing pixels, error code : %1.</Original>
+				<French>Une érreur s'est produite lors de l'écriture des pixels, code d'erreur : %1.</French>
 			</Key>
 
 			<Key ID="STR_SP_SURFACE_PAINTER_NOTIFICATION_PIXELS_REMOVED">

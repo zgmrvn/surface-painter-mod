@@ -145,13 +145,15 @@ _generateControl ctrlAddEventHandler ["ButtonClick", {
 					while {true} do {
 						sleep 1;
 
-						_result = ("sp" callExtension ["checkTaskDone", []]) select 1;
+						_result = "sp" callExtension ["checkTaskDone", []];
+						_code = _result select 1;
+						_codeStr = _result select 0;
 
-						if (_result == -1) exitWith {
-							["NOK", localize "STR_SP_SURFACE_PAINTER_NOTIFICATION_PIXELS_WRITTING_ERROR"] spawn SP_fnc_core_pushNotification;
+						if (_code == -1) exitWith {
+							["NOK", format [localize "STR_SP_SURFACE_PAINTER_NOTIFICATION_PIXELS_WRITTING_ERROR", _codeStr]] spawn SP_fnc_core_pushNotification;
 						};
 
-						if (_result == 1) exitWith {
+						if (_code == 1) exitWith {
 							["OK", localize "STR_SP_SURFACE_PAINTER_NOTIFICATION_PIXELS_WRITTEN"] spawn SP_fnc_core_pushNotification;
 						};
 					};

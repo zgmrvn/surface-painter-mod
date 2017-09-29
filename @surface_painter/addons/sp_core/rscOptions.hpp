@@ -21,7 +21,7 @@ class HeaderBase: RscControlsGroup {
 
 			text = "text";
 
-			SizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1.4)";
+			SizeEx = safezoneH / SP_OPTION_HEADER_TEXT_H_DIVIDER;
 		};
 
 		class Underline: RscText {
@@ -48,27 +48,27 @@ class TitleBase: RscControlsGroup {
 	x = safeZoneW * SP_MARGIN_X;
 	y = 0;
 	w = safeZoneW * SP_OPTIONS_CONTENT_W;
-	h = safeZoneH * 0.023;
+	h = safeZoneH * 0.028;
 
 	class Controls {
 		class Text: RscText {
 			idc = 3;
 
-			x = -0.005;
-			y = -0.009;
+			x = 0;
+			y = 0;
 			w = safeZoneW * SP_OPTIONS_CONTENT_W;
 			h = safeZoneH * 0.023;
 
 			text = "text";
 
-			SizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1.2)";
+			SizeEx = safezoneH / SP_OPTION_TITLE_TEXT_H_DIVIDER;
 		};
 
 		class Underline: RscText {
 			idc = 4;
 
 			x = 0;
-			y = safeZoneH * 0.020;
+			y = safeZoneH * 0.025;
 			w = safeZoneW * SP_OPTIONS_CONTENT_W;
 			h = pixelH;
 
@@ -97,6 +97,7 @@ class EditBase: RscControlsGroup {
 
 			text = "0";
 
+			SizeEx = safezoneH / SP_OPTION_COMMON_TEXT_H_DIVIDER;
 			canModify = 0;
 			colorBackground[] = {0.1, 0.1, 0.1, 1};
 		};
@@ -111,6 +112,7 @@ class EditBase: RscControlsGroup {
 
 			text = "text";
 
+			SizeEx = safezoneH / SP_OPTION_COMMON_TEXT_H_DIVIDER;
 			colorBackground[] = {0.1, 0.1, 0.1, 1};
 		};
 	};
@@ -135,6 +137,7 @@ class CheckBoxBase: RscControlsGroup {
 
 			text = "0";
 
+			SizeEx = safezoneH / SP_OPTION_COMMON_TEXT_H_DIVIDER;
 			colorBackground[] = {0.1, 0.1, 0.1, 1};
 		};
 
@@ -148,6 +151,7 @@ class CheckBoxBase: RscControlsGroup {
 
 			text = "text";
 
+			SizeEx = safezoneH / SP_OPTION_COMMON_TEXT_H_DIVIDER;
 			colorBackground[] = {0.1, 0.1, 0.1, 1};
 		};
 	};
@@ -172,7 +176,7 @@ class ButtonBase: RscControlsGroup {
 
 			text = "text";
 
-			SizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1.2)";
+			SizeEx = safezoneH / SP_OPTION_BUTTON_TEXT_H_DIVIDER;
 			colorBackground[] = {0.2, 0.2, 0.2, 1};
 			colorBackgroundActive[] = {
 				"(profilenamespace getvariable ['GUI_BCG_RGB_R', 0.5])",
@@ -201,6 +205,7 @@ class ListBoxBase: RscControlsGroup {
 			w = safeZoneW * SP_OPTIONS_CONTENT_W;
 			h = safeZoneH * SP_OPTION_CONTENT_H * 8;
 
+			SizeEx = safezoneH / SP_OPTION_COMMON_TEXT_H_DIVIDER;
 			colorBackground[] = {0.1, 0.1, 0.1, 1};
 			rowHeight = safeZoneH * SP_OPTION_CONTENT_H;
 		};
@@ -224,6 +229,7 @@ class TextBase: RscControlsGroup {
 			w = safeZoneW * SP_OPTIONS_CONTENT_W;
 			h = safeZoneH * SP_OPTION_CONTENT_H;
 
+			SizeEx = safezoneH / SP_OPTION_COMMON_TEXT_H_DIVIDER;
 			colorBackground[] = {0.1, 0.1, 0.1, 1};
 			text = "text";
 		};

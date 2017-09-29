@@ -12,7 +12,7 @@ private _extraCount = 0;
 
 	private _isExtra = getNumber (configFile >> "CfgSurfacePainter" >> "Modules" >> _x >> "extra") == 1;
 
-	private _modeEntry = _dialog ctrlCreate ["RscStructuredText", -1, _modeslist];
+	private _modeEntry = _dialog ctrlCreate ["ModeButton", -1, _modeslist];
 	SP_var_modes pushBack _modeEntry;
 
 	if (_isExtra) then {
@@ -23,10 +23,18 @@ private _extraCount = 0;
 	};
 
 	_modeEntry ctrlCommit 0;
-	_modeEntry ctrlSetStructuredText (parseText format ["<t size='0'>%1:</t><t size='0.32'>&#160;</t><img image='%2' size='1' shadow='0' />", _x, getText (configFile >> "CfgSurfacePainter" >> "Modules" >> _x >> "icon")]);
+
+	// extract sub controls
+	private _backgroundCtrl = _modeEntry controlsGroupCtrl 3;
+	private _pictureCtrl = _modeEntry controlsGroupCtrl 4;
+	private _lbCtrl = _modeEntry controlsGroupCtrl 5;
+
+	_pictureCtrl ctrlSetText (getText (configFile >> "CfgSurfacePainter" >> "Modules" >> _x >> "icon"));
+
+	_backgroundCtrl ctrlSetText _x;
 
 	if (_mode == SP_var_mode) then {
-		_modeEntry ctrlSetBackgroundColor [0, 0, 0, 1];
+		_backgroundCtrl ctrlSetBackgroundColor [0, 0, 0, 1];
 	};
 
 	// create options control group
@@ -146,17 +154,21 @@ private _extraCount = 0;
 
 
 
-	_modeEntry ctrlAddEventHandler ["MouseButtonDown", {
-		private _control = _this select 0;
+	_lbCtrl ctrlAddEventHandler ["MouseButtonDown", {
+		private _lbCtrl = _this select 0;
+
+		// extract sub controls
+		private _modeButton = ctrlParentControlsGroup _lbCtrl;
+		private _backgroundCtrl = _modeButton controlsGroupCtrl 3;
+		private _pictureCtrl = _modeButton controlsGroupCtrl 4;
 
 		{
-			_x ctrlSetBackgroundColor [0, 0, 0, 0];
+			(_x controlsGroupCtrl 3) ctrlSetBackgroundColor [0, 0, 0, 0];
 		} forEach SP_var_modes;
 
-		_control ctrlSetBackgroundColor [0, 0, 0, 1];
+		_backgroundCtrl ctrlSetBackgroundColor [0, 0, 0, 1];
 
-		private _mode = ctrlText _control;
-		_mode = ([_mode, ":"] call BIS_fnc_splitString) select 0;
+		private _mode = ctrlText _backgroundCtrl;
 
 		if (_mode != SP_var_mode) then {
 

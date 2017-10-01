@@ -27,6 +27,6 @@ private _tools = (configFile >> "CfgSurfacePainter" >> "Tools") call BIS_fnc_get
 	if (_recompile != "") then {
 		call compile preprocessFileLineNumbers _recompile;
 	};
-} forEach _modules;
+} forEach _tools;
 
 systemChat format ["functions recompiled in %1 ms", round ((diag_tickTime - _start) * 1000)];

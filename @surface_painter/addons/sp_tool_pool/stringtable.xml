@@ -4,7 +4,7 @@
 
 		<container name="Notifications">
 
-			<Key ID="STR_SP_CORE_NOTIFICATION_OBJECT_POOL_EMPTY">
+			<Key ID="STR_SP_TOOL_POOL_NOTIFICATION_OBJECT_POOL_EMPTY">
 				<Original>Objects pool is empty.</Original>
 				<French>Le pool d'objets est vide.</French>
 			</Key>

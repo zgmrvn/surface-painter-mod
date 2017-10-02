@@ -66,7 +66,7 @@
 
 		// if the object pool is empty
 		} else {
-			["NOK", localize "STR_SP_CORE_NOTIFICATION_OBJECT_POOL_EMPTY"] spawn SP_fnc_core_pushNotification;
+			["NOK", localize "STR_SP_TOOL_POOL_NOTIFICATION_OBJECT_POOL_EMPTY"] spawn SP_fnc_core_pushNotification;
 		};
 	};
 };

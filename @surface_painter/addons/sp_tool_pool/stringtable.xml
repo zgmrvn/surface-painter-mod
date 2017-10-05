@@ -2,6 +2,30 @@
 <Project name="Surface Painter">
 	<Package name="Core">
 
+		<container name="Settings">
+
+			<Key ID="STR_SP_TOOL_POOL_SETTING_PROBABILITY">
+				<Original>Probability</Original>
+				<French>Probabilité</French>
+			</Key>
+
+			<Key ID="STR_SP_TOOL_POOL_SETTING_Z_OFFSET">
+				<Original>Z offset</Original>
+				<French>Décalage Z</French>
+			</Key>
+
+			<Key ID="STR_SP_TOOL_POOL_SETTING_SCALE">
+				<Original>Scale (min/max)</Original>
+				<French>Échelle (min/max)</French>
+			</Key>
+
+			<Key ID="STR_SP_TOOL_POOL_SETTING_FOLLOW_TERRAIN">
+				<Original>Follow slope</Original>
+				<French>Suivre le terrain</French>
+			</Key>
+
+		</container>
+
 		<container name="Notifications">
 
 			<Key ID="STR_SP_TOOL_POOL_NOTIFICATION_OBJECT_POOL_EMPTY">

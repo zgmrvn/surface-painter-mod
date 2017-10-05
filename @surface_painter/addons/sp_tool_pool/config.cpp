@@ -5,7 +5,7 @@ class CfgPatches {
 		units[] = {};
 		weapons[] = {};
 		version = 1.0;
-		requiredaddons[] = {"SP_Core"};
+		requiredaddons[] = {"A3_Data_F", "SP_Core"};
 	};
 };
 
@@ -38,4 +38,16 @@ class CfgSurfacePainter {
 	};
 };
 
+class MenuBackground;
+class PanelEventCheckBox;
+class PanelControlsGroup;
+class RscEdit;
+class RscListBox;
+class RscControlsGroup;
+class RscPicture;
+class RscText;
+class RscButton;
+class RscCheckBox;
+
+#include "bases.hpp"
 #include "ui.hpp"

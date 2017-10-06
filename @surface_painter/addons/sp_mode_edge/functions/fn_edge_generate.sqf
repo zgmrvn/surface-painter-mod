@@ -66,10 +66,22 @@ for [{private _i = 0}, {_i < _count}, {_i = _i + 1}] do {
 			};
 
 			private _classname = selectRandom _pool;
-			private _keepHorizontal = getNumber (configFile >> "CfgVehicles" >> _classname >> "keepHorizontalPlacement");
-			_keepHorizontal = [true, false] select (_keepHorizontal == 0);
+			private _poolEntry = [SP_var_pool_pool, _classname] call BIS_fnc_getFromPairs;
 
-			_obj = [ATLToASL _pos, _classname, _keepHorizontal] call SP_fnc_core_createSimpleObject;
+			// zOffset and followTerrain
+			private _keepHorizontal = !([_poolEntry, "followTerrain"] call BIS_fnc_getFromPairs);
+			private _zOffset = [_poolEntry, "zOffset"] call BIS_fnc_getFromPairs;
+
+			private _obj = [(ATLToASL _pos) vectorAdd [0, 0, _zOffset], _classname,  _keepHorizontal] call SP_fnc_core_createSimpleObject;
+
+			// scale
+			private _scaleMin = [_poolEntry, "scaleMin"] call BIS_fnc_getFromPairs;
+			private _scaleMax = [_poolEntry, "scaleMax"] call BIS_fnc_getFromPairs;
+			private _scale = _scaleMin + random (_scaleMax - _scaleMin);
+
+			_obj setVariable ["SP_var_scale", _scale];
+
+			// push to created objects array
 			_objects pushBack _obj;
 
 			_progression = _progression + _interval;

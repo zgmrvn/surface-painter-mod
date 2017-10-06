@@ -178,6 +178,20 @@ _poolSearchResult ctrlAddEventHandler ["LBDblClick", {
 		_classNameCtrl		= _newPoolEntry controlsGroupCtrl ENTRY_CLASS_NAME;
 		_openCloseCtrl		= _newPoolEntry controlsGroupCtrl ENTRY_OPEN_CLOSE;
 		_removeCtrl			= _newPoolEntry controlsGroupCtrl ENTRY_REMOVE;
+		_settingsCtrl		= _newPoolEntry controlsGroupCtrl ENTRY_SETTINGS;
+
+		_probabilityCtrl		= _settingsCtrl controlsGroupCtrl ENTRY_PROBABILITY;
+		_probabilityEditCtrl	= _probabilityCtrl controlsGroupCtrl ENTRY_PROBABILITY_EDIT;
+
+		_zOffsetCtrl		= _settingsCtrl controlsGroupCtrl ENTRY_Z_OFFSET;
+		_zOffsetEditCtrl	= _zOffsetCtrl controlsGroupCtrl ENTRY_Z_OFFSET_EDIT;
+
+		_scaleCtrl			= _settingsCtrl controlsGroupCtrl ENTRY_SCALE;
+		_scaleMinEditCtrl	= _scaleCtrl controlsGroupCtrl ENTRY_SCALE_EDIT_MIN;
+		_scaleMaxEditCtrl	= _scaleCtrl controlsGroupCtrl ENTRY_SCALE_EDIT_MAX;
+
+		_followTerrainCtrl			= _settingsCtrl controlsGroupCtrl ENTRY_FOLLOW_TERRAIN;
+		_followTerrainCheckBoxCtrl	= _followTerrainCtrl controlsGroupCtrl ENTRY_FOLLOW_TERRAIN_CHECKBOX;
 
 		// set sub controls
 		_editorPreview = getText (configfile >> "CfgVehicles" >> _className >> "editorPreview");
@@ -187,8 +201,18 @@ _poolSearchResult ctrlAddEventHandler ["LBDblClick", {
 		_displayNameCtrl ctrlSetText getText (configFile >> "CfgVehicles" >> _className >> "displayName");
 		_classNameCtrl ctrlSetText _className;
 
+		_keepHorizontal = getNumber (configFile >> "CfgVehicles" >> (ctrlText _classNameCtrl) >> "keepHorizontalPlacement");
+		_followTerrain = (_keepHorizontal == 0);
+		_followTerrainCheckBoxCtrl cbSetChecked _followTerrain;
+
 		// then we push the new object and its configuration in the pool
-		[SP_var_pool_pool, _className, 1] call BIS_fnc_setToPairs;
+		[SP_var_pool_pool, _className, [
+			["probability", 1],
+			["zOffset", 0],
+			["scaleMin", 1],
+			["scaleMax", 1],
+			["followTerrain", _followTerrain]
+		]] call BIS_fnc_setToPairs;
 
 		// then we generate the actual pool
 		// the array in which tools will randomly pick an item
@@ -257,6 +281,146 @@ _poolSearchResult ctrlAddEventHandler ["LBDblClick", {
 			_poolList ctrlCommit 0.1;
 		}];
 
+		/**********************
+		***** probability *****
+		**********************/
+		_probabilityEditCtrl ctrlAddEventHandler ["MouseZChanged", {
+			_control = _this select 0;
+			_probability = ctrlParentControlsGroup _control;
+			_settings = ctrlParentControlsGroup _probability;
+			_entry = ctrlParentControlsGroup _settings;
+			_classname = _entry controlsGroupCtrl ENTRY_CLASS_NAME;
+			_data = ctrlText _classname;
+
+			_mouseWheel	= [-1, 1] select ((_this select 1) > 0);
+			_before	= parseNumber (ctrlText _control);
+			_after = _before + _mouseWheel * 0.1;
+			_after = (_after min 1) max 0;
+
+			if (_after != _before) then {
+				[[SP_var_pool_pool, _data] call BIS_fnc_getFromPairs, "probability", _after] call BIS_fnc_setToPairs;
+				SP_var_pool_finalPool = SP_var_pool_pool call SP_fnc_pool_generatePool;
+
+				_control ctrlSetText (_after toFixed 1);
+
+				// then exec probability event
+				if (isClass (configFile >> "CfgSurfacePainter" >> "Modules" >> SP_var_mode >> "Events" >> "OnPoolEntryProbabilityChange")) then {
+					_function = getText (configFile >> "CfgSurfacePainter" >> "Modules" >> SP_var_mode >> "Events" >> "OnPoolEntryProbabilityChange" >> "function");
+					call compile (format ["call %1", _function]);
+				};
+			};
+		}];
+
+		/*******************
+		***** z offset *****
+		*******************/
+		_zOffsetEditCtrl ctrlAddEventHandler ["MouseZChanged", {
+			_control = _this select 0;
+			_zOffset = ctrlParentControlsGroup _control;
+			_settings = ctrlParentControlsGroup _zOffset;
+			_entry = ctrlParentControlsGroup _settings;
+			_classname = _entry controlsGroupCtrl ENTRY_CLASS_NAME;
+			_data = ctrlText _classname;
+
+			_mouseWheel	= [-1, 1] select ((_this select 1) > 0);
+			_before	= parseNumber (ctrlText _control);
+			_after = _before + _mouseWheel * 0.1;
+			_after = (_after min 10) max -10;
+
+			if (_after != _before) then {
+				[[SP_var_pool_pool, _data] call BIS_fnc_getFromPairs, "zOffset", _after] call BIS_fnc_setToPairs;
+
+				_control ctrlSetText (_after toFixed 1);
+
+				// then exec z offset event
+				if (isClass (configFile >> "CfgSurfacePainter" >> "Modules" >> SP_var_mode >> "Events" >> "OnPoolEntryZOffsetChange")) then {
+					_function = getText (configFile >> "CfgSurfacePainter" >> "Modules" >> SP_var_mode >> "Events" >> "OnPoolEntryZOffsetChange" >> "function");
+					call compile (format ["call %1", _function]);
+				};
+			};
+		}];
+
+		/****************
+		***** scale *****
+		****************/
+		_scaleMinEditCtrl ctrlAddEventHandler ["MouseZChanged", {
+			_control = _this select 0;
+			_scale = ctrlParentControlsGroup _control;
+			_settings = ctrlParentControlsGroup _scale;
+			_entry = ctrlParentControlsGroup _settings;
+			_classname = _entry controlsGroupCtrl ENTRY_CLASS_NAME;
+
+			_data = ctrlText _classname;
+			_scaleMax = _scale controlsGroupCtrl ENTRY_SCALE_EDIT_MAX;
+
+			_mouseWheel	= [-1, 1] select ((_this select 1) > 0);
+			_before	= parseNumber (ctrlText _control);
+			_after = _before + _mouseWheel * 0.1;
+			_after = (_after min 2) max 0;
+
+			if (_after != _before && {parseNumber (_after toFixed 1) <= (parseNumber ctrlText _scaleMax)}) then {
+				[[SP_var_pool_pool, _data] call BIS_fnc_getFromPairs, "scaleMin", _after] call BIS_fnc_setToPairs;
+
+				_control ctrlSetText (_after toFixed 1);
+
+				// then exec scale min event
+				if (isClass (configFile >> "CfgSurfacePainter" >> "Modules" >> SP_var_mode >> "Events" >> "OnPoolEntryScaleMinChange")) then {
+					_function = getText (configFile >> "CfgSurfacePainter" >> "Modules" >> SP_var_mode >> "Events" >> "OnPoolEntryScaleMinChange" >> "function");
+					call compile (format ["call %1", _function]);
+				};
+			};
+		}];
+
+		_scaleMaxEditCtrl ctrlAddEventHandler ["MouseZChanged", {
+			_control = _this select 0;
+			_scale = ctrlParentControlsGroup _control;
+			_settings = ctrlParentControlsGroup _scale;
+			_entry = ctrlParentControlsGroup _settings;
+			_classname = _entry controlsGroupCtrl ENTRY_CLASS_NAME;
+
+			_data = ctrlText _classname;
+			_scaleMin = _scale controlsGroupCtrl ENTRY_SCALE_EDIT_MIN;
+
+			_mouseWheel	= [-1, 1] select ((_this select 1) > 0);
+			_before	= parseNumber (ctrlText _control);
+			_after = _before + _mouseWheel * 0.1;
+			_after = (_after min 2) max 0;
+
+			if (_after != _before && {parseNumber (_after toFixed 1) >= (parseNumber ctrlText _scaleMin)}) then {
+				[[SP_var_pool_pool, _data] call BIS_fnc_getFromPairs, "scaleMax", _after] call BIS_fnc_setToPairs;
+
+				_control ctrlSetText (_after toFixed 1);
+
+				// then exec CHANGE event
+				if (isClass (configFile >> "CfgSurfacePainter" >> "Modules" >> SP_var_mode >> "Events" >> "OnPoolEntryScaleMaxChange")) then {
+					_function = getText (configFile >> "CfgSurfacePainter" >> "Modules" >> SP_var_mode >> "Events" >> "OnPoolEntryScaleMaxChange" >> "function");
+					call compile (format ["call %1", _function]);
+				};
+			};
+		}];
+
+		/*************************
+		***** follow terrain *****
+		*************************/
+		_followTerrainCheckBoxCtrl ctrlAddEventHandler ["CheckedChanged", {
+			_control = _this select 0;
+			_followTerrain = ctrlParentControlsGroup _control;
+			_settings = ctrlParentControlsGroup _followTerrain;
+			_entry = ctrlParentControlsGroup _settings;
+			_classname = _entry controlsGroupCtrl ENTRY_CLASS_NAME;
+			_data = ctrlText _classname;
+			_value = (_this select 1) == 1;
+
+			[[SP_var_pool_pool, _data] call BIS_fnc_getFromPairs, "followTerrain", _value] call BIS_fnc_setToPairs;
+			_control cbSetChecked _value;
+
+			// then exec follow terrain event
+			if (isClass (configFile >> "CfgSurfacePainter" >> "Modules" >> SP_var_mode >> "Events" >> "OnPoolEntryFollowTerrainChange")) then {
+				_function = getText (configFile >> "CfgSurfacePainter" >> "Modules" >> SP_var_mode >> "Events" >> "OnPoolEntryFollowTerrainChange" >> "function");
+				call compile (format ["call %1", _function]);
+			};
+		}];
+
 		/*****************
 		***** remove *****
 		*****************/
@@ -323,111 +487,4 @@ _poolSearchResult ctrlAddEventHandler ["LBDblClick", {
 			ctrlDelete _poolEntry;
 		}];
 	};
-
-	/*
-	_dialog		= findDisplay SP_SURFACE_PAINTER_IDD;
-	_poolList 	= _dialog displayCtrl SP_SURFACE_PAINTER_POOL_LIST;
-
-	_data = (_this select 0) lbData (_this select 1);
-
-	// if this object is not already in the pool
-	if (([SP_var_pool_pool, _data] call BIS_fnc_findInPairs) == -1) then {
-		_y = count SP_var_pool_pool;
-
-		// pool entry controls group
-		_idc = (count SP_var_pool_poolControls) + 1;
-		_poolEntry = _dialog ctrlCreate ["RscControlsGroup", _idc, _poolList];
-		_poolEntry ctrlSetPosition [
-			0,
-			safeZoneH * (count SP_var_pool_poolControls) * (SP_POOL_ENTRY_H + SP_POOL_ENTRY_M),
-			safeZoneW * SP_POOL_CONTENT_W,
-			safeZoneH * SP_POOL_ENTRY_H
-		];
-		_poolEntry ctrlCommit 0;
-		SP_var_pool_poolControls pushBack _idc;
-
-		_classname = _dialog ctrlCreate ["RscText", 9955, _poolEntry];
-		_classname ctrlSetPosition [0, 0, safeZoneW * SP_POOL_ENTRY_TEXT * SP_POOL_CONTENT_W, safeZoneH * SP_POOL_ENTRY_H];
-		_classname ctrlSetBackgroundColor [0.1, 0.1, 0.1, 1];
-		_classname ctrlCommit 0;
-		_classname ctrlSetText _data;
-
-		_probability = _dialog ctrlCreate ["RscEdit", -1, _poolEntry];
-		_probability ctrlSetPosition [safeZoneW * SP_POOL_ENTRY_TEXT * SP_POOL_CONTENT_W, 0, safeZoneW * SP_POOL_ENTRY_PROBABILITY * SP_POOL_CONTENT_W, safeZoneH * SP_POOL_ENTRY_H];
-		_probability ctrlSetBackgroundColor [0, 0, 0, 1];
-		_probability ctrlCommit 0;
-		_probability ctrlSetText "1.0";
-
-		_probability ctrlAddEventHandler ["MouseZChanged", {
-			_control = _this select 0;
-			_parent = ctrlParentControlsGroup _control;
-
-			_data = ctrlText (_parent controlsGroupCtrl 9955);
-
-			_mouseWheel	= [-1, 1] select ((_this select 1) > 0);
-			_before	= parseNumber (ctrlText _control);
-			_after	= _before + _mouseWheel * 0.1;
-			_after = (_after min 1) max 0;
-
-			if (_after != _before) then {
-				[SP_var_pool_pool, _data, _after] call BIS_fnc_setToPairs;
-				SP_var_pool_finalPool = SP_var_pool_pool call SP_fnc_pool_generatePool;
-
-				_control ctrlSetText (_after toFixed 1);
-
-				// then exec CHANGE event
-				if (isClass (configFile >> "CfgSurfacePainter" >> "Modules" >> SP_var_mode >> "Events" >> "OnPoolEntryProbabilityChange")) then {
-					_function = getText (configFile >> "CfgSurfacePainter" >> "Modules" >> SP_var_mode >> "Events" >> "OnPoolEntryProbabilityChange" >> "function");
-					call compile (format ["call %1", _function]);
-				};
-			};
-		}];
-
-		_delete = _dialog ctrlCreate ["RscButton", -1, _poolEntry];
-		_delete ctrlSetPosition [safeZoneW * (SP_POOL_ENTRY_TEXT + SP_POOL_ENTRY_PROBABILITY) * SP_POOL_CONTENT_W, 0, safeZoneW * SP_POOL_ENTRY_DELETE * SP_POOL_CONTENT_W, safeZoneH * SP_POOL_ENTRY_H];
-		_delete ctrlCommit 0;
-		_delete ctrlSetText "X";
-
-		// when delete button pressed
-		_delete ctrlAddEventHandler ["ButtonClick", {
-			_entryCtrlGrp		= ctrlParentControlsGroup (_this select 0);
-			_entryCtrlGrpIdc	= ctrlIDC _entryCtrlGrp;
-			_poolCtrlGrp		= ctrlParentControlsGroup _entryCtrlGrp;
-			_data				= ctrlText (_entryCtrlGrp controlsGroupCtrl 9955);
-
-			// delete this entry from all arrays
-			SP_var_pool_poolControls deleteAt (SP_var_pool_poolControls find _entryCtrlGrpIdc);
-			[SP_var_pool_pool, _data] call BIS_fnc_removeFromPairs;
-			SP_var_pool_finalPool = SP_var_pool_pool call SP_fnc_pool_generatePool;
-
-			// rearange list so there is no spaces between entries
-			for [{_i = (SP_var_pool_poolControls find _entryCtrlGrpIdc) + 1; _c = count SP_var_pool_poolControls; }, {_i < _c}, {_i = _i + 1}] do {
-				_entry = _poolCtrlGrp controlsGroupCtrl (SP_var_pool_poolControls select _i);
-				_entry ctrlSetPosition [0, safeZoneH * _i * (SP_POOL_ENTRY_H + SP_POOL_ENTRY_M), safeZoneW * SP_POOL_CONTENT_W, safeZoneH * SP_POOL_ENTRY_H];
-				_entry ctrlCommit 0;
-			};
-
-			// then exec DELETE event
-			if (isClass (configFile >> "CfgSurfacePainter" >> "Modules" >> SP_var_mode >> "Events" >> "OnPoolEntryDelete")) then {
-				_function = getText (configFile >> "CfgSurfacePainter" >> "Modules" >> SP_var_mode >> "Events" >> "OnPoolEntryDelete" >> "function");
-				call compile (format ["call %1", _function]);
-			};
-
-			// delete entry control group
-			ctrlDelete _entryCtrlGrp;
-		}];
-
-		[SP_var_pool_pool, _data, 1] call BIS_fnc_setToPairs;
-		SP_var_pool_finalPool = SP_var_pool_pool call SP_fnc_pool_generatePool;
-
-		// then exec ADD event
-		if (isClass (configFile >> "CfgSurfacePainter" >> "Modules" >> SP_var_mode >> "Events" >> "OnPoolEntryAdd")) then {
-			_function = getText (configFile >> "CfgSurfacePainter" >> "Modules" >> SP_var_mode >> "Events" >> "OnPoolEntryAdd" >> "function");
-			call compile (format ["call %1", _function]);
-		};
-	};
-	*/
-
-
 }];
-

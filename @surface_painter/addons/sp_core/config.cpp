@@ -53,9 +53,13 @@ class CfgSurfacePainter {
 			class OnPrimaryMouseButtonUp {};	// run when primary mouse button is released
 
 			// pool
-			class OnPoolEntryAdd {};				// run when a pool entry is added
-			class OnPoolEntryDelete {};				// run when a pool entry is deleted
-			class OnPoolEntryProbabilityChange {};	// run when a pool entry probability change
+			class OnPoolEntryAdd {};					// run when a pool entry is added
+			class OnPoolEntryDelete {};					// run when a pool entry is deleted
+			class OnPoolEntryProbabilityChange {};		// run when a pool entry probability change
+			class OnPoolEntryZOffsetChange {};			// run when a pool entry z offset change
+			class OnPoolEntryScaleMinChange {};			// run when a pool entry min scale change
+			class OnPoolEntryScaleMaxChange {};			// run when a pool entry max scale change
+			class OnPoolEntryFollowTerrainChange {};	// run when a pool entry follow terrain change
 			*/
 		};
 

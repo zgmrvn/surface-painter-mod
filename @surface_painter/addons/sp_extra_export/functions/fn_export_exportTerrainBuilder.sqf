@@ -19,8 +19,9 @@
 		zgmrvn, commy2, cptnnick
 */
 
-#define DECIMALS_POS 4
-#define DECIMALS_ANG 3
+#define DECIMALS_POS	4
+#define DECIMALS_ANG	3
+#define DECIMALS_SCALE	3
 
 private _export = "";
 private _count = (count SP_var_createdObjects) - 1;
@@ -63,6 +64,9 @@ for "_i" from 0 to _count do {
 	_roll = _roll toFixed DECIMALS_ANG;
 	_yaw = _yaw toFixed DECIMALS_ANG;
 
+	// scale
+	private _scale = (_object getVariable "Sp_var_scale") toFixed DECIMALS_SCALE;
+
 	// final string
 	private _final = format ["""%1"";%2;%3;%4;%5;%6;%7;%8;",
 		_model,	// model
@@ -71,7 +75,7 @@ for "_i" from 0 to _count do {
 		_yaw,	// yaw
 		_pitch,	// pitch
 		_roll,	// roll
-		1,		// scale
+		_scale,	// scale
 		_z		// z
 	];
 

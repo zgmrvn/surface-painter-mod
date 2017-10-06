@@ -1,10 +1,3 @@
-class MenuBackground;
-class PanelEventCheckBox;
-class PanelControlsGroup;
-class RscEdit;
-class RscListBox;
-class RscControlsGroup;
-
 #include "idcs.hpp"
 #include "..\sp_core\sizes.hpp"
 #include "sizes.hpp"
@@ -46,6 +39,7 @@ class RscDisplaySurfacePainterCamera {
 					h = safeZoneH * SP_POOL_SEARCH_H;
 
 					colorBackground[] = {0.1, 0.1, 0.1, 1};
+					SizeEx = safezoneH / SP_OPTION_COMMON_TEXT_H_DIVIDER;
 				};
 
 				class PoolSearchResult: RscListBox {
@@ -58,6 +52,7 @@ class RscDisplaySurfacePainterCamera {
 
 					colorBackground[] = {0.1, 0.1, 0.1, 1};
 					rowHeight = safeZoneH * SP_OPTION_CONTENT_H;
+					SizeEx = safezoneH / SP_OPTION_COMMON_TEXT_H_DIVIDER;
 				};
 
 				class Pool: RscControlsGroup {
@@ -71,6 +66,17 @@ class RscDisplaySurfacePainterCamera {
 					colorBackground[] = {0, 0, 0, 0.25};
 
 					class Controls {};
+
+					class VScrollbar {
+						color[] = {0, 0, 0, 0};
+						width = 0;
+						autoScrollEnabled = 0;
+					};
+
+					class HScrollbar {
+						color[] = {0, 0, 0, 0};
+						height = 0;
+					};
 				};
 
 				// MUST BE AT THE END TO BE OVER ALL OTHER CONTROLS

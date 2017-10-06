@@ -63,6 +63,10 @@ class CfgSurfacePainter {
 				class OnPoolEntryAdd { function = "SP_fnc_edge_regenerate"; };
 				class OnPoolEntryDelete { function = "SP_fnc_edge_regenerate"; };
 				class OnPoolEntryProbabilityChange { function = "SP_fnc_edge_regenerate"; };
+				class OnPoolEntryZOffsetChange { function = "SP_fnc_edge_regenerate"; };
+				class OnPoolEntryScaleMinChange { function = "SP_fnc_edge_regenerate"; };
+				class OnPoolEntryScaleMaxChange { function = "SP_fnc_edge_regenerate"; };
+				class OnPoolEntryFollowTerrainChange { function = "SP_fnc_edge_regenerate"; };
 			};
 
 			class Options {

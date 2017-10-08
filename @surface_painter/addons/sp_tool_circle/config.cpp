@@ -26,8 +26,7 @@ class CfgSurfacePainter {
 
 	class Tools {
 		class Circle: DefaultTool {
-			description = "";
-			recompile	= "x\surface_painter\addons\sp_tool_circle\recompile.sqf";
+			recompile = "x\surface_painter\addons\sp_tool_circle\recompile.sqf";
 
 			class Events {
 				class OnInit { function = "SP_fnc_circle_init"; };

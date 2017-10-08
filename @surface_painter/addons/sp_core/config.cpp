@@ -76,8 +76,7 @@ class CfgSurfacePainter {
 
 	// default tool class
 	class DefaultTool {
-		description = "Description";
-		recompile	= "";
+		recompile = "";
 
 		class Events {
 			/*

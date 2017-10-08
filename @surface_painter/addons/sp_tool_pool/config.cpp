@@ -28,8 +28,7 @@ class CfgSurfacePainter {
 
 	class Tools {
 		class Pool: DefaultTool {
-			description = "";
-			recompile	= "x\surface_painter\addons\sp_tool_pool\recompile.sqf";
+			recompile = "x\surface_painter\addons\sp_tool_pool\recompile.sqf";
 
 			class Events {
 				class OnInit { function = "SP_fnc_pool_init"; };

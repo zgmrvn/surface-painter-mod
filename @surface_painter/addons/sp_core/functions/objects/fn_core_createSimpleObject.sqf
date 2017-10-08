@@ -5,7 +5,7 @@
 	params :
 		position : ARRAY - position array, ASL format
 		classname : STRING - object classname
-	    keepHorizontal (optionnal) : BOOL - keep horizontal placement - Default false
+		keepHorizontal (optionnal) : BOOL - keep horizontal placement - Default false
 */
 
 private _position		= param [0, [0, 0, 0], [[]], 3];

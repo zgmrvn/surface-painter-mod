@@ -16,6 +16,12 @@
 			private _vehs = nearestObjects [SP_var_mouseWorldPosition, [], SP_var_circle_circleRadius, true];
 			if ((count _vehs) > 0) then {
 				_obj = selectRandom _vehs;
+
+				// remove bounding boxes 3D lines
+				if (_obj == SP_var_boundingBox_lastCreatedObject) then {
+					SP_var_boundingBox_boundingBoxes = [];
+				};
+
 				SP_var_createdObjects deleteAt (SP_var_createdObjects find _obj);
 				deleteVehicle _obj;
 			};
@@ -67,6 +73,10 @@
 						private _scale = _scaleMin + random (_scaleMax - _scaleMin);
 
 						_obj setVariable ["SP_var_scale", _scale];
+
+						// bounding boxes
+						["real", _obj, 1, [0.1, 0.1, 0.1, 1]] call SP_fnc_boundingBox_pushBoundingBox;
+						["scale", _obj, _scale, [0, 0.8, 0, 0.3]] call SP_fnc_boundingBox_pushBoundingBox;
 
 						// push to created objects array
 						SP_var_createdObjects pushBack _obj;

@@ -8,7 +8,12 @@ class CfgPatches {
 		units[] = {};
 		weapons[] = {};
 		version = 1.0.1;
-		requiredaddons[] = {"SP_Core", "SP_Tool_Circle", "SP_Tool_Pool"};
+		requiredaddons[] = {
+			"SP_Core",
+			"SP_Tool_Circle",
+			"SP_Tool_Pool",
+			"SP_Tool_BoundingBox"
+		};
 	};
 };
 
@@ -35,7 +40,7 @@ class CfgSurfacePainter {
 
 	class Modules {
 		class Brush: DefaultModule {
-			tools[]		= {"Circle", "Pool"};
+			tools[]		= {"Circle", "Pool", "BoundingBox"};
 			idc			= SP_SURFACE_PAINTER_BRUSH_OPTIONS_CTRL_GROUP;
 			icon		= "x\surface_painter\addons\sp_mode_brush\icon.paa";
 			recompile	= "x\surface_painter\addons\sp_mode_brush\recompile.sqf";

@@ -20,7 +20,7 @@ class Default: OptionCheckBox {
 	class Values {
 		class CheckBox: Main {
 			typeName = "BOOL";
-			value = 1;
+			value = 0;
 		};
 
 		class Text: Second {

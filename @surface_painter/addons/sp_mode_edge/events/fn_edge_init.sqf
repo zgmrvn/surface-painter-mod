@@ -6,17 +6,36 @@
 // exposed
 // SP_var_edge_controls	= []; // contains editable controls
 SP_var_edge_line		= []; // contains the positions that represents the line
-SP_var_edge_interval	= 10; // inteval between objects created on the line
-SP_var_edge_spread		= 0; // spread of created objects according to their origin position
+
+// inteval between objects created on the line
+if (isNil "SP_var_edge_interval") then {
+	SP_var_edge_interval = 10;
+};
+
+// spread of created objects according to their origin position
+if (isNil "SP_var_edge_spread") then {
+	SP_var_edge_spread = 0;
+};
 
 // internal
-SP_var_edge_mode		= "DRAW"; // edge mode : DRAW, LOWER, HIGHER, CLIFF
+
+// edge mode : DRAW, LOWER, HIGHER, CLIFF
+if (isNil "SP_var_edge_mode") then {
+	SP_var_edge_mode = "DRAW";
+};
+
 SP_var_edge_anchor		= []; // needed to detect the direction the mouse move
 SP_var_edge_tempObjects	= []; // temporary objects for the refresh when options are changed
 
 // checkboxes
 {
-	_checkBoxControl = [SP_var_edge_controls, _x] call BIS_fnc_getFromPairs;
+	_x params ["_control", "_mode"];
+
+	_checkBoxControl = [SP_var_edge_controls, _control] call BIS_fnc_getFromPairs;
+
+	if (SP_var_edge_mode == _mode) then {
+		_checkBoxControl cbSetChecked true;
+	};
 
 	_checkBoxControl ctrlAddEventHandler ["CheckedChanged", {
 		{
@@ -34,14 +53,15 @@ SP_var_edge_tempObjects	= []; // temporary objects for the refresh when options 
 		];
 	}];
 } forEach [
-	"Default",
-	"Lower",
-	"Higher",
-	"Cliff"
+	["Default", "DRAW"],
+	["Lower", "LOWER"],
+	["Higher", "HIGHER"],
+	["Cliff", "CLIFF"]
 ];
 
 // interval
 private _intervalControl = [SP_var_edge_controls, "Interval"] call BIS_fnc_getFromPairs;
+_intervalControl ctrlSetText str SP_var_edge_interval;
 _intervalControl ctrlAddEventHandler ["MouseZChanged", {
 	_mouseWheel	= [-1, 1] select ((_this select 1) > 0);
 	_before		= parseNumber (ctrlText (_this select 0));
@@ -62,6 +82,7 @@ _intervalControl ctrlAddEventHandler ["MouseZChanged", {
 
 // spread
 private _spreadControl = [SP_var_edge_controls, "Spread"] call BIS_fnc_getFromPairs;
+_spreadControl ctrlSetText str SP_var_edge_spread;
 _spreadControl ctrlAddEventHandler ["MouseZChanged", {
 	_mouseWheel	= [-1, 1] select ((_this select 1) > 0);
 	_before		= parseNumber (ctrlText (_this select 0));

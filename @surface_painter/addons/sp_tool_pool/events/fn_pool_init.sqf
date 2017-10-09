@@ -137,6 +137,10 @@ _poolSearchResult ctrlAddEventHandler ["LBDblClick", {
 		_dialog		= findDisplay SP_SURFACE_PAINTER_IDD;
 		_poolList	= _dialog displayCtrl SP_SURFACE_PAINTER_POOL_LIST;
 
+		_newPoolEntry = _dialog ctrlCreate ["ObjectPoolEntry", SP_var_pool_uniqueIDC, _poolList];
+		[_newPoolEntry, _classname] execVM "x\surface_painter\addons\sp_tool_pool\scripts\createPoolEntry.sqf";
+
+		_followTerrainCheckBoxCtrl = _newPoolEntry controlsGroupCtrl ENTRY_FOLLOW_TERRAIN_CHECKBOX;
 		_keepHorizontal = getNumber (configFile >> "CfgVehicles" >> _classname >> "keepHorizontalPlacement");
 		_followTerrain = (_keepHorizontal == 0);
 		_followTerrainCheckBoxCtrl cbSetChecked _followTerrain;
@@ -150,7 +154,5 @@ _poolSearchResult ctrlAddEventHandler ["LBDblClick", {
 			["followTerrain", _followTerrain]
 		]] call BIS_fnc_setToPairs;
 
-		_newPoolEntry = _dialog ctrlCreate ["ObjectPoolEntry", SP_var_pool_uniqueIDC, _poolList];
-		[_newPoolEntry, _classname] execVM "x\surface_painter\addons\sp_tool_pool\scripts\createPoolEntry.sqf";
 	};
 }];

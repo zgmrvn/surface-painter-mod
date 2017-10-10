@@ -39,6 +39,7 @@ class CfgSurfacePainter {
 	class DefaultModule {
 		tools[]		= {};
 		idc			= -1;
+		extra		= 0;
 		icon		= "x\surface_painter\addons\sp_core\icon.paa";
 		recompile	= "";
 

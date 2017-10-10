@@ -14,6 +14,8 @@ class ObjectPoolEntry: RscControlsGroup {
 		autoScrollEnabled = 0;
 	};
 
+	fade = 1;
+
 	class Controls {
 		class Backgound {
 			idc = ENTRY_BACKGROUND;

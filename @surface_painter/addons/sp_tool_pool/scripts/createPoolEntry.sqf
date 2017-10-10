@@ -42,6 +42,7 @@ _newPoolEntry ctrlSetPosition [
 	safeZoneW * SP_POOL_CONTENT_W,
 	safeZoneH * SP_POOL_ENTRY_H
 ];
+_newPoolEntry ctrlSetFade 0;
 _newPoolEntry ctrlCommit 0;
 _newPoolEntryBackground ctrlSetText "1";
 

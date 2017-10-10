@@ -2,7 +2,7 @@
 	Brush - Mouse down
 	This function runs when mouse button is pressed down on world.
 */
-
+/*
 #define DISTANCE_MARGIN				15
 #define MAX_DISTANCE_FROM_CAMERA	1000
 #define MAX_SEARCH_ITERATIONS		16
@@ -92,3 +92,4 @@
 		};
 	};
 };
+*/

@@ -4,7 +4,7 @@ class CfgPatches {
 		name = "Surface Painter - Core";
 		units[] = {};
 		weapons[] = {};
-		version = 1.1.0;
+		version = 2.0.0;
 		requiredaddons[] = {};
 	};
 };
@@ -30,6 +30,11 @@ class CfgFunctions {
 			file = "x\surface_painter\addons\sp_core\functions\notifications";
 			class Core_PushNotification {};
 		};
+
+		class Events {
+			file = "x\surface_painter\addons\sp_core\functions\events";
+			class Core_TryEvent { recompile = 1; };
+		};
 	};
 };
 
@@ -42,7 +47,7 @@ class CfgSurfacePainter {
 		extra		= 0;
 		priority	= -1;
 		icon		= "x\surface_painter\addons\sp_core\icon.paa";
-		recompile	= "";
+		path		= "";
 
 		class Events {
 			/*
@@ -78,8 +83,6 @@ class CfgSurfacePainter {
 
 	// default tool class
 	class DefaultTool {
-		recompile = "";
-
 		class Events {
 			/*
 			// core

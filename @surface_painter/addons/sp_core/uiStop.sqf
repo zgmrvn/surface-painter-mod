@@ -1,3 +1,5 @@
+
+/*
 SP_var_camera cameraEffect ["terminate", "back"];
 camDestroy SP_var_camera;
 showCinemaBorder false;
@@ -29,3 +31,4 @@ SP_var_cameraDir = nil;
 SP_var_cameraPitch = nil;
 SP_var_while = nil;
 SP_var_leftPanelOpen = nil;
+*/

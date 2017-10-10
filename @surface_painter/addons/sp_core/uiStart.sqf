@@ -1,6 +1,8 @@
 #include "idcs.hpp"
 #include "sizes.hpp"
 
+#define MODULES (configFile >> "CfgSurfacePainter" >> "Modules")
+/*
 // camera
 showCinemaBorder false;
 SP_var_camera = "camera" camCreate (getposASL player);
@@ -32,21 +34,6 @@ SP_var_notificationsStack 	= [];
 SP_var_notificationsLoop	= false;
 SP_var_notifications		= [];
 
-// mode
-if (isNil "SP_var_mode") then {
-	_modes = "true" configClasses (configFile >> "CfgSurfacePainter" >> "Modules");
-	_modes = _modes apply {configName _x};
-	_modes = _modes apply {[getNumber (configFile >> "CfgSurfacePainter" >> "Modules" >> _x >> "priority"), _x]};
-	_modes sort false;
-	_modes = _modes apply {_x select 1};
-
-	{
-		if (getNumber (configFile >> "CfgSurfacePainter" >> "Modules" >> _x >> "extra") != 1) exitWith {
-			SP_var_mode = _x;
-		};
-	} forEach _modes;
-};
-
 // camera control keys
 SP_var_cameraKeys = [];
 {
@@ -60,8 +47,80 @@ SP_var_cameraKeys = [];
 	"MoveDown"
 ];
 SP_var_while = false;
+*/
+
+// get modules
+private _modules = ("true" configClasses MODULES) apply { configName _x };
+
+// sort modules by priority
+_modules = _modules apply { [getNumber (configFile >> "CfgSurfacePainter" >> "Modules" >> _x >> "priority"), _x] };
+_modules sort false;
+_modules = _modules apply { _x select 1 };
+
+
+
+
+// set default module if not already defined
+if (isNil "SP_var_core_currentModule") then {
+	SP_var_core_currentModule = _modules select 0;
+};
+
+
+
+// compile events for modules
+{
+	private _module = _x;
+	private _path = getText (MODULES >> _module >> "path");
+	private _events = ("true" configClasses (MODULES >> _module >> "Events")) apply { configName _x };
+
+	{
+		private _event = _x;
+		private _script = format ["%1\events\%2", _path, getText (MODULES >> _module >> "Events" >> _event >> "script")];
+
+		missionNamespace setVariable [
+			format ["SP_event_%1_%2", _module, _event],
+			compile preprocessFileLineNumbers _script
+		];
+	} forEach _events;
+} forEach _modules;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// call OnInit events
+{
+	["MODULE", _x, "OnInit"] call SP_fnc_core_tryEvent;
+} forEach _modules;
+
+
+
+	/*private _module = _x;
+
+	if (isClass (MODULES >> _module >> "Events" >> "OnInit")) then {
+		format ["SP_event_%1_onInit", _module];
+	};
+
+	private _path = getText (MODULES >> _module >> "path");
+
+
+	private _events = ("true" configClasses (MODULES >> _module >> "Events")) apply { configName _x };
+*/
+
+
+
 
 // ui logic initialization
+/*
 [] spawn {
 	waitUntil {!(isNull (findDisplay SP_SURFACE_PAINTER_IDD))};
 
@@ -173,3 +232,4 @@ SP_var_while = false;
 		ctrlShow [getNumber (configFile >> "CfgSurfacePainter" >> "Modules" >> SP_var_mode >> "idc"), true];
 	};
 };
+*/

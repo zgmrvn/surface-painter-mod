@@ -4,8 +4,8 @@
 class RscDisplaySurfacePainterCamera {
 	idd = SP_SURFACE_PAINTER_IDD;
 
-	onLoad = "[] execVM 'x\surface_painter\addons\sp_core\uiStart.sqf';";
-	onUnload = "[] execVM 'x\surface_painter\addons\sp_core\uiStop.sqf';";
+	onLoad = "[_this] execVM 'x\surface_painter\addons\sp_core\uiStart.sqf';";
+	onUnload = "[_this] execVM 'x\surface_painter\addons\sp_core\uiStop.sqf';";
 
 	class controlsBackground {
 		// main event control, responsible of mouse to world interactions

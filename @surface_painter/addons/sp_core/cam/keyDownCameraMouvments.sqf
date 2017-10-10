@@ -5,14 +5,7 @@
 	if ((_this select 1) in (actionKeys _x)) then {
 		[SP_var_cameraKeys, _x, true] call BIS_fnc_setToPairs;
 	};
-} forEach [
-	"cameraMoveForward",
-	"cameraMoveBackward",
-	"cameraMoveLeft",
-	"cameraMoveRight",
-	"cameraMoveUp",
-	"cameraMoveDown"
-];
+} forEach ["MoveForward", "MoveBack", "TurnLeft", "TurnRight", "LeanLeft", "MoveDown"];
 
 if (!SP_var_while) then {
 	SP_var_while = true;
@@ -48,12 +41,12 @@ if (!SP_var_while) then {
 					];
 				};
 			} forEach [
-				["cameraMoveForward", [0, 1, 0]],
-				["cameraMoveBackward", [0, -1, 0]],
-				["cameraMoveLeft", [-1, 1, 0]],
-				["cameraMoveRight", [1, 1, 0]],
-				["cameraMoveUp", [0, 0, 1]],
-				["cameraMoveDown", [0, 0, -1]]
+				["MoveForward", [0, 1, 0]],
+				["MoveBack", [0, -1, 0]],
+				["TurnLeft", [-1, 1, 0]],
+				["TurnRight", [1, 1, 0]],
+				["LeanLeft", [0, 0, 1]],
+				["MoveDown", [0, 0, -1]]
 			];
 
 			if (count _newPos != 0) then {

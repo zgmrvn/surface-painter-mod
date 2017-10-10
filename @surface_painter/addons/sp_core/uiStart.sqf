@@ -34,7 +34,11 @@ SP_var_notifications		= [];
 
 // mode
 if (isNil "SP_var_mode") then {
-	_modes = (configFile >> "CfgSurfacePainter" >> "Modules") call BIS_fnc_getCfgSubClasses;
+	_modes = "true" configClasses (configFile >> "CfgSurfacePainter" >> "Modules");
+	_modes = _modes apply {configName _x};
+	_modes = _modes apply {[getNumber (configFile >> "CfgSurfacePainter" >> "Modules" >> _x >> "priority"), _x]};
+	_modes sort false;
+	_modes = _modes apply {_x select 1};
 
 	{
 		if (getNumber (configFile >> "CfgSurfacePainter" >> "Modules" >> _x >> "extra") != 1) exitWith {

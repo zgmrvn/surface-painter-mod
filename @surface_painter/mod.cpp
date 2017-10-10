@@ -1,8 +1,8 @@
-name = "Suface Painter 1.0.1";
+name = "Suface Painter 1.1.0";
 picture = "icon.paa";
 actionName = "GitHub";
 action = "https://github.com/zgmrvn/surface-painter-mod";
-description = "Suface Painter - Version 1.0.1";
+description = "Suface Painter - Version 1.1.0";
 logo = "icon.paa";
 logoOver = "icon.paa";
 tooltip = "Surface Painter";

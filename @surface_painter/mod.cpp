@@ -8,5 +8,5 @@ logoOver = "icon.paa";
 tooltip = "Surface Painter";
 tooltipOwned = "Surface Painter Owned";
 overview = "Surface Painter, a tool for map makers.";
-author = "zgmrvn";
+author = "zgmrvn, Hashlych";
 overviewPicture = "icon.paa";

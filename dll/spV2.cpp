@@ -4,7 +4,7 @@
 File: spV2.cpp
 
 System: sp
-Status: Version 1.0.0 Release 1
+Status: Version 1.0.1
 Language: C++
 
 License: GNU Public License
@@ -41,7 +41,7 @@ Description:
 
 
 // DLL version for Arma 3 log:
-#define CURRENT_VERSION "1.0.0"
+#define CURRENT_VERSION "1.0.1"
 
 
 /* Global variables */
@@ -287,6 +287,8 @@ void __stdcall RVExtension(char *output, int outputSize, const char *function)
 /* fnc_applyModifs */
 void fnc_applyModifs(const char **args, int argsCnt)
 {
+	auto start_time = std::chrono::high_resolution_clock::now();	// exec_duration
+
 	int ret_code = 0;
 	std::string str;
 
@@ -343,6 +345,13 @@ void fnc_applyModifs(const char **args, int argsCnt)
 	sys_state.ret_str = str;
 	sys_state.ret_code = ret_code;
 	sys_state.is_working = false;
+
+	auto end_time = std::chrono::high_resolution_clock::now();	// exec_duration
+	std::stringstream exec_duration;
+
+	exec_duration << std::chrono::duration_cast<std::chrono::seconds>(end_time - start_time).count() << "s";
+	
+	sys_state.exec_duration = std::string(exec_duration.str());
 }
 
 
@@ -422,13 +431,15 @@ int __stdcall RVExtensionArgs(char *output, int outputSize, const char *function
 			}
 			else {
 				std::stringstream tmp_str;
-				tmp_str << "System has finished performing his task on project [" << sys_state.project_name << "]: ("
-					<< sys_state.ret_code << ") " << sys_state.ret_str;
+				tmp_str << "[" << sys_state.project_name << "] Task done: ("
+					<< sys_state.ret_code << ") " << sys_state.ret_str
+					<< " (spent: " << sys_state.exec_duration << ")";
 
 				str = tmp_str.str();
 
 				sys_state.project_name = "";
 				ret_code = sys_state.ret_code;
+				sys_state.exec_duration.clear();
 			}
 
 		}

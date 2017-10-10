@@ -4,7 +4,7 @@
 File: defines.h
 
 System: sp
-Status: Version 1.0.0 Release 1
+Status: Version 1.0.1
 Language: C++
 
 License: GNU Public License
@@ -26,6 +26,7 @@ Description:
 #include <string>
 #include <vector>
 #include <thread>
+#include <chrono>
 
 #ifndef FREEIMAGE_LIB
 	#define FREEIMAGE_LIB
@@ -52,6 +53,7 @@ typedef struct _sSystemState {	// Store system status
 	std::string project_name;
 	std::string ret_str;
 	int ret_code;
+	std::string exec_duration;
 } sSystemState;
 
 

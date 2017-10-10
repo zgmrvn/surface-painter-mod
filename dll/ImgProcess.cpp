@@ -4,7 +4,7 @@
 File: ImgProcess.cpp
 
 System: sp
-Status: Version 1.0.1 Release 1
+Status: Version 1.0.1
 Language: C++
 
 License: GNU Public License
@@ -31,26 +31,35 @@ int readImageInfos(const char *filepath, sInfos &infos)
 	if (fif == FIF_UNKNOWN)
 		fif = FreeImage_GetFIFFromFilename(filepath);
 
+	infos.fif = fif;
+
+
+	int ret = 0;
 	
 	if (fif != FIF_UNKNOWN && FreeImage_FIFSupportsReading(fif)) {
+		infos.is_supported = true;
+
 		FIBITMAP *dib = FreeImage_Load(fif, filepath, FIF_LOAD_NOPIXELS);
 
 		if (dib) {
 			infos.w = FreeImage_GetWidth(dib);
 			infos.h = FreeImage_GetHeight(dib);
-			infos.bpp = FreeImage_GetBPP(dib);
+			infos.bpp = FreeImage_GetBPP(dib);			
 			infos.cl_type = FreeImage_GetColorType(dib);
-
+			
 			FreeImage_Unload(dib);
-			return IMGPROCESS_SUCCESS;
+			ret = IMGPROCESS_SUCCESS;
 		}
 		else
-			return IMGPROCESS_ERRORS::FAILED_LOAD;
+			ret = IMGPROCESS_ERRORS::FAILED_LOAD;
 	}
-	else
-		return IMGPROCESS_ERRORS::UNSUPPORTED_FORMAT;
+	else {
+		infos.is_supported = false;
+		ret = IMGPROCESS_ERRORS::UNSUPPORTED_FORMAT;
+	}
 
-	return 0;
+	
+	return ret;
 }
 
 
@@ -132,220 +141,184 @@ int readImageLayers(const char *prj_name, sSystemState &sys_state, std::vector<s
 }
 
 
-/* imgConvert24To8bit */
-int imgConvert24To8bit(const char *filepath)
+/* imgConvertTo8bit */
+int imgConvertTo8bit(const char *filepath)
 {
-	// Determine image type:
-	FREE_IMAGE_FORMAT fif = FIF_UNKNOWN;
-	fif = FreeImage_GetFileType(filepath, 0);
-
-	if (fif == FIF_UNKNOWN)
-		fif = FreeImage_GetFIFFromFilename(filepath);
+	sInfos infos;
+	int ret = 0;
+	if ((ret = readImageInfos(filepath, infos)) != IMGPROCESS_SUCCESS)
+		return ret;
 
 	
-	if (fif != FIF_UNKNOWN && FreeImage_FIFSupportsReading(fif)) {
-		FIBITMAP *dib = FreeImage_Load(fif, filepath);
-
-		if (dib) {
-			sInfos infos = { FreeImage_GetWidth(dib), FreeImage_GetHeight(dib),
-				FreeImage_GetBPP(dib), FreeImage_GetColorType(dib) };
-
-			if (infos.bpp != 24) {
-				FreeImage_Unload(dib);
-				return IMGPROCESS_CONVERT_ERRORS::NOT_24BIT;
-			}
-
-
-			FIBITMAP *dib_8b = FreeImage_ColorQuantizeEx(dib, FIQ_LFPQUANT, 256, 0, NULL);
-			FreeImage_Unload(dib);
-
-			if (dib_8b) {
-				if (FreeImage_Save(FIF_TIFF, dib_8b, filepath, TIFF_LZW)) {
-					FreeImage_Unload(dib_8b);
-					return IMGPROCESS_SUCCESS;
-				}
-				else
-					return IMGPROCESS_ERRORS::FAILED_SAVE;
-			}
-			else
-				return IMGPROCESS_CONVERT_ERRORS::FAILED_COLOR_QUANTIZE;
-
-
-		}
-		else
-			return IMGPROCESS_CONVERT_ERRORS::FAILED_LOAD_SOURCE;
-	}
-	else
+	// Is image valid for opening:
+	if (infos.fif == FIF_UNKNOWN || !infos.is_supported)
 		return IMGPROCESS_ERRORS::UNSUPPORTED_FORMAT;
 
-	return 0;
-}
 
+	// If not 24/32-bit: stop
+	if (infos.bpp != 24 && infos.bpp != 32)
+		return IMGPROCESS_CONVERT_ERRORS::BAD_BPP;
 
-/* imgConvert32To8bit */
-int imgConvert32To8bit(const char *filepath)
-{
-	// Determine image type:
-	FREE_IMAGE_FORMAT fif = FIF_UNKNOWN;
-	fif = FreeImage_GetFileType(filepath, 0);
+	
+	// Try opening and loading source image:
+	FIBITMAP *dib = FreeImage_Load(infos.fif, filepath);
+	if (!dib)
+		return IMGPROCESS_CONVERT_ERRORS::FAILED_LOAD_SOURCE;
+	
 
-	if (fif == FIF_UNKNOWN)
-		fif = FreeImage_GetFIFFromFilename(filepath);
+	// Conversion process
+	// First try with Fast algo.
+	// On fail: try 2nd algo.
+	FIBITMAP *dib_8b = FreeImage_ColorQuantize(dib, FIQ_LFPQUANT);	// Lossless Fast Pseudo-Quantization Algorithm by Carsten Klein
+	
+	bool convert_failed = false;
+	if (!dib_8b) {
+		if (infos.bpp != 24)
+			convert_failed = true;
+		else {
+			dib_8b = FreeImage_ColorQuantize(dib, FIQ_NNQUANT);	// NeuQuant neural-net quantization algorithm by Anthony Dekker (24-bit only)
 
-
-	if (fif != FIF_UNKNOWN && FreeImage_FIFSupportsReading(fif)) {
-		FIBITMAP *dib = FreeImage_Load(fif, filepath);
-
-		if (dib) {
-			sInfos infos = { FreeImage_GetWidth(dib), FreeImage_GetHeight(dib),
-				FreeImage_GetBPP(dib), FreeImage_GetColorType(dib) };
-
-			if (infos.bpp != 32) {
-				FreeImage_Unload(dib);
-				return IMGPROCESS_CONVERT_ERRORS::NOT_32BIT;
-			}
-
-
-			FIBITMAP *dib_8b = FreeImage_ColorQuantize(dib, FIQ_LFPQUANT);
-			FreeImage_Unload(dib);
-
-			if (dib_8b) {
-				if (FreeImage_Save(FIF_TIFF, dib_8b, filepath, TIFF_LZW)) {
-					FreeImage_Unload(dib_8b);
-					return IMGPROCESS_SUCCESS;
-				}
-				else
-					return IMGPROCESS_ERRORS::FAILED_SAVE;
-			}
-			else
-				return IMGPROCESS_CONVERT_ERRORS::FAILED_COLOR_QUANTIZE;
-
-
+			if (!dib_8b)
+				convert_failed = true;
 		}
-		else
-			return IMGPROCESS_CONVERT_ERRORS::FAILED_LOAD_SOURCE;
 	}
+
+	FreeImage_Unload(dib);	// Unload previously loaded source image
+
+	if (convert_failed)
+		return IMGPROCESS_CONVERT_ERRORS::FAILED_COLOR_QUANTIZE;
+
+
+	// Conversion: ok. Save image.
+	ret = 0;
+	if (FreeImage_Save(FIF_TIFF, dib_8b, filepath, TIFF_LZW))
+		ret = IMGPROCESS_SUCCESS;
 	else
-		return IMGPROCESS_ERRORS::UNSUPPORTED_FORMAT;
+		ret = IMGPROCESS_ERRORS::FAILED_SAVE;
 
-	return 0;
+
+	FreeImage_Unload(dib_8b); // Unload previously loaded dest image
+	
+	return ret;
 }
-
-
 
 
 
 /* applyModifs */
 int applyModifs(sProject &prj, std::vector<sPxModif> &modifs, sSystemState &sys_state)
 {
-	// Determine image type:
-	const char *filepath = prj.filepath.c_str();
-	FREE_IMAGE_FORMAT fif = FIF_UNKNOWN;
+	sInfos infos;
+	const char *filepath = prj.filepath.c_str(),
+		*prjname = prj.name.c_str();
+	int ret = 0;
 
-	fif = FreeImage_GetFileType(filepath, 0);
+	if ((ret = readImageInfos(filepath, infos)) != IMGPROCESS_SUCCESS)
+		return ret;
 
-	if (fif == FIF_UNKNOWN)
-		fif = FreeImage_GetFIFFromFilename(filepath);
 
-	if (fif != FIF_UNKNOWN && FreeImage_FIFSupportsReading(fif)) {
-		FIBITMAP *dib = FreeImage_Load(fif, filepath);
+	// Test if conversion to 8-bit needed:
+	if (infos.bpp != 8) {
+		int ret = imgConvertTo8bit(filepath);
 
-		if (dib) {
-			uint32_t width = FreeImage_GetWidth(dib),
-				height = FreeImage_GetHeight(dib);
-			uint16_t bpp = FreeImage_GetBPP(dib);
-
-			if (bpp != 8) {
-				FreeImage_Unload(dib);
-
-				int ret;
-				if (bpp == 24)
-					ret = imgConvert24To8bit(filepath);
-				else if (bpp == 32)
-					ret = imgConvert32To8bit(filepath);
-				else
-					ret = IMGPROCESS_ERRORS::UNSUPPORTED_FORMAT;
-
-				if (ret != IMGPROCESS_SUCCESS) {
-					if (ret == IMGPROCESS_CONVERT_ERRORS::NOT_24BIT || ret == IMGPROCESS_CONVERT_ERRORS::NOT_32BIT
-						|| ret == IMGPROCESS_CONVERT_ERRORS::FAILED_COLOR_QUANTIZE)
-						return IMGPROCESS_CONVERT_ERRORS::FAILED_CONVERT;
-					else
-						return ret;
-				}
-				else {
-					dib = FreeImage_Load(fif, filepath);
-					if (!dib)
-						return IMGPROCESS_ERRORS::FAILED_LOAD;
-				}
+		if (ret != IMGPROCESS_SUCCESS) {
+			switch (ret) {
+			case IMGPROCESS_CONVERT_ERRORS::BAD_BPP:
+			case IMGPROCESS_CONVERT_ERRORS::FAILED_COLOR_QUANTIZE:
+				return IMGPROCESS_CONVERT_ERRORS::FAILED_CONVERT;
+				break;
+			default:
+				return ret;
+				break;
 			}
 
-
-			std::vector<RGBTRIPLE> fn_colors;
-			determineUniqueColors(dib, fn_colors);
-
-			int free_index = fn_colors.size();
-
-			RGBQUAD *palette = FreeImage_GetPalette(dib);
-
-			
-			for (size_t n = 0; n < modifs.size(); n++) {
-				sPxModif pxm = modifs[n];
-
-				if (pxm.x > width || pxm.y > height)
-					break;
-
-
-				int cl_index = 0;
-				bool cl_fnd = false;
-
-				cl_fnd = false;
-				for (cl_index = 0; cl_index <= 255; cl_index++) {
-					if (palette[cl_index].rgbRed == pxm.color.rgbtRed
-						&& palette[cl_index].rgbGreen == pxm.color.rgbtGreen
-						&& palette[cl_index].rgbBlue == pxm.color.rgbtBlue) {
-						cl_fnd = true;
-						break;
-					}
-				}
-
-				BYTE *bits = FreeImage_GetScanLine(dib, pxm.y);
-
-				if (cl_fnd) {
-					bits[pxm.x] = cl_index;
-				}
-				else {
-					palette[free_index].rgbRed = pxm.color.rgbtRed;
-					palette[free_index].rgbGreen = pxm.color.rgbtGreen;
-					palette[free_index].rgbBlue = pxm.color.rgbtBlue;
-					
-					bits[pxm.x] = free_index;
-
-					free_index++;
-				}
-			}
-
-
-			int ret = 0;
-
-			if (FreeImage_Save(FIF_TIFF, dib, filepath, TIFF_LZW)) {
-				ret = IMGPROCESS_SUCCESS;
-			}
-			else {
-				ret = IMGPROCESS_ERRORS::FAILED_SAVE;
-			}
-
-			FreeImage_Unload(dib);
-			return ret;
 		}
-		else
-			return IMGPROCESS_ERRORS::FAILED_LOAD;
+	}
+
+
+	// Try opening and loading image:
+	FIBITMAP *dib = FreeImage_Load(infos.fif, filepath);
+	if (!dib)
+		return IMGPROCESS_ERRORS::FAILED_LOAD;
+
+
+	// Compare colors listed in the layers configuration file
+	// to the colors used in the image.
+	// If color is missing, add to the palette.
+	std::vector<RGBTRIPLE> img_colors;
+	std::vector<sColor> layers_colors;
+
+	determineUniqueColors(dib, img_colors);		// colors used in the image
+	readImageLayers(prjname, sys_state, layers_colors);	// colors indexed in the layers cfg file
+
+	int free_index = img_colors.size();
+	RGBQUAD *palette = FreeImage_GetPalette(dib);
+
+	bool color_found;
+	
+	
+	for (size_t n = 0; n < layers_colors.size(); n++) {
+		
+		color_found = false;
+		for (size_t i = 0; i < free_index; i++) {
+			if (layers_colors[n].val.rgbtRed == palette[i].rgbRed
+				&& layers_colors[n].val.rgbtGreen == palette[i].rgbGreen
+				&& layers_colors[n].val.rgbtBlue == palette[i].rgbBlue) {
+				color_found = true;
+				break;
+			}
+		}
+
+		// color not found: adding
+		if (!color_found) {
+
+			if (free_index < 255) {
+				palette[free_index].rgbRed = layers_colors[n].val.rgbtRed;
+				palette[free_index].rgbGreen = layers_colors[n].val.rgbtGreen;
+				palette[free_index].rgbBlue = layers_colors[n].val.rgbtBlue;
+
+				free_index++;
+			}
+		}
 
 	}
-	else
-		return IMGPROCESS_ERRORS::UNSUPPORTED_FORMAT;
 
-	return 0;
+
+	// Apply pixels modifications:
+	int color_index = 0;
+	for (size_t n = 0; n < modifs.size(); n++) {
+
+		// test if valid pixel position:
+		if (modifs[n].x > infos.w || modifs[n].y > infos.h)
+			continue;
+
+		// determine color index:
+		for (int i = 0; i <= 255; i++) {
+			if (palette[i].rgbRed == modifs[n].color.rgbtRed
+				&& palette[i].rgbGreen == modifs[n].color.rgbtGreen
+				&& palette[i].rgbBlue == modifs[n].color.rgbtBlue) {
+				color_index = i;
+				break;
+			}
+		}
+
+
+		// apply color to pixel (x,y):
+		BYTE *bits = FreeImage_GetScanLine(dib, modifs[n].y);
+		bits[modifs[n].x] = color_index;
+	}
+
+
+	// Try to save image:
+	ret = 0;
+	if (FreeImage_Save(FIF_TIFF, dib, filepath, TIFF_LZW)) {
+		modifs.clear();
+		ret = IMGPROCESS_SUCCESS;
+	}
+	else
+		ret = IMGPROCESS_ERRORS::FAILED_SAVE;
+	
+	FreeImage_Unload(dib);	// Unload previously loaded image
+	return ret;
 }
 
 
@@ -371,7 +344,7 @@ void addPixelModif(std::string source_str, std::vector<sPxModif> &modifs)
 		if (grp_color.size() == 3) {
 			r = atoi(grp_color[0].c_str());
 			g = atoi(grp_color[1].c_str()),
-				b = atoi(grp_color[2].c_str());
+			b = atoi(grp_color[2].c_str());
 
 			RGBTRIPLE cl = { (BYTE)b,(BYTE)g,(BYTE)r };
 			modifs.push_back({ (uint32_t)x, (uint32_t)y, cl });

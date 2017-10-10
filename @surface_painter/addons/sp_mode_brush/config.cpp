@@ -42,6 +42,7 @@ class CfgSurfacePainter {
 		class Brush: DefaultModule {
 			tools[]		= {"Circle", "Pool", "BoundingBox"};
 			idc			= SP_SURFACE_PAINTER_BRUSH_OPTIONS_CTRL_GROUP;
+			priority	= 5;
 			icon		= "x\surface_painter\addons\sp_mode_brush\icon.paa";
 			recompile	= "x\surface_painter\addons\sp_mode_brush\recompile.sqf";
 

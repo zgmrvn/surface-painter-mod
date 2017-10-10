@@ -3,8 +3,14 @@
 // every modes controls so the color can be changed on mode selection
 SP_var_modes = [];
 
+// sort modules by priority
+private _modes = "true" configClasses (MODULES);
+_modes = _modes apply {configName _x};
+_modes = _modes apply {[getNumber (configFile >> "CfgSurfacePainter" >> "Modules" >> _x >> "priority"), _x]};
+_modes sort false;
+_modes = _modes apply {_x select 1};
+
 // load modes list
-_modes = (configFile >> "CfgSurfacePainter" >> "Modules") call BIS_fnc_getCfgSubClasses;
 private _extraCount = 0;
 
 {

@@ -48,6 +48,7 @@ class CfgSurfacePainter {
 		class Edge: DefaultModule {
 			tools[]		= {"Circle", "Pool"};
 			idc			= SP_SURFACE_PAINTER_EDGE_OPTIONS_CTRL_GROUP;
+			priority	= 4;
 			icon		= "x\surface_painter\addons\sp_mode_edge\icon.paa";
 			recompile	= "x\surface_painter\addons\sp_mode_edge\recompile.sqf";
 

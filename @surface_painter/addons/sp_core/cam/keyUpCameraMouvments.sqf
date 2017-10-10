@@ -1,4 +1,11 @@
-_actions = ["MoveForward", "MoveBack", "TurnLeft", "TurnRight", "LeanLeft", "MoveDown"];
+_actions = [
+	"cameraMoveForward",
+	"cameraMoveBackward",
+	"cameraMoveLeft",
+	"cameraMoveRight",
+	"cameraMoveUp",
+	"cameraMoveDown"
+];
 
 {
 	if ((_this select 1) in (actionKeys _x)) then {

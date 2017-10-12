@@ -33,7 +33,7 @@ class CfgFunctions {
 
 		class Events {
 			file = "x\surface_painter\addons\sp_core\functions\events";
-			class Core_TryEvent { recompile = 1; };
+			class Core_TryEvent {};
 		};
 	};
 };
@@ -46,8 +46,8 @@ class CfgSurfacePainter {
 		idc			= -1;
 		extra		= 0;
 		priority	= -1;
-		icon		= "x\surface_painter\addons\sp_core\icon.paa";
-		path		= "";
+		path		= "x\surface_painter\addons\sp_core";
+		icon		= "icon.paa";
 
 		class Events {
 			/*

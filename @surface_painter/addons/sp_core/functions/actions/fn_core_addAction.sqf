@@ -2,7 +2,7 @@
 
 player addAction [
 	"Surface Painter",
-	{ createDialog "RscDisplaySurfacePainterCamera" }
+	{ createDialog "RscDisplaySurfacePainter" }
 ];
 
 if (DEV) then {

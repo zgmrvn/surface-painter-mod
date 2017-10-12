@@ -11,9 +11,7 @@ SP_var_camera camCommit 0;
 SP_var_cameraDir	= 0; // camera direction
 SP_var_cameraPitch	= 0; // camera pitch
 
-// mouse
-SP_var_primaryMouseButton	= false; // mouse main click mutex
-SP_var_secondaryMouseButton	= false; // mouse second click mutex
+
 SP_var_mouseScreenDelta		= [0.5, 0.5]; // mouse screen position during the previous frame
 SP_var_mouseScreenPosition	= [0.5, 0.5]; // mouse screen position during the current frame
 SP_var_mouseWorldPosition	= screenToWorld SP_var_mouseScreenPosition; // mouse world position
@@ -49,6 +47,32 @@ SP_var_cameraKeys = [];
 SP_var_while = false;
 */
 
+//waitUntil { !isNull _this };
+
+//systemChat str _this;
+
+
+disableserialization;
+
+waitUntil { !isNull findDisplay SP_IDD };
+
+private _dialog	= findDisplay SP_IDD;
+private _eventControl = _dialog displayCtrl SP_EVENT_CONTROL; // this is the main control for catching events
+
+private _menuControlsGroup = _dialog displayCtrl SP_MENU_CONTROLS_GROUP;
+private _modulesControlsGroup = _menuControlsGroup controlsGroupCtrl SP_MODULES_CONTROLS_GROUP;
+
+/*
+_leftPanelCtrlGroup			= _dialog displayCtrl SP_SURFACE_PAINTER_LEFT_PANEL_CTRL_GROUP;
+_modeslist					= _dialog displayCtrl SP_SURFACE_PAINTER_MODES_LIST;
+_leftPanelEnterEventCtrl	= _dialog displayCtrl SP_SURFACE_PAINTER_LEFT_PANEL_EVENT_ENTER_CTRL;
+_leftPanelExitEventCtrl		= _dialog displayCtrl SP_SURFACE_PAINTER_LEFT_PANEL_EVENT_EXIT_CTRL;
+*/
+
+
+
+
+
 // get modules
 private _modules = ("true" configClasses MODULES) apply { configName _x };
 
@@ -60,10 +84,22 @@ _modules = _modules apply { _x select 1 };
 
 
 
+
+
+
+
+
 // set default module if not already defined
 if (isNil "SP_var_core_currentModule") then {
 	SP_var_core_currentModule = _modules select 0;
 };
+
+// mouse
+SP_var_core_primaryMouseButton = false;
+SP_var_core_secondaryMouseButton = false;
+
+
+
 
 
 
@@ -89,6 +125,37 @@ if (isNil "SP_var_core_currentModule") then {
 
 
 
+
+
+
+// fill menu
+{
+	private _menuButton = _dialog ctrlCreate ["MenuButton", -1, _modulesControlsGroup];
+	private _controlPosition = ctrlPosition _menuButton;
+	_menuButton ctrlSetPosition [
+		0,
+		safeZoneW * SP_MENU_W * (safeZoneW / safeZoneH) * _forEachIndex,
+		_controlPosition select 2,
+		_controlPosition select 3
+	];
+	_menuButton ctrlCommit 0;
+
+	// set button icon
+	private _path = getText (MODULES >> _x >> "path");
+	private _icon = getText (MODULES >> _x >> "icon");
+	private _menuButtonIcon = _menuButton controlsGroupCtrl SP_MENU_BUTTON_ICON;
+	_menuButtonIcon ctrlSetText format ["%1\%2", _path, _icon];
+} forEach _modules;
+
+// resize menu according to the number of buttons
+private _controlPosition = ctrlPosition _modulesControlsGroup;
+_modulesControlsGroup ctrlSetPosition [
+	0,
+	_controlPosition select 1,
+	_controlPosition select 2,
+	safeZoneW * SP_MENU_W * (safeZoneW / safeZoneH) * (count _modules)
+];
+_modulesControlsGroup ctrlCommit 0;
 
 
 
@@ -160,16 +227,7 @@ _eventControl ctrlAddEventHandler ["MouseButtonUp", {
 // ui logic initialization
 /*
 [] spawn {
-	waitUntil {!(isNull (findDisplay SP_SURFACE_PAINTER_IDD))};
 
-	disableserialization;
-
-	_dialog						= findDisplay SP_SURFACE_PAINTER_IDD;
-	_eventCtrl					= _dialog displayCtrl SP_SURFACE_PAINTER_EVENT_CTRL; // this is the main control for catching events
-	_leftPanelCtrlGroup			= _dialog displayCtrl SP_SURFACE_PAINTER_LEFT_PANEL_CTRL_GROUP;
-	_modeslist					= _dialog displayCtrl SP_SURFACE_PAINTER_MODES_LIST;
-	_leftPanelEnterEventCtrl	= _dialog displayCtrl SP_SURFACE_PAINTER_LEFT_PANEL_EVENT_ENTER_CTRL;
-	_leftPanelExitEventCtrl		= _dialog displayCtrl SP_SURFACE_PAINTER_LEFT_PANEL_EVENT_EXIT_CTRL;
 
 	// fill modes list
 	#include "events\dialogCreated.sqf";
@@ -204,27 +262,12 @@ _eventControl ctrlAddEventHandler ["MouseButtonUp", {
 
 		true
 	}];
+	*/
 
-	// on mouse button down
-	_eventCtrl ctrlAddEventHandler ["MouseButtonDown", {
-		_button = _this select 1;
 
-		// mouse buttons down behaviour
-		#include "events\eventCtrlMouseDown.sqf"
 
-		true
+/*
 
-	}];
-
-	// on mouse button up
-	_eventCtrl ctrlAddEventHandler ["MouseButtonUp", {
-		_button = _this select 1;
-
-		// mouse buttons up behaviour
-		#include "events\eventCtrlMouseUp.sqf"
-
-		true
-	}];
 
 	// on mouse move in the main control
 	_eventCtrl ctrlAddEventHandler ["MouseMoving", {

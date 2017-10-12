@@ -6,7 +6,7 @@ class CfgPatches {
 		name = "Surface Painter - Mode - Brush";
 		units[] = {};
 		weapons[] = {};
-		version = 1.0.1;
+		version = 2.0.0;
 		requiredaddons[] = {
 			"SP_Core",
 			"SP_Tool_Circle"

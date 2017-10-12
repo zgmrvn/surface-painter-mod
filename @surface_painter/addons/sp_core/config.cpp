@@ -58,8 +58,6 @@ class CfgSurfacePainter {
 			class OnMouseMove {};					// run everytime mouse move
 			class OnPrimaryMouseButtonDown {};		// run when primary mouse button is pressed down
 			class OnPrimaryMouseButtonUp {};		// run when primary mouse button is released
-			class OnSecondaryMouseButtonDown {};	// run when secondary mouse button is pressed down
-			class OnSecondaryMouseButtonUp {};		// run when secondary mouse button is released
 
 			// pool
 			class OnPoolEntryAdd {};					// run when a pool entry is added

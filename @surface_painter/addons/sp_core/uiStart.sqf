@@ -181,7 +181,6 @@ _eventControl ctrlAddEventHandler ["MouseButtonDown", {
 
 	if (_button == 1) then {
 		SP_var_core_secondaryMouseButton = true;
-		["MODULE", SP_var_core_currentModule, "OnSecondaryMouseButtonDown"] call SP_fnc_core_tryEvent;
 	};
 
 	true
@@ -199,7 +198,6 @@ _eventControl ctrlAddEventHandler ["MouseButtonUp", {
 
 	if (_button == 1) then {
 		SP_var_core_secondaryMouseButton = false;
-		["MODULE", SP_var_core_currentModule, "OnSecondaryMouseButtonUp"] call SP_fnc_core_tryEvent;
 	};
 
 	true

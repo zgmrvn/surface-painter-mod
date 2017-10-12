@@ -1,5 +1,8 @@
+#define SP_MENU_W		pixelW * 16
+
 // generics
-#define SP_FOLDED_W		0.02
+/*
+#define SP_FOLDED_W		pixelW * 40 * safeZoneW
 #define SP_UNFOLDED_W	(0.15 + SP_FOLDED_W)
 #define SP_MARGIN_X		0.01
 #define SP_MARGIN_Y		0.015
@@ -27,3 +30,4 @@
 #define SP_NOTIFICATION_W				0.3
 #define SP_NOTIFICATION_H				0.035
 #define SP_NOTIFICATION_MARGIN			pixelH * 2
+*/

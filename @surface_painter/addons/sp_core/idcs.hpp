@@ -1,10 +1,19 @@
-// IDD
-#define	SP_SURFACE_PAINTER_IDD 253943
+#define	SP_IDD 253943
 
-// main event control, it catches every mouse actions
-#define	SP_SURFACE_PAINTER_EVENT_CTRL 10
+#define	SP_EVENT_CONTROL 10
+
+// menu
+#define SP_MENU_CONTROLS_GROUP 11
+#define SP_MODULES_CONTROLS_GROUP 12
+
+// menu button
+#define SP_MENU_BUTTON_DATA			10
+#define SP_MENU_BUTTON_BACKGROUND	11
+#define SP_MENU_BUTTON_ICON			12
+#define SP_MENU_BUTTON_EVENT		13
 
 // left panel with modes and options
+/*
 #define SP_SURFACE_PAINTER_LEFT_PANEL_EVENT_ENTER_CTRL 110
 #define SP_SURFACE_PAINTER_LEFT_PANEL_EVENT_EXIT_CTRL 111
 #define	SP_SURFACE_PAINTER_LEFT_PANEL_CTRL_GROUP 15
@@ -13,3 +22,4 @@
 
 // notifications
 #define SP_SURFACE_PAINTER_NOTIFICATIONS_CTRL_GROUP 16
+*/

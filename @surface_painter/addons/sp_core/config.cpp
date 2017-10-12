@@ -100,16 +100,20 @@ class CfgSurfacePainter {
 	class Tools {};
 };
 
-class RscControlsGroup;
-class RscEdit;
-class RscCheckBox;
-class RscText;
-class RscButton;
 class RscListBox;
+class RscControlsGroup;
 class rscPicture;
+class RscText;
 
+/*class RscEdit;
+class RscCheckBox;
+
+class RscButton;*/
+//class rscPicture;
+/*
 #include "bases.hpp"
 #include "rscOptions.hpp"
 #include "rscNotification.hpp"
+*/
 
 #include "ui.hpp"

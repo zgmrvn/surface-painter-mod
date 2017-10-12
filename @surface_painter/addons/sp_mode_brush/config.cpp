@@ -22,8 +22,8 @@ class CfgSurfacePainter {
 			tools[]		= { "Circle", "Pool" };
 			idc			= SP_SURFACE_PAINTER_BRUSH_OPTIONS_CTRL_GROUP;
 			priority	= 100;
-			icon		= "x\surface_painter\addons\sp_mode_brush\icon.paa";
 			path		= "x\surface_painter\addons\sp_mode_brush";
+			icon		= "icon.paa";
 
 			class Events {
 				class OnInit { script = "init.sqf"; };

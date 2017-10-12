@@ -1,30 +1,182 @@
 #include "idcs.hpp"
+#include "types.hpp"
+#include "styles.hpp"
 #include "sizes.hpp"
 
-class RscDisplaySurfacePainterCamera {
-	idd = SP_SURFACE_PAINTER_IDD;
 
-	onLoad = "[_this] execVM 'x\surface_painter\addons\sp_core\uiStart.sqf';";
-	onUnload = "[_this] execVM 'x\surface_painter\addons\sp_core\uiStop.sqf';";
+class RscStatic {
+	idc = -1;
+	type = CT_STATIC;
+	style = ST_LEFT;
+
+	x = safeZoneX;
+	y = safeZoneY;
+	w = safeZoneW;
+	h = safeZoneH;
+
+	colorBackground[] = {0, 0, 0, 1};
+	colorText[] = {1, 1, 1, 1};
+	font = GUI_FONT_NORMAL;
+	sizeEx = GUI_GRID_CENTER_H;
+	text = "";
+	moving = 1;
+};
+
+
+
+class RscEvent: RscListBox {
+	x = safeZoneX;
+	y = safeZoneY;
+	w = safeZoneW;
+	h = safeZoneH;
+
+	colorBackground[] = {1, 0, 0, 0};
+	lineSpacing = 0;
+	rowHeight = 0;
+	text = "";
+};
+
+class RscData: RscText {
+	x = 0;
+	y = 0;
+	w = 0;
+	h = 0;
+
+	text = "";
+	sizeEx = 0;
+	colorBackground[] = {0, 0, 0, 0};
+	colorText[] = {0, 0, 0, 0};
+};
+
+
+
+// menu button
+class MenuButton: RscControlsGroup {
+	x = 0;
+	y = 0;
+	w = safeZoneW * SP_MENU_W;
+	h = safeZoneW * SP_MENU_W * (safeZoneW / safeZoneH);
+
+	class Controls {
+		class Data: RscData {
+			idc = SP_MENU_BUTTON_DATA;
+		};
+
+		class Background: RscStatic {
+			idc = SP_MENU_BUTTON_BACKGROUND;
+
+			x = 0;
+			y = 0;
+			w = safeZoneW * SP_MENU_W;
+			h = safeZoneW * SP_MENU_W * (safeZoneW / safeZoneH);
+
+			colorBackground[] = {0, 0, 0, 0};
+		};
+
+		class Icon: RscPicture {
+			idc = SP_MENU_BUTTON_ICON;
+
+			x = 0;
+			y = 0;
+			w = safeZoneW * SP_MENU_W;
+			h = safeZoneW * SP_MENU_W * (safeZoneW / safeZoneH);
+		};
+
+		class Event: RscEvent {
+			idc = SP_MENU_BUTTON_EVENT;
+
+			x = 0;
+			y = 0;
+			w = safeZoneW * SP_MENU_W;
+			h = safeZoneW * SP_MENU_W * (safeZoneW / safeZoneH);
+		};
+	};
+};
+
+
+class RscDisplaySurfacePainter {
+	idd = SP_IDD;
+
+	onLoad = "[] execVM 'x\surface_painter\addons\sp_core\uiStart.sqf';";
+	onUnload = "[] execVM 'x\surface_painter\addons\sp_core\uiStop.sqf';";
 
 	class controlsBackground {
-		// main event control, responsible of mouse to world interactions
-		class EventCtrl: RscListBox {
-			idc = SP_SURFACE_PAINTER_EVENT_CTRL;
-			type = CT_LISTBOX;
+		class EventControl: RscEvent {
+			idc = SP_EVENT_CONTROL;
+		};
+	};
+
+	class Controls {
+		class Menu: RscControlsGroup {
+			idc = SP_MENU_CONTROLS_GROUP;
 
 			x = safeZoneX;
 			y = safeZoneY;
-			w = safeZoneW;
+			w = safeZoneW * SP_MENU_W;
 			h = safeZoneH;
 
-			colorBackground[] = {0, 0, 0, 0};
-			lineSpacing = 0;
-			text = "";
+			class Controls {
+				class Background: RscStatic {
+					x = 0;
+					y = 0;
+					w = safeZoneW * SP_MENU_W;
+					h = safeZoneH;
+
+					colorBackground[] = {0, 0, 0, 1};
+					colorText[] = {0, 0, 0, 0};
+					sizeEx = 0;
+				};
+
+				class Logo: RscControlsGroup {
+					x = 0;
+					y = 0;
+					w = safeZoneW * SP_MENU_W;
+					h = safeZoneW * SP_MENU_W * (safeZoneW / safeZoneH);
+
+					class Controls {
+						class Background: RscStatic {
+							x = 0;
+							y = 0;
+							w = safeZoneW * SP_MENU_W;
+							h = safeZoneW * SP_MENU_W * (safeZoneW / safeZoneH);
+
+							colorBackground[] = {1, 1, 1, 1};
+							colorText[] = {0, 0, 0, 0};
+							sizeEx = 0;
+						};
+
+						class Picture: RscPicture {
+							x = 0;
+							y = 0;
+							w = safeZoneW * SP_MENU_W;
+							h = safeZoneW * SP_MENU_W * (safeZoneW / safeZoneH);
+
+							text = "x\surface_painter\addons\sp_core\logo_ca.paa";
+						};
+					};
+				};
+
+				class Modules: RscControlsGroup {
+					idc = SP_MODULES_CONTROLS_GROUP;
+
+					x = 0;
+					y = safeZoneW * SP_MENU_W * (safeZoneW / safeZoneH);
+					w = safeZoneW * SP_MENU_W;
+					h = 0;
+
+					class Controls {};
+				};
+			};
 		};
+	};
+};
+
+
+
+
 
 		// modes and options background
-		class ModesBackground: MenuBackground {
+		/*class ModesBackground: MenuBackground {
 			idc = SP_SURFACE_PAINTER_MODES_BACKGROUND;
 			type = CT_STATIC;
 
@@ -42,10 +194,9 @@ class RscDisplaySurfacePainterCamera {
 			h = safeZoneH;
 
 			colorBackground[] = {0, 0, 0, 1};
-		};
-	};
+		};*/
 
-	class Controls {
+	/*class Controls {
 		//////////////////////////////////////////////
 		//////////////////////////////////////////////
 		///// LEFT PANEL /////////////////////////////
@@ -86,7 +237,7 @@ class RscDisplaySurfacePainterCamera {
 					h = safeZoneH;
 				};
 			};
-		};
+		};*/
 
 		//////////////////////////////////////////////
 		//////////////////////////////////////////////
@@ -94,7 +245,7 @@ class RscDisplaySurfacePainterCamera {
 		//////////////////////////////////////////////
 		//////////////////////////////////////////////
 
-		class NotificationList: RscControlsGroup {
+		/*class NotificationList: RscControlsGroup {
 			idc = SP_SURFACE_PAINTER_NOTIFICATIONS_CTRL_GROUP;
 
 			x = safeZoneX + safeZoneW * (0.5 - SP_NOTIFICATION_W / 2);
@@ -113,5 +264,4 @@ class RscDisplaySurfacePainterCamera {
 				height = 0;
 			};
 		};
-	};
-};
+	};*/

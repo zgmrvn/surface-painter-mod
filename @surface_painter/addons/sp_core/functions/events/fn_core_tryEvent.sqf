@@ -4,6 +4,10 @@
 
 params ["_mode", "_moduleOrTool", "_event"];
 
+if !(toUpper _mode in ["MODULE", "TOOL"]) exitWith {
+	["_mode must be ""MODULE"" or ""TOOL"": %1"] call BIS_fnc_error;
+};
+
 private _success = false;
 
 // generate config path

@@ -52,12 +52,14 @@ class CfgSurfacePainter {
 		class Events {
 			/*
 			// core
-			class OnInit {};					// run when Surface Painter dialog is opened
-			class OnActivate {};				// run everytime switching this mode
-			class OnDesactivate {};				// run everytime leaving this mode
-			class OnMouseMove {};				// run everytime mouse move
-			class OnPrimaryMouseButtonDown {};	// run when primary mouse button is pressed down
-			class OnPrimaryMouseButtonUp {};	// run when primary mouse button is released
+			class OnInit {};						// run when Surface Painter dialog is opened
+			class OnActivate {};					// run everytime switching this mode
+			class OnDesactivate {};					// run everytime leaving this mode
+			class OnMouseMove {};					// run everytime mouse move
+			class OnPrimaryMouseButtonDown {};		// run when primary mouse button is pressed down
+			class OnPrimaryMouseButtonUp {};		// run when primary mouse button is released
+			class OnSecondaryMouseButtonDown {};	// run when secondary mouse button is pressed down
+			class OnSecondaryMouseButtonUp {};		// run when secondary mouse button is released
 
 			// pool
 			class OnPoolEntryAdd {};					// run when a pool entry is added

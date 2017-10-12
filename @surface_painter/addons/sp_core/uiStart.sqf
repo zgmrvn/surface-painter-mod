@@ -174,14 +174,14 @@ _modulesControlsGroup ctrlCommit 0;
 _eventControl ctrlAddEventHandler ["MouseButtonDown", {
 	params ["", "_button"];
 
-	if (_button == 1) then {
-		SP_var_core_secondaryMouseButton = true;
-		["MODULE", SP_var_core_currentModule, "OnSecondaryMouseButtonDown"] call SP_fnc_core_tryEvent;
-	};
-
 	if (_button == 0) then {
 		SP_var_core_primaryMouseButton = true;
 		["MODULE", SP_var_core_currentModule, "OnPrimaryMouseButtonDown"] call SP_fnc_core_tryEvent;
+	};
+
+	if (_button == 1) then {
+		SP_var_core_secondaryMouseButton = true;
+		["MODULE", SP_var_core_currentModule, "OnSecondaryMouseButtonDown"] call SP_fnc_core_tryEvent;
 	};
 
 	true
@@ -192,14 +192,14 @@ _eventControl ctrlAddEventHandler ["MouseButtonDown", {
 _eventControl ctrlAddEventHandler ["MouseButtonUp", {
 	params ["", "_button"];
 
-	if (_button == 1) then {
-		SP_var_core_secondaryMouseButton = false;
-		["MODULE", SP_var_core_currentModule, "OnSecondaryMouseButtonUp"] call SP_fnc_core_tryEvent;
-	};
-
 	if (_button == 0) then {
 		SP_var_core_primaryMouseButton = false;
 		["MODULE", SP_var_core_currentModule, "OnPrimaryMouseButtonUp"] call SP_fnc_core_tryEvent;
+	};
+
+	if (_button == 1) then {
+		SP_var_core_secondaryMouseButton = false;
+		["MODULE", SP_var_core_currentModule, "OnSecondaryMouseButtonUp"] call SP_fnc_core_tryEvent;
 	};
 
 	true

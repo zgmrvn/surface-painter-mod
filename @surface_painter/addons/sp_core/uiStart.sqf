@@ -2,6 +2,8 @@
 #include "sizes.hpp"
 
 #define MODULES (configFile >> "CfgSurfacePainter" >> "Modules")
+#define TOOLS (configFile >> "CfgSurfacePainter" >> "Tools")
+
 /*
 // camera
 showCinemaBorder false;
@@ -82,14 +84,14 @@ _modules sort false;
 _modules = _modules apply { _x select 1 };
 
 
+// get tools
+private _tools = ("true" configClasses TOOLS) apply { configName _x };
 
 
 
 
 
-
-
-// set default module if not already defined
+// if current module not defined, set default module
 if (isNil "SP_var_core_currentModule") then {
 	SP_var_core_currentModule = _modules select 0;
 };
@@ -184,6 +186,11 @@ _modulesControlsGroup ctrlCommit 0;
 {
 	["MODULE", _x, "OnInit"] call SP_fnc_core_tryEvent;
 } forEach _modules;
+
+{
+	["TOOL", _x, "OnInit"] call SP_fnc_core_tryEvent;
+} forEach _tools;
+
 
 
 // on mouse button down

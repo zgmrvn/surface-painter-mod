@@ -22,7 +22,7 @@
 				<French>Il n'y a aucun objet à copier.</French>
 			</Key>
 
-			<Key ID="STR_SP_EXPORT_EXPORT_NOTIFICATION_OBJECTS_COPIED">
+			<Key ID="STR_SP_EXPORT_NOTIFICATION_OBJECTS_COPIED">
 				<Original>Objects were copied to clipboard.</Original>
 				<French>Les objects ont été copiés dans le presse-papier.</French>
 			</Key>

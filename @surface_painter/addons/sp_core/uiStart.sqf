@@ -115,10 +115,15 @@ SP_var_core_secondaryMouseButton = false;
 		private _event = _x;
 		private _script = format ["%1\events\%2", _path, getText (MODULES >> _module >> "Events" >> _event >> "script")];
 
-		missionNamespace setVariable [
-			format ["SP_event_%1_%2", _module, _event],
-			compile preprocessFileLineNumbers _script
-		];
+		// if on init, call immediately
+		if (_event == "OnInit") then {
+			call compile preprocessFileLineNumbers _script;
+		} else {
+			missionNamespace setVariable [
+				format ["SP_event_%1_%2", _module, _event],
+				compile preprocessFileLineNumbers _script
+			];
+		};
 	} forEach _events;
 } forEach _modules;
 
@@ -138,10 +143,15 @@ SP_var_core_secondaryMouseButton = false;
 		private _event = _x;
 		private _script = format ["%1\events\%2", _path, getText (TOOLS >> _tool >> "Events" >> _event >> "script")];
 
-		missionNamespace setVariable [
-			format ["SP_event_%1_%2", _tool, _event],
-			compile preprocessFileLineNumbers _script
-		];
+		// if on init, call immediately
+		if (_event == "OnInit") then {
+			call compile preprocessFileLineNumbers _script;
+		} else {
+			missionNamespace setVariable [
+				format ["SP_event_%1_%2", _tool, _event],
+				compile preprocessFileLineNumbers _script
+			];
+		};
 	} forEach _events;
 } forEach _tools;
 
@@ -182,14 +192,6 @@ _modulesControlsGroup ctrlCommit 0;
 
 
 
-// try OnInit events
-{
-	["MODULE", _x, "OnInit"] call SP_fnc_core_tryEvent;
-} forEach _modules;
-
-{
-	["TOOL", _x, "OnInit"] call SP_fnc_core_tryEvent;
-} forEach _tools;
 
 
 

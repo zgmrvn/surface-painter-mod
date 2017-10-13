@@ -8,8 +8,6 @@ if !(toUpper _mode in ["MODULE", "TOOL"]) exitWith {
 	["_mode must be ""MODULE"" or ""TOOL"": %1"] call BIS_fnc_error;
 };
 
-private _success = false;
-
 // generate config path
 private _config = configFile >> "CfgSurfacePainter";
 
@@ -24,7 +22,4 @@ _config = _config >> _moduleOrTool >> "Events" >> _event;
 if (isClass _config) then {
 	private _script = getText (_config >> "script");
 	call compile format ["call SP_event_%1_%2", _moduleOrTool, _event];
-	_success = true;
 };
-
-_success

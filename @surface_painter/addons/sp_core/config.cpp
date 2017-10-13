@@ -4,7 +4,7 @@ class CfgPatches {
 		name = "Surface Painter - Core";
 		units[] = {};
 		weapons[] = {};
-		version = 1.1.0;
+		version = 1.1.1;
 		requiredaddons[] = {};
 	};
 };

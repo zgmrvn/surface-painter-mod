@@ -7,11 +7,20 @@ class Header: OptionHeader {
 	};
 };
 
-class Export: OptionButton {
+class CopyToClipboard: OptionButton {
 	class values {
 		class Text: Main {
 			typeName = "STRING";
-			value = $STR_SP_EXPORT_EXPORT;
+			value = $STR_SP_EXPORT_COPY_TO_CLIPBOARD;
+		};
+	};
+};
+
+class ExportTxt: OptionButton {
+	class values {
+		class Text: Main {
+			typeName = "STRING";
+			value = $STR_SP_EXPORT_EXPORT_TXT;
 		};
 	};
 };

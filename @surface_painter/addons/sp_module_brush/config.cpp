@@ -1,9 +1,9 @@
 #include "idcs.hpp"
 
 class CfgPatches {
-	class SP_Mode_Brush {
+	class SP_Module_Brush {
 		author = "zgmrvn";
-		name = "Surface Painter - Mode - Brush";
+		name = "Surface Painter - Module - Brush";
 		units[] = {};
 		weapons[] = {};
 		version = 2.0.0;
@@ -22,7 +22,7 @@ class CfgSurfacePainter {
 			tools[]		= { "Circle", "Pool" };
 			idc			= SP_SURFACE_PAINTER_BRUSH_OPTIONS_CTRL_GROUP;
 			priority	= 100;
-			path		= "x\surface_painter\addons\sp_mode_brush";
+			path		= "x\surface_painter\addons\sp_module_brush";
 			icon		= "icon.paa";
 
 			class Events {

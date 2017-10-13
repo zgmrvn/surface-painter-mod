@@ -1,9 +1,9 @@
 #include "idcs.hpp"
 
 class CfgPatches {
-	class SP_Mode_Line {
+	class SP_Module_Line {
 		author = "zgmrvn";
-		name = "Surface Painter - Mode - Line";
+		name = "Surface Painter - Module - Line";
 		units[] = {};
 		weapons[] = {};
 		version = 2.0.0;
@@ -17,8 +17,8 @@ class CfgPatches {
 
 class CfgFunctions {
 	class SP {
-		class SurfacePainterModeLineFunctions {
-			file = "x\surface_painter\addons\sp_mode_line\functions";
+		class SurfacePainterModuleLineFunctions {
+			file = "x\surface_painter\addons\sp_module_line\functions";
 			class Line_Generate {};
 			class Line_Regenerate {};
 			class Line_FindEdge {};
@@ -34,7 +34,7 @@ class CfgSurfacePainter {
 			tools[]		= {"Circle", "Pool"};
 			idc			= SP_SURFACE_PAINTER_EDGE_OPTIONS_CTRL_GROUP;
 			priority	= 90;
-			path		= "x\surface_painter\addons\sp_mode_line";
+			path		= "x\surface_painter\addons\sp_module_line";
 			icon		= "icon.paa";
 
 			class Events {

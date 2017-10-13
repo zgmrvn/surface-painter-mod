@@ -3,6 +3,9 @@
 	This function runs when mouse wheel changes.
 */
 
+systemChat "z changed";
+
+/*
 #include "..\defines.hpp"
 
 // if shift pressed, multiplier is 10
@@ -21,3 +24,4 @@ for [{private _i = 0; private _a = 0;}, {_i < 24}, {_i = _i + 1; _a = _a + 15;}]
 
 	SP_var_circle_circle set [_i, _r];
 };
+*/

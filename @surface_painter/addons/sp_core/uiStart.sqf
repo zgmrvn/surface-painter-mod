@@ -126,6 +126,22 @@ SP_var_core_secondaryMouseButton = false;
 
 
 
+// compile events for tools
+{
+	private _tool = _x;
+	private _path = getText (TOOLS >> _tool >> "path");
+	private _events = ("true" configClasses (TOOLS >> _tool >> "Events")) apply { configName _x };
+
+	{
+		private _event = _x;
+		private _script = format ["%1\events\%2", _path, getText (TOOLS >> _tool >> "Events" >> _event >> "script")];
+
+		missionNamespace setVariable [
+			format ["SP_event_%1_%2", _tool, _event],
+			compile preprocessFileLineNumbers _script
+		];
+	} forEach _events;
+} forEach _tools;
 
 
 // fill menu

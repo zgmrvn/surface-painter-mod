@@ -113,7 +113,7 @@ _generateControl ctrlAddEventHandler ["ButtonClick", {
 				{
 					// we send pixels grouped by 1024 because of the limit of arguments of callExtension
 					if (count _pixels == 1024) then {
-						"sp" callExtension ["addModifs", _pixels];
+						"sp" callExtension ["pushPixels", _pixels];
 						_pixels = [];
 					};
 
@@ -133,10 +133,10 @@ _generateControl ctrlAddEventHandler ["ButtonClick", {
 					_pixels pushBack _string;
 				} forEach SP_var_surfacePainter_keys;
 
-				"sp" callExtension ["addModifs", _pixels];
+				"sp" callExtension ["pushPixels", _pixels];
 
 				// write pixels
-				"sp" callExtension ["applyModifs", [SP_var_surfacePainter_project]];
+				"sp" callExtension ["writePixels", [SP_var_surfacePainter_project]];
 
 				// check status
 				[] spawn {

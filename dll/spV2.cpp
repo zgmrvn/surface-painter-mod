@@ -24,6 +24,7 @@ Description:
 
 #include "stdafx.h"
 #include <iostream>
+#include <iomanip>    // std::fill, std::setw
 #include <fstream>		// std::ifstream & ofstream
 #include <sstream>		// std::stringstream
 #include <string>
@@ -32,6 +33,7 @@ Description:
 #include <Windows.h>	// DllMain & GetModuleHandleExA
 #include <thread>
 #include "dirent.h"		// Directory manipulations (linux adaptation)
+#include <ctime>      // time, localtime
 
 #define FREEIMAGE_LIB
 #include "FreeImage.h"
@@ -48,6 +50,7 @@ Description:
 sSystemState sys_state;
 std::vector<sProject> projects;
 std::vector<sPxModif> modifs;
+std::vector<std::string> objectsList;
 
 
 /* Functions declarations */
@@ -280,6 +283,13 @@ void __stdcall RVExtension(char *output, int outputSize, const char *function)
 		snprintf(output, outputSize, "%s", str.c_str());
 		return;
 	}
+  // callExtension "clearObjects"
+  else if (sfunc.compare("clearObjects") == 0) {
+    objectsList.clear();
+    str = "Objects list cleared.";
+  }
+  else
+    str = "Function [" + sfunc + "] not recongnized.";
 }
 
 
@@ -586,6 +596,123 @@ int __stdcall RVExtensionArgs(char *output, int outputSize, const char *function
 		snprintf(output, outputSize, "%s", str.c_str());
 		return ret_code;
 	}
+
+
+  // callExtension ["pushObjects",[...]]:
+  if (sfunc.compare("pushObjects") == 0) {
+    if (argsCnt == 0) {
+      str = "Expected 1 parameter at least.";
+      ret_code = SP_ERRORS::INVALID_PARAMS_COUNT;
+    }
+    else {
+
+      uint32_t nb_added = 0;
+
+      for (size_t i = 0; i < argsCnt; i++) {
+        std::string arg(args[i]);
+        cleanStrFromArma(arg);
+
+        std::vector<std::string> ar = splitStrBy(arg, ';');
+        if (ar.size() >= 1) {
+          cleanStrFromArma(ar[0]);
+        }
+
+        std::string f_arg;
+        for (size_t o = 0; o < ar.size(); o++) {
+          f_arg += ar[o] + ";";
+        }
+
+        objectsList.push_back(f_arg);
+        nb_added++;
+      }
+
+      std::stringstream sstr;
+      sstr << nb_added << " objects added.";
+      str = sstr.str();
+
+      ret_code = SP_SUCCESS;
+    }
+
+
+    snprintf(output, outputSize, "%s", str.c_str());
+    return ret_code;
+  }
+
+
+  // callExtension ["writeObjects",[project_name]]:
+  if (sfunc.compare("writeObjects") == 0) {
+    
+    // build current datetime string:
+    time_t now = time(0);
+    struct tm ltm;
+    localtime_s(&ltm, &now);
+
+    std::stringstream sstr_datetime;
+
+    sstr_datetime << std::setfill('0') << std::setw(2) << ltm.tm_hour << "-"
+      << std::setfill('0') << std::setw(2) << ltm.tm_min << "-"
+      << std::setfill('0') << std::setw(2) << ltm.tm_sec << "_"
+      << std::setfill('0') << std::setw(2) << ltm.tm_mday << "-"
+      << std::setfill('0') << std::setw(2) << (ltm.tm_mon + 1) << "-"
+      << (1900 + ltm.tm_year) << ".txt";
+
+
+    // build filename:
+    std::string filename = sys_state.projects_path;
+
+    if (argsCnt == 1) {
+      std::string name(args[0]);
+      cleanStrFromArma(name);
+
+      if (!name.empty()) {
+        
+        sProject *prj = getProjectByName(name);
+        if (prj == NULL) {
+          str = "Project [" + name + "] not found.";
+          ret_code = SP_ERR;
+
+          snprintf(output, outputSize, "%s", str.c_str());
+          return ret_code;
+        }
+        else
+          filename += name + "_";
+      }
+
+    }
+
+    filename += sstr_datetime.str();
+    
+
+    // open file and write datas:
+    std::ofstream out(filename.c_str());
+
+    if (out.bad() || !out.is_open()) {
+      str = "Failed to opened destination file: " + filename;
+      ret_code = SP_ERR;
+    }
+    else {
+
+      std::string w_str;
+      for (size_t i = 0; i < objectsList.size(); i++) {
+        w_str = objectsList[i] + "\n";
+        out.write(w_str.c_str(), w_str.length());
+      }
+
+      out.close();
+
+      std::stringstream sstr;
+      sstr << objectsList.size() << " objects wrote into file: " << filename;
+      str = sstr.str();
+
+      objectsList.clear();
+
+      ret_code = SP_SUCCESS;
+    }
+
+
+    snprintf(output, outputSize, "%s", str.c_str());
+    return ret_code;
+  }
 
 
 	return 0;

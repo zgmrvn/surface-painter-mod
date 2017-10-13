@@ -28,7 +28,7 @@ Draw lines and create objects along them, can be set to detect terrain and follo
 
 You can skip the steps 4 and 5 if you don't plan to use the Surface Painter tool, the tool that lets you paint your surface map directly in Arma.
 
-4. Copy your `mask.tif` and your `layers.cfg` in `@surface_painter/masks`. The dll only supports TIF format as input and will always output 8bits LZW compressed TIF.
+4. Copy your `mask.tif` and your `layers.cfg` in `@surface_painter/projects`. The dll only supports TIF format as input and will always output 8bits LZW compressed TIF.
 
 5. rename your `layers.cfg` as your `mask.tif` :
 

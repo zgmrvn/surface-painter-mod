@@ -4,7 +4,7 @@ class CfgPatches {
 		name = "Surface Painter - Tool - Circle";
 		units[] = {};
 		weapons[] = {};
-		version = 1.0.1;
+		version = 2.0.0;
 		requiredaddons[] = {"SP_Core"};
 	};
 };

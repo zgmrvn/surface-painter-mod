@@ -83,7 +83,7 @@ int checkImageLayers(const char *prj_name, sSystemState &sys_state)
 	std::string fname = prj_name + std::string(".cfg");
 
 	// Init and open file:
-	std::string path = sys_state.masks_path + fname;
+	std::string path = sys_state.projects_path + fname;
 	std::ifstream input(path);
 
 	if (input.bad() || !input.is_open())
@@ -101,7 +101,7 @@ int readImageLayers(const char *prj_name, sSystemState &sys_state, std::vector<s
 	std::string fname = prj_name + std::string(".cfg");
 
 	// Init and open file:
-	std::string path = sys_state.masks_path + fname;
+	std::string path = sys_state.projects_path + fname;
 	std::ifstream input(path);
 
 	if (input.bad() || !input.is_open())

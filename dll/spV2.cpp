@@ -161,7 +161,7 @@ void buildMasksPath()
 
 	if (pos != std::string::npos) {
 		path.erase(pos, lgt);
-		sys_state.masks_path = path + "masks\\";
+		sys_state.projects_path = path + "projects\\";
 	}
 }
 
@@ -170,11 +170,11 @@ void buildMasksPath()
 void buildMasksDir()
 {
 	DIR *dr;
-	const char *masks_path = sys_state.masks_path.c_str();
+	const char *masks_path = sys_state.projects_path.c_str();
 
 	// If directory doesn't exists: create it
 	if ((dr = opendir(masks_path)) == NULL) {
-		std::wstring wide_string = std::wstring(sys_state.masks_path.begin(), sys_state.masks_path.end());
+		std::wstring wide_string = std::wstring(sys_state.projects_path.begin(), sys_state.projects_path.end());
 		const wchar_t *pth = wide_string.c_str();
 
 		CreateDirectory(pth, NULL);
@@ -189,7 +189,7 @@ void scanForProjects()
 {
 	DIR *dr;
 	struct dirent *ent;
-	const char *masks_path = sys_state.masks_path.c_str();
+	const char *masks_path = sys_state.projects_path.c_str();
 
 	
 	// Open directory and list valid image files (TIFF):
@@ -214,7 +214,7 @@ void scanForProjects()
 				project_name = match[1].str();
 
 				if (checkImageLayers(project_name.c_str(), sys_state) == IMGPROCESS_SUCCESS) {
-					file_path = sys_state.masks_path + fname;
+					file_path = sys_state.projects_path + fname;
 					projects.push_back({ project_name, file_path });
 				}
 			}

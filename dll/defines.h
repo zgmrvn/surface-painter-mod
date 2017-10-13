@@ -49,7 +49,7 @@ typedef struct _sProject {		// Store project informations
 typedef struct _sSystemState {	// Store system status
 	bool fi_initialized;
 	bool is_working;
-	std::string masks_path;
+  std::string projects_path;
 	std::string project_name;
 	std::string ret_str;
 	int ret_code;

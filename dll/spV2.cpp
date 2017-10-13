@@ -4,7 +4,7 @@
 File: spV2.cpp
 
 System: sp
-Status: Version 1.0.1
+Status: Version 1.0.2
 Language: C++
 
 License: GNU Public License
@@ -43,7 +43,7 @@ Description:
 
 
 // DLL version for Arma 3 log:
-#define CURRENT_VERSION "1.0.1"
+#define CURRENT_VERSION "1.0.2"
 
 
 /* Global variables */
@@ -267,20 +267,13 @@ void __stdcall RVExtension(char *output, int outputSize, const char *function)
 
 	
 	// callExtension "scanForProjects"
-	if (sfunc.compare("scanForProjects") == 0) {
-		if (sys_state.fi_initialized) {
-			scanForProjects();
+  if (sfunc.compare("scanForProjects") == 0) {
+    scanForProjects();
 
-			for (uint16_t n = 0; n < projects.size(); n++) {
-				str += projects[n].name + "|";
-			}
-		}
-		else
-			str = "Module not initialized.";
-
-		snprintf(output, outputSize, "%s", str.c_str());
-		return;
-	}
+    for (uint16_t n = 0; n < projects.size(); n++) {
+      str += projects[n].name + "|";
+    }
+  }
   // callExtension "clearObjects"
   else if (sfunc.compare("clearObjects") == 0) {
     objectsList.clear();
@@ -288,6 +281,8 @@ void __stdcall RVExtension(char *output, int outputSize, const char *function)
   }
   else
     str = "Function [" + sfunc + "] not recongnized.";
+
+  snprintf(output, outputSize, "%s", str.c_str());
 }
 
 
@@ -475,10 +470,11 @@ int __stdcall RVExtensionArgs(char *output, int outputSize, const char *function
 			else {
 				int ret;
 				sInfos infos;
-				if ((ret = readImageInfos(prj->filepath.c_str(), infos)) == IMGPROCESS_SUCCESS) {
-					char width[8];
-					_itoa_s(infos.w, width, 10);
-					str = width;
+				
+        if ((ret = readImageInfos(prj->filepath.c_str(), infos)) == IMGPROCESS_SUCCESS) {
+          std::stringstream sstr;
+          sstr << infos.w;
+					str = sstr.str();
 					ret_code = SP_SUCCESS;
 				}
 				else {
@@ -526,14 +522,15 @@ int __stdcall RVExtensionArgs(char *output, int outputSize, const char *function
 
 				if ((ret = readImageLayers(prj->name.c_str(), sys_state, colors)) == IMGPROCESS_SUCCESS) {
 					for (size_t i = 0; i < colors.size(); i++) {
-						std::stringstream tmp_str;
-						tmp_str << colors[i].name << ";"
-							<< (uint32_t)colors[i].val.rgbtRed << ":"
-							<< (uint32_t)colors[i].val.rgbtGreen << ":"
-							<< (uint32_t)colors[i].val.rgbtBlue << "|";
-						str += tmp_str.str();
+						std::stringstream sstr;
+						sstr << colors[i].name << ";"
+							<< (uint16_t)colors[i].val.rgbtRed << ":"
+							<< (uint16_t)colors[i].val.rgbtGreen << ":"
+							<< (uint16_t)colors[i].val.rgbtBlue << "|";
+						str += sstr.str();
 					}
 					ret_code = SP_SUCCESS;
+
 				}
 				else {
 					ret_code = SP_ERR;

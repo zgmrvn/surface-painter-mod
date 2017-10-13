@@ -255,8 +255,6 @@ void cleanStrFromArma(std::string &str)
 /* RVExtensionVersion */
 void __stdcall RVExtensionVersion(char *output, int outputSize)
 {
-	initModule();
-
 	snprintf(output, outputSize, "%s", CURRENT_VERSION);
 }
 

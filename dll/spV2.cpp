@@ -371,8 +371,8 @@ int __stdcall RVExtensionArgs(char *output, int outputSize, const char *function
 	int ret_code = 0;
 
 
-	// callExtension ["addModifs",[...]]
-	if (sfunc.compare("addModifs") == 0) {
+	// callExtension ["pushPixels",[...]]
+	if (sfunc.compare("pushPixels") == 0) {
 		if (argsCnt == 0) {
 			str = "Expected 1 parameter at least.";
 			ret_code = SP_ERRORS::INVALID_PARAMS_COUNT;
@@ -385,10 +385,11 @@ int __stdcall RVExtensionArgs(char *output, int outputSize, const char *function
 				addPixelModif(tmp_arg, modifs);
 			}
 
-			char nb_modifs[16];
-			_itoa_s(modifs.size(), nb_modifs, 10);
 
-			str = std::string(nb_modifs) + " modifications added.";
+      std::stringstream sstr;
+      sstr << modifs.size() + " modifications added.";
+
+			str = sstr.str();
 			ret_code = SP_SUCCESS;
 		}
 
@@ -397,15 +398,14 @@ int __stdcall RVExtensionArgs(char *output, int outputSize, const char *function
 	}
 
 
-	// callExtension ["applyModifs",["project_name"]]
-	if (sfunc.compare("applyModifs") == 0) {
+	// callExtension ["writePixels",["project_name"]]
+	if (sfunc.compare("writePixels") == 0) {
 		
 		if (sys_state.is_working) {
 			str = "System is already performing a task on project [" + sys_state.project_name + "]. Please retry later.";
 			ret_code = SP_ERR;
 		}
 		else {
-			//fnc_applyModifs(args, argsCnt);
 			std::thread th(fnc_applyModifs, args, argsCnt);
 
 			if (th.joinable()) {

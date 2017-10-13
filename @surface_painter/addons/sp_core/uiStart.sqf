@@ -219,6 +219,21 @@ _eventControl ctrlAddEventHandler ["MouseButtonUp", {
 	true
 }];
 
+// on mouse wheel change
+_eventControl ctrlAddEventHandler ["MouseZChanged", {
+
+	systemChat "z event";
+	// try OnMouseZChange for every tools the current module uses
+	{
+		systemChat _x;
+		["TOOL", _x, "OnMouseZChange"] call SP_fnc_core_tryEvent;
+	} forEach getArray (configFile >> "CfgSurfacePainter" >> "Modules" >> SP_var_core_currentModule >> "tools");
+
+	// try OnMouseZChange event for the current module
+	["TOOL", _x, "OnMouseZChange"] call SP_fnc_core_tryEvent;
+
+	true
+}];
 
 
 
@@ -301,13 +316,6 @@ _eventControl ctrlAddEventHandler ["MouseButtonUp", {
 		true
 	}];
 
-	// on mouse wheel change
-	_eventCtrl ctrlAddEventHandler ["MouseZChanged", {
-		// mouse move behaviour
-		#include "events\eventCtrlMouseZChanged.sqf"
-
-		true
-	}];
 
 	// left panel behaviour when mouse enter and exit
 	#include "events\leftPanelCtrlMouseEnterExit.sqf"

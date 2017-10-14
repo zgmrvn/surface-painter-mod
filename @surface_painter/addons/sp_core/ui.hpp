@@ -115,6 +115,8 @@ class RscDisplaySurfacePainter {
 			w = safeZoneW * SP_MENU_W;
 			h = safeZoneH;
 
+			fade = 1;
+
 			class Controls {
 				class Background: RscStatic {
 					x = 0;
@@ -165,6 +167,26 @@ class RscDisplaySurfacePainter {
 					h = 0;
 
 					class Controls {};
+				};
+			};
+		};
+
+		class Loading: RscControlsGroup {
+			idc = SP_LOADING_CONTROLS_GROUP;
+
+			x = safeZoneX;
+			y = safeZoneY;
+			w = safeZoneW;
+			h = safeZoneH;
+
+			fade = 1;
+
+			class Controls {
+				class Background: RscStatic {
+					x = 0;
+					y = 0;
+
+					colorBackground[] = {0.3, 0.3, 0.3, 1};
 				};
 			};
 		};

@@ -64,6 +64,12 @@ private _eventControl = _dialog displayCtrl SP_EVENT_CONTROL; // this is the mai
 private _menuControlsGroup = _dialog displayCtrl SP_MENU_CONTROLS_GROUP;
 private _modulesControlsGroup = _menuControlsGroup controlsGroupCtrl SP_MODULES_CONTROLS_GROUP;
 
+private _loadingControlsGroup = _dialog displayCtrl SP_LOADING_CONTROLS_GROUP;
+
+// fade loading screen in
+_loadingControlsGroup ctrlSetFade 0;
+_loadingControlsGroup ctrlCommit 0.1;
+
 /*
 _leftPanelCtrlGroup			= _dialog displayCtrl SP_SURFACE_PAINTER_LEFT_PANEL_CTRL_GROUP;
 _modeslist					= _dialog displayCtrl SP_SURFACE_PAINTER_MODES_LIST;
@@ -345,3 +351,28 @@ _eventControl ctrlAddEventHandler ["MouseZChanged", {
 	};
 };
 */
+
+
+
+// wait until loading screen is fade in
+waitUntil { ctrlFade _loadingControlsGroup == 0 };
+
+// create camera
+showCinemaBorder false;
+private _cameraPosition = (player getRelPos [10, 180]);
+_cameraPosition set [2, ((getPosASL player) select 2) + 6];
+SP_var_core_camera = "camera" camCreate ASLToATL _cameraPosition;
+SP_var_core_camera cameraEffect ["internal", "BACK"];
+SP_var_core_camera setDir (getDir player);
+[SP_var_core_camera, -20, 0] call BIS_fnc_setPitchBank;
+SP_var_core_camera camCommit 0;
+
+// show menu
+_menuControlsGroup ctrlSetFade 0;
+_menuControlsGroup ctrlCommit 0;
+
+// fade loading screen out
+_loadingControlsGroup ctrlSetFade 1;
+_loadingControlsGroup ctrlCommit 0.1;
+sleep 0.1;
+_loadingControlsGroup ctrlEnable false;

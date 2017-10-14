@@ -2,6 +2,9 @@
 
 #define	SP_EVENT_CONTROL 10
 
+// loading
+#define	SP_LOADING_CONTROLS_GROUP 14
+
 // menu
 #define SP_MENU_CONTROLS_GROUP 11
 #define SP_MODULES_CONTROLS_GROUP 12

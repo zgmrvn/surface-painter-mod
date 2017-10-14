@@ -1,10 +1,9 @@
-
-/*
-SP_var_camera cameraEffect ["terminate", "back"];
-camDestroy SP_var_camera;
+SP_var_core_camera cameraEffect ["terminate", "back"];
+camDestroy SP_var_core_camera;
 showCinemaBorder false;
 showHUD true;
 
+/*
 if !(isNil {SP_var_mode}) then {
 	// desactivate tools
 	_tools = getArray (configFile >> "CfgSurfacePainter" >> "Modules" >> SP_var_mode >> "tools");

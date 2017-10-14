@@ -12,12 +12,15 @@ SP_var_camera cameraEffect ["internal", "BACK"];
 SP_var_camera camCommit 0;
 SP_var_cameraDir	= 0; // camera direction
 SP_var_cameraPitch	= 0; // camera pitch
+*/
+SP_var_core_cameraRotationSensibility = 100;
+
+SP_var_core_mouseScreenPosition					= [0.5, 0.5]; // mouse screen position during the current frame
+SP_var_core_mousePreviousFrameScreenPosition	= SP_var_core_mouseScreenPosition; // mouse screen position during the previous frame
+SP_var_core_mouseWorldPosition					= screenToWorld SP_var_core_mouseScreenPosition; // mouse world position
 
 
-SP_var_mouseScreenDelta		= [0.5, 0.5]; // mouse screen position during the previous frame
-SP_var_mouseScreenPosition	= [0.5, 0.5]; // mouse screen position during the current frame
-SP_var_mouseWorldPosition	= screenToWorld SP_var_mouseScreenPosition; // mouse world position
-
+/*
 // special keys
 SP_key_shift	= false; // is shift held ?
 SP_key_ctrl		= false; // is ctrl held ?
@@ -250,6 +253,35 @@ _eventControl ctrlAddEventHandler ["MouseZChanged", {
 	true
 }];
 
+// on mouse move in the main control
+_eventControl ctrlAddEventHandler ["MouseMoving", {
+	params ["", "_x", "_y"];
+
+	SP_var_core_mouseScreenPosition = [_x, _y];
+	SP_var_core_mouseWorldPosition = screenToWorld SP_var_core_mouseScreenPosition;
+
+	// try OnMouseMove event
+	["MODULE", SP_var_core_currentModule, "OnMouseMove"] call SP_fnc_core_tryEvent;
+
+	// camera rotation
+	if (SP_var_core_secondaryMouseButton) then {
+		SP_var_core_mousePreviousFrameScreenPosition params ["_xd", "_yd"];
+
+		// camera direction
+		SP_var_core_cameraDir = SP_var_core_cameraDir + (_x - _xd) * SP_var_core_cameraRotationSensibility;
+		SP_var_core_camera setDir SP_var_core_cameraDir;
+
+		// camera pitch
+		SP_var_core_cameraPitch = SP_var_core_cameraPitch - (_y - _yd) * SP_var_core_cameraRotationSensibility;
+		SP_var_core_cameraPitch = SP_var_core_cameraPitch max -90 min 90;
+		[SP_var_core_camera, SP_var_core_cameraPitch, 0] call bis_fnc_setpitchbank;
+	};
+
+	SP_var_core_mousePreviousFrameScreenPosition = [_x, _y];
+
+	true
+}];
+
 
 
 
@@ -313,24 +345,6 @@ _eventControl ctrlAddEventHandler ["MouseZChanged", {
 /*
 
 
-	// on mouse move in the main control
-	_eventCtrl ctrlAddEventHandler ["MouseMoving", {
-		SP_var_mouseScreenPosition = [_this select 1, _this select 2];
-		SP_var_mouseWorldPosition = screenToWorld SP_var_mouseScreenPosition;
-
-		// mouse move behaviour
-		#include "events\eventCtrlMouseMove.sqf"
-
-		if (SP_var_secondaryMouseButton) then {
-			// camera behaviour
-			#include "cam\mouseMovingCameraMouvments.sqf"
-		};
-
-		SP_var_mouseScreenDelta = [_this select 1, _this select 2];
-
-		true
-	}];
-
 
 	// left panel behaviour when mouse enter and exit
 	#include "events\leftPanelCtrlMouseEnterExit.sqf"
@@ -363,8 +377,10 @@ private _cameraPosition = (player getRelPos [10, 180]);
 _cameraPosition set [2, ((getPosASL player) select 2) + 6];
 SP_var_core_camera = "camera" camCreate ASLToATL _cameraPosition;
 SP_var_core_camera cameraEffect ["internal", "BACK"];
-SP_var_core_camera setDir (getDir player);
-[SP_var_core_camera, -20, 0] call BIS_fnc_setPitchBank;
+SP_var_core_cameraDir = (getDir player);
+SP_var_core_camera setDir SP_var_core_cameraDir;
+SP_var_core_cameraPitch = -20;
+[SP_var_core_camera, SP_var_core_cameraPitch, 0] call BIS_fnc_setPitchBank;
 SP_var_core_camera camCommit 0;
 
 // show menu

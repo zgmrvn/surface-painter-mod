@@ -16,6 +16,12 @@ class CfgFunctions {
 			class Core_AddAction { postInit = 1; recompile = 1; };
 		};
 
+		class Arrays {
+			file = "x\surface_painter\addons\sp_core\functions\arrays";
+			class Core_SetToPairs {};
+			class Core_GetFromPairs {};
+		};
+
 		class Recompile {
 			file = "x\surface_painter\addons\sp_core\functions\recompile";
 			class Core_RecompileFunctions { recompile = 1; };

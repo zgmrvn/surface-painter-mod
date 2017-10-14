@@ -44,6 +44,7 @@ disableserialization;
 
 waitUntil { !isNull findDisplay SP_IDD };
 
+// controls
 private _dialog	= findDisplay SP_IDD;
 private _eventControl = _dialog displayCtrl SP_EVENT_CONTROL; // this is the main control for catching events
 
@@ -409,7 +410,7 @@ _eventControl ctrlAddEventHandler ["KeyUp", {
 
 
 
-// wait until loading screen is fade in
+// wait for loading screen to be completely faded in
 waitUntil { ctrlFade _loadingControlsGroup == 0 };
 
 // create camera

@@ -17,9 +17,9 @@ SP_var_core_cameraTranslationSensibility		= 0.07;
 SP_var_core_cameraTranslationTurboMultiplier	= 3;
 
 // mouse
-SP_var_core_mouseScreenPosition					= [0.5, 0.5]; // mouse screen position during the current frame
-SP_var_core_mousePreviousFrameScreenPosition	= SP_var_core_mouseScreenPosition; // mouse screen position during the previous frame
-SP_var_core_mouseWorldPosition					= screenToWorld SP_var_core_mouseScreenPosition; // mouse world position
+SP_var_core_mouseScreenPosition					= [0.5, 0.5];
+SP_var_core_mousePreviousFrameScreenPosition	= SP_var_core_mouseScreenPosition;
+SP_var_core_mouseWorldPosition					= screenToWorld SP_var_core_mouseScreenPosition;
 
 // special keys
 SP_var_keyShift	= false;
@@ -28,7 +28,6 @@ SP_var_keyAlt	= false;
 SP_var_keyTurbo	= false;
 
 /*
-
 // this var will contain every created objects
 // if this variable doesn't already exist, we set it to an empty array
 if (isNil {SP_var_createdObjects}) then {
@@ -40,8 +39,6 @@ SP_var_notificationsStack 	= [];
 SP_var_notificationsLoop	= false;
 SP_var_notifications		= [];
 */
-
-//waitUntil { !isNull _this };
 
 disableserialization;
 
@@ -66,10 +63,6 @@ _leftPanelEnterEventCtrl	= _dialog displayCtrl SP_SURFACE_PAINTER_LEFT_PANEL_EVE
 _leftPanelExitEventCtrl		= _dialog displayCtrl SP_SURFACE_PAINTER_LEFT_PANEL_EVENT_EXIT_CTRL;
 */
 
-
-
-
-
 // get modules
 private _modules = ("true" configClasses MODULES) apply { configName _x };
 
@@ -78,13 +71,8 @@ _modules = _modules apply { [getNumber (configFile >> "CfgSurfacePainter" >> "Mo
 _modules sort false;
 _modules = _modules apply { _x select 1 };
 
-
 // get tools
 private _tools = ("true" configClasses TOOLS) apply { configName _x };
-
-
-
-
 
 // if current module not defined, set default module
 if (isNil "SP_var_core_currentModule") then {
@@ -100,7 +88,9 @@ SP_var_core_secondaryMouseButton = false;
 
 
 
-// compile events for modules
+/*************************************
+***** compile events for modules *****
+*************************************/
 {
 	private _module = _x;
 	private _path = getText (MODULES >> _module >> "path");
@@ -126,9 +116,9 @@ SP_var_core_secondaryMouseButton = false;
 
 
 
-
-
-// compile events for tools
+/***********************************
+***** compile events for tools *****
+***********************************/
 {
 	private _tool = _x;
 	private _path = getText (TOOLS >> _tool >> "path");
@@ -151,7 +141,12 @@ SP_var_core_secondaryMouseButton = false;
 } forEach _tools;
 
 
-// fill menu
+
+
+
+/*************************
+***** fill left menu *****
+*************************/
 {
 	private _menuButton = _dialog ctrlCreate ["MenuButton", -1, _modulesControlsGroup];
 	private _controlPosition = ctrlPosition _menuButton;
@@ -184,13 +179,9 @@ _modulesControlsGroup ctrlCommit 0;
 
 
 
-
-
-
-
-
-
-// on mouse button down
+/*******************************
+***** on mouse button down *****
+*******************************/
 _eventControl ctrlAddEventHandler ["MouseButtonDown", {
 	params ["", "_button"];
 
@@ -207,7 +198,12 @@ _eventControl ctrlAddEventHandler ["MouseButtonDown", {
 }];
 
 
-// on mouse button up
+
+
+
+/*****************************
+***** on mouse button up *****
+*****************************/
 _eventControl ctrlAddEventHandler ["MouseButtonUp", {
 	params ["", "_button"];
 
@@ -223,7 +219,13 @@ _eventControl ctrlAddEventHandler ["MouseButtonUp", {
 	true
 }];
 
-// on mouse wheel change
+
+
+
+
+/********************************
+***** on mouse wheel change *****
+********************************/
 _eventControl ctrlAddEventHandler ["MouseZChanged", {
 	// try OnMouseZChange for every tools the current module uses
 	{
@@ -236,7 +238,13 @@ _eventControl ctrlAddEventHandler ["MouseZChanged", {
 	true
 }];
 
-// on mouse move
+
+
+
+
+/************************
+***** on mouse move *****
+************************/
 _eventControl ctrlAddEventHandler ["MouseMoving", {
 	params ["", "_x", "_y"];
 
@@ -265,7 +273,13 @@ _eventControl ctrlAddEventHandler ["MouseMoving", {
 	true
 }];
 
-// on key down
+
+
+
+
+/**********************
+***** on key down *****
+**********************/
 _eventControl ctrlAddEventHandler ["KeyDown", {
 	params ["", "_key"];
 
@@ -329,7 +343,13 @@ _eventControl ctrlAddEventHandler ["KeyDown", {
 	true
 }];
 
-// on key up
+
+
+
+
+/********************
+***** on key up *****
+********************/
 _eventControl ctrlAddEventHandler ["KeyUp", {
 	params ["", "_key"];
 
@@ -355,17 +375,6 @@ _eventControl ctrlAddEventHandler ["KeyUp", {
 
 
 
-	/*private _module = _x;
-
-	if (isClass (MODULES >> _module >> "Events" >> "OnInit")) then {
-		format ["SP_event_%1_onInit", _module];
-	};
-
-	private _path = getText (MODULES >> _module >> "path");
-
-
-	private _events = ("true" configClasses (MODULES >> _module >> "Events")) apply { configName _x };
-*/
 
 
 

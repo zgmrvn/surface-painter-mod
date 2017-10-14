@@ -387,18 +387,6 @@ _eventControl ctrlAddEventHandler ["KeyUp", {
 	// fill modes list
 	#include "events\dialogCreated.sqf";
 
-	// exec init events for modes and tools
-	#include "events\dialogModesToolsInit.sqf";
-
-
-	*/
-
-
-
-/*
-
-
-
 	// left panel behaviour when mouse enter and exit
 	#include "events\leftPanelCtrlMouseEnterExit.sqf"
 

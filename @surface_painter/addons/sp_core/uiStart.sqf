@@ -1,30 +1,33 @@
 #include "idcs.hpp"
 #include "sizes.hpp"
 
+// config defines
 #define MODULES (configFile >> "CfgSurfacePainter" >> "Modules")
 #define TOOLS (configFile >> "CfgSurfacePainter" >> "Tools")
 
-/*
-// camera
-showCinemaBorder false;
-SP_var_camera = "camera" camCreate (getposASL player);
-SP_var_camera cameraEffect ["internal", "BACK"];
-SP_var_camera camCommit 0;
-SP_var_cameraDir	= 0; // camera direction
-SP_var_cameraPitch	= 0; // camera pitch
-*/
-SP_var_core_cameraRotationSensibility = 100;
+// key down/up defines
+#define ACTIONS ["cameraMoveForward", "cameraMoveBackward", "cameraMoveLeft", "cameraMoveRight", "cameraMoveUp", "cameraMoveDown"]
+#define TRANSLATIONS [[0, 1, 0], [0, -1, 0], [-1, 1, 0], [1, 1, 0], [0, 0, 1], [0, 0, -1]]
 
+// camera
+SP_var_core_cameraTranslationKeys				= [];
+SP_var_core_cameraTranslationLoop				= false;
+SP_var_core_cameraRotationSensibility			= 100;
+SP_var_core_cameraTranslationSensibility		= 0.07;
+SP_var_core_cameraTranslationTurboMultiplier	= 3;
+
+// mouse
 SP_var_core_mouseScreenPosition					= [0.5, 0.5]; // mouse screen position during the current frame
 SP_var_core_mousePreviousFrameScreenPosition	= SP_var_core_mouseScreenPosition; // mouse screen position during the previous frame
 SP_var_core_mouseWorldPosition					= screenToWorld SP_var_core_mouseScreenPosition; // mouse world position
 
+// special keys
+SP_var_keyShift	= false;
+SP_var_keyCtrl	= false;
+SP_var_keyAlt	= false;
+SP_var_keyTurbo	= false;
 
 /*
-// special keys
-SP_key_shift	= false; // is shift held ?
-SP_key_ctrl		= false; // is ctrl held ?
-SP_key_alt		= false; // is alt held ?
 
 // this var will contain every created objects
 // if this variable doesn't already exist, we set it to an empty array
@@ -36,26 +39,9 @@ if (isNil {SP_var_createdObjects}) then {
 SP_var_notificationsStack 	= [];
 SP_var_notificationsLoop	= false;
 SP_var_notifications		= [];
-
-// camera control keys
-SP_var_cameraKeys = [];
-{
-	[SP_var_cameraKeys, _x, false] call BIS_fnc_setToPairs;
-} forEach [
-	"MoveForward",
-	"MoveBack",
-	"TurnLeft",
-	"TurnRight",
-	"LeanLeft",
-	"MoveDown"
-];
-SP_var_while = false;
 */
 
 //waitUntil { !isNull _this };
-
-//systemChat str _this;
-
 
 disableserialization;
 
@@ -239,11 +225,8 @@ _eventControl ctrlAddEventHandler ["MouseButtonUp", {
 
 // on mouse wheel change
 _eventControl ctrlAddEventHandler ["MouseZChanged", {
-
-	systemChat "z event";
 	// try OnMouseZChange for every tools the current module uses
 	{
-		systemChat _x;
 		["TOOL", _x, "OnMouseZChange"] call SP_fnc_core_tryEvent;
 	} forEach getArray (configFile >> "CfgSurfacePainter" >> "Modules" >> SP_var_core_currentModule >> "tools");
 
@@ -253,7 +236,7 @@ _eventControl ctrlAddEventHandler ["MouseZChanged", {
 	true
 }];
 
-// on mouse move in the main control
+// on mouse move
 _eventControl ctrlAddEventHandler ["MouseMoving", {
 	params ["", "_x", "_y"];
 
@@ -282,6 +265,93 @@ _eventControl ctrlAddEventHandler ["MouseMoving", {
 	true
 }];
 
+// on key down
+_eventControl ctrlAddEventHandler ["KeyDown", {
+	params ["", "_key"];
+
+	// if Esc. pressed, exit
+	if (_key == 1) exitWith { false };
+
+	// special keys
+	if (_key == 42) then { SP_var_keyShift = true; };
+	if (_key == 29) then { SP_var_keyCtrl = true; };
+	if (_key == 56) then { SP_var_keyAlt = true; };
+	if (_key in (actionKeys "cameraMoveTurbo1")) then { SP_var_keyTurbo = true; };
+
+	// camera behaviour
+	{
+		if (_key in (actionKeys _x)) then {
+			[SP_var_core_cameraTranslationKeys, _x, true] call SP_fnc_core_setToPairs;
+		};
+	} forEach ACTIONS;
+
+	if (!SP_var_core_cameraTranslationLoop) then {
+		SP_var_core_cameraTranslationLoop = true;
+
+		[_key] spawn {
+			params ["_key"];
+
+			while {SP_var_core_cameraTranslationLoop} do {
+				private _newPos = getPosASL SP_var_core_camera;
+				private _speedMultiplier = (((ASLToATL _newPos) select 2) * 0.01 + 0.05);
+
+				if (SP_var_keyTurbo) then {
+					_speedMultiplier = _speedMultiplier * SP_var_core_cameraTranslationTurboMultiplier;
+				};
+
+				{
+
+					if ([SP_var_core_cameraTranslationKeys, _x] call SP_fnc_core_getFromPairs) then {
+						private _translation = TRANSLATIONS select _forEachIndex;
+						_translation params ["_tx", "_ty", "_tz"];
+
+						_dir = (getDir SP_var_core_camera) + _tx * 90;
+						_newPos = [
+							(_newPos select 0) + ((sin _dir) * SP_var_core_cameraTranslationSensibility * _ty * _speedMultiplier),
+							(_newPos select 1) + ((cos _dir) * SP_var_core_cameraTranslationSensibility * _ty * _speedMultiplier),
+							(_newPos select 2) + _tz * SP_var_core_cameraTranslationSensibility * _speedMultiplier
+						];
+					};
+				} forEach ACTIONS;
+
+				if (count _newPos != 0) then {
+					_newPos set [2, (_newPos select 2) max (getTerrainHeightASL (_newPos))];
+					SP_var_core_camera setPosASL _newPos;
+
+					// update mouse world position so if the camera move but the mouse stay at the same position
+					// the var still has the correct value
+					SP_var_core_mouseWorldPosition = screenToWorld SP_var_core_mouseScreenPosition;
+				};
+			};
+		};
+	};
+
+	true
+}];
+
+// on key up
+_eventControl ctrlAddEventHandler ["KeyUp", {
+	params ["", "_key"];
+
+	//  special keys
+	if (_key == 42) then { SP_var_keyShift = false; };
+	if (_key == 29) then { SP_var_keyCtrl = false; };
+	if (_key == 56) then { SP_var_keyAlt = false; };
+	if (_key in (actionKeys "cameraMoveTurbo1")) then { SP_var_keyTurbo = false; };
+
+	// camera behaviour
+	{
+		if (_key in (actionKeys _x)) then {
+			[SP_var_core_cameraTranslationKeys, _x, false] call SP_fnc_core_setToPairs;
+		};
+	} forEach ACTIONS;
+
+	if (({[SP_var_core_cameraTranslationKeys, _x] call SP_fnc_core_getFromPairs} count ACTIONS) == 0) then {
+		SP_var_core_cameraTranslationLoop = false;
+	};
+
+	true
+}];
 
 
 
@@ -311,33 +381,7 @@ _eventControl ctrlAddEventHandler ["MouseMoving", {
 	// exec init events for modes and tools
 	#include "events\dialogModesToolsInit.sqf";
 
-	// on key up
-	_eventCtrl ctrlAddEventHandler ["KeyDown", {
-		_key = _this select 1;
 
-		// if escape pressed, exit
-		if (_key == 1) exitWith { false };
-
-		// key down behaviour
-		#include "events\eventCtrlKeyDown.sqf";
-
-		// camera behaviour
-		#include "cam\keyDownCameraMouvments.sqf";
-
-		true
-	}];
-
-	_eventCtrl ctrlAddEventHandler ["KeyUp", {
-		_key = _this select 1;
-
-		// key up behaviour
-		#include "events\eventCtrlKeyUp.sqf";
-
-		// camera behaviour
-		#include "cam\keyUpCameraMouvments.sqf"
-
-		true
-	}];
 	*/
 
 
@@ -382,6 +426,11 @@ SP_var_core_camera setDir SP_var_core_cameraDir;
 SP_var_core_cameraPitch = -20;
 [SP_var_core_camera, SP_var_core_cameraPitch, 0] call BIS_fnc_setPitchBank;
 SP_var_core_camera camCommit 0;
+
+// set default state of camera translation keys
+{
+	[SP_var_core_cameraTranslationKeys, _x, false] call SP_fnc_core_setToPairs;
+} forEach ACTIONS;
 
 // show menu
 _menuControlsGroup ctrlSetFade 0;

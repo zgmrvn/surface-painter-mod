@@ -50,6 +50,7 @@ private _eventControl = _dialog displayCtrl SP_EVENT_CONTROL; // this is the mai
 
 private _menuControlsGroup = _dialog displayCtrl SP_MENU_CONTROLS_GROUP;
 private _modulesControlsGroup = _menuControlsGroup controlsGroupCtrl SP_MODULES_CONTROLS_GROUP;
+private _buttonsBackgroundControl = _modulesControlsGroup controlsGroupCtrl SP_MODULES_BUTTONS_BACKGROUND_CONTROL;
 
 private _loadingControlsGroup = _dialog displayCtrl SP_LOADING_CONTROLS_GROUP;
 
@@ -148,8 +149,11 @@ SP_var_core_secondaryMouseButton = false;
 /*************************
 ***** fill left menu *****
 *************************/
+private _menuButtonsControls = [];
+
 {
 	private _menuButton = _dialog ctrlCreate ["MenuButton", -1, _modulesControlsGroup];
+	_menuButtonsControls pushBack _menuButton;
 	private _controlPosition = ctrlPosition _menuButton;
 	_menuButton ctrlSetPosition [
 		0,
@@ -164,6 +168,16 @@ SP_var_core_secondaryMouseButton = false;
 	private _icon = getText (MODULES >> _x >> "icon");
 	private _menuButtonIcon = _menuButton controlsGroupCtrl SP_MENU_BUTTON_ICON;
 	_menuButtonIcon ctrlSetText format ["%1\%2", _path, _icon];
+
+	// set button data
+	private _menuButtonData = _menuButton controlsGroupCtrl SP_MENU_BUTTON_DATA;
+	_menuButtonData ctrlSetText _x;
+
+	// set background position
+	if (_x == SP_var_core_currentModule) then {
+		_buttonsBackgroundControl ctrlSetPosition (ctrlPosition _menuButton);
+		_buttonsBackgroundControl ctrlCommit 0;
+	};
 } forEach _modules;
 
 // resize menu according to the number of buttons
@@ -175,6 +189,34 @@ _modulesControlsGroup ctrlSetPosition [
 	safeZoneW * SP_MENU_W * (safeZoneW / safeZoneH) * (count _modules)
 ];
 _modulesControlsGroup ctrlCommit 0;
+
+
+
+
+
+/******************************
+***** on click on buttons *****
+******************************/
+{
+	_x ctrlAddEventHandler ["MouseButtonDown", {
+		params ["_menubutton"];
+		private _dataControl = _menubutton controlsGroupCtrl SP_MENU_BUTTON_DATA;
+		private _module = ctrlText _dataControl;
+
+		// set new module
+		SP_var_core_currentModule = _module;
+
+		// move buttons background
+		private _dialog	= findDisplay SP_IDD;
+		private _menuControlsGroup = _dialog displayCtrl SP_MENU_CONTROLS_GROUP;
+		private _modulesControlsGroup = _menuControlsGroup controlsGroupCtrl SP_MODULES_CONTROLS_GROUP;
+		private _backgroundControl = _modulesControlsGroup controlsGroupCtrl SP_MODULES_BUTTONS_BACKGROUND_CONTROL;
+
+		private _menuButtonPosition = ctrlPosition _menubutton;
+		_backgroundControl ctrlSetPosition _menuButtonPosition;
+		_backgroundControl ctrlCommit 0.1;
+	}];
+} forEach _menuButtonsControls; // variable defined in the step above
 
 
 

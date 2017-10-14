@@ -166,7 +166,18 @@ class RscDisplaySurfacePainter {
 					w = safeZoneW * SP_MENU_W;
 					h = 0;
 
-					class Controls {};
+					class Controls {
+						class Background: RscStatic {
+							idc = SP_MODULES_BUTTONS_BACKGROUND_CONTROL;
+
+							x = 0;
+							y = 0;
+							w = safeZoneW * SP_MENU_W;
+							h = safeZoneW * SP_MENU_W * (safeZoneW / safeZoneH);
+
+							colorBackground[] = {0.4, 0.4, 0.4, 1};
+						};
+					};
 				};
 			};
 		};

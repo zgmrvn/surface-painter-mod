@@ -12,9 +12,7 @@
 
 // menu button
 #define SP_MENU_BUTTON_DATA			10
-#define SP_MENU_BUTTON_BACKGROUND	11
 #define SP_MENU_BUTTON_ICON			12
-#define SP_MENU_BUTTON_EVENT		13
 
 // left panel with modes and options
 /*

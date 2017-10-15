@@ -62,17 +62,6 @@ class MenuButton: RscControlsGroup {
 			idc = SP_MENU_BUTTON_DATA;
 		};
 
-		class Background: RscStatic {
-			idc = SP_MENU_BUTTON_BACKGROUND;
-
-			x = 0;
-			y = 0;
-			w = safeZoneW * SP_MENU_W;
-			h = safeZoneW * SP_MENU_W * (safeZoneW / safeZoneH);
-
-			colorBackground[] = {0, 0, 0, 0};
-		};
-
 		class Icon: RscPicture {
 			idc = SP_MENU_BUTTON_ICON;
 

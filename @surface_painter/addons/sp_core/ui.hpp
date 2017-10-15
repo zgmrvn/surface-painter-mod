@@ -81,15 +81,6 @@ class MenuButton: RscControlsGroup {
 			w = safeZoneW * SP_MENU_W;
 			h = safeZoneW * SP_MENU_W * (safeZoneW / safeZoneH);
 		};
-
-		class Event: RscEvent {
-			idc = SP_MENU_BUTTON_EVENT;
-
-			x = 0;
-			y = 0;
-			w = safeZoneW * SP_MENU_W;
-			h = safeZoneW * SP_MENU_W * (safeZoneW / safeZoneH);
-		};
 	};
 };
 

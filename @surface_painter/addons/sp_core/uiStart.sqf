@@ -8,6 +8,7 @@
 // key down/up defines
 #define ACTIONS ["cameraMoveForward", "cameraMoveBackward", "cameraMoveLeft", "cameraMoveRight", "cameraMoveUp", "cameraMoveDown"]
 #define TRANSLATIONS [[0, 1, 0], [0, -1, 0], [-1, 1, 0], [1, 1, 0], [0, 0, 1], [0, 0, -1]]
+#define SHORTCUTS [2, 3, 4, 5, 6, 7, 8, 9, 10]
 
 // camera
 SP_var_core_cameraTranslationKeys				= [];
@@ -26,6 +27,9 @@ SP_var_keyShift	= false;
 SP_var_keyCtrl	= false;
 SP_var_keyAlt	= false;
 SP_var_keyTurbo	= false;
+
+// ui
+SP_var_menuButtonsControls = [];
 
 /*
 // this var will contain every created objects
@@ -149,11 +153,9 @@ SP_var_core_secondaryMouseButton = false;
 /*************************
 ***** fill left menu *****
 *************************/
-private _menuButtonsControls = [];
-
 {
 	private _menuButton = _dialog ctrlCreate ["MenuButton", -1, _modulesControlsGroup];
-	_menuButtonsControls pushBack _menuButton;
+	SP_var_menuButtonsControls pushBack _menuButton;
 	private _controlPosition = ctrlPosition _menuButton;
 	_menuButton ctrlSetPosition [
 		0,
@@ -207,16 +209,9 @@ _modulesControlsGroup ctrlCommit 0;
 		SP_var_core_currentModule = _module;
 
 		// move buttons background
-		private _dialog	= findDisplay SP_IDD;
-		private _menuControlsGroup = _dialog displayCtrl SP_MENU_CONTROLS_GROUP;
-		private _modulesControlsGroup = _menuControlsGroup controlsGroupCtrl SP_MODULES_CONTROLS_GROUP;
-		private _backgroundControl = _modulesControlsGroup controlsGroupCtrl SP_MODULES_BUTTONS_BACKGROUND_CONTROL;
-
-		private _menuButtonPosition = ctrlPosition _menubutton;
-		_backgroundControl ctrlSetPosition _menuButtonPosition;
-		_backgroundControl ctrlCommit 0.1;
+		(ctrlPosition _menubutton) call SP_fnc_core_moveMenuButtonsBackground;
 	}];
-} forEach _menuButtonsControls; // variable defined in the step above
+} forEach SP_var_menuButtonsControls; // variable defined in the step above
 
 
 
@@ -401,6 +396,15 @@ _eventControl ctrlAddEventHandler ["KeyUp", {
 	if (_key == 29) then { SP_var_keyCtrl = false; };
 	if (_key == 56) then { SP_var_keyAlt = false; };
 	if (_key in (actionKeys "cameraMoveTurbo1")) then { SP_var_keyTurbo = false; };
+
+	// modules shortcuts
+	if (_key in SHORTCUTS) then {
+		private _newButtonControl = SP_var_menuButtonsControls select (_key - 2);
+		_newButtonDataControl = _newButtonControl controlsGroupCtrl SP_MENU_BUTTON_DATA;
+		private _newModule = ctrlText _newButtonDataControl;
+		SP_var_core_currentModule = _newModule;
+		(ctrlPosition _newButtonControl) call SP_fnc_core_moveMenuButtonsBackground;
+	};
 
 	// camera behaviour
 	{

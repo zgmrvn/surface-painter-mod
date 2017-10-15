@@ -41,6 +41,11 @@ class CfgFunctions {
 			file = "x\surface_painter\addons\sp_core\functions\events";
 			class Core_TryEvent {};
 		};
+
+		class UI {
+			file = "x\surface_painter\addons\sp_core\functions\ui";
+			class Core_MoveMenuButtonsBackground {};
+		};
 	};
 };
 

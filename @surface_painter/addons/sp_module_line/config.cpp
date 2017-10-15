@@ -30,9 +30,9 @@ class CfgSurfacePainter {
 	class DefaultModule;
 
 	class Modules {
-		class Edge: DefaultModule {
+		class Line: DefaultModule {
 			tools[]		= {"Circle", "Pool"};
-			idc			= SP_SURFACE_PAINTER_EDGE_OPTIONS_CTRL_GROUP;
+			idc			= SP_SURFACE_PAINTER_LINE_OPTIONS_CTRL_GROUP;
 			priority	= 90;
 			path		= "x\surface_painter\addons\sp_module_line";
 			icon		= "icon.paa";

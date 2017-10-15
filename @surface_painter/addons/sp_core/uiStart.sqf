@@ -352,7 +352,6 @@ _eventControl ctrlAddEventHandler ["KeyDown", {
 				};
 
 				{
-
 					if ([SP_var_core_cameraTranslationKeys, _x] call SP_fnc_core_getFromPairs) then {
 						private _translation = TRANSLATIONS select _forEachIndex;
 						_translation params ["_tx", "_ty", "_tz"];

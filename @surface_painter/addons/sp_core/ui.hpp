@@ -157,6 +157,21 @@ class RscDisplaySurfacePainter {
 
 							colorBackground[] = {0.4, 0.4, 0.4, 1};
 						};
+
+						class Separator: RscStatic {
+							idc = SP_MODULES_BUTTONS_SEPARATOR_CONTROL;
+							style = CT_STATIC + ST_LINE;
+
+							x = safeZoneW * SP_MENU_W * 0.25;
+							y = 0;
+							w = safeZoneW * SP_MENU_W * 0.5;
+							h = 0;
+
+							colorBackground[] = {0, 0, 0, 0};
+							colorText[] = {0.4, 0.4, 0.4, 1};
+
+							fade = 1;
+						};
 					};
 				};
 			};

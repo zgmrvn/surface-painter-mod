@@ -55,6 +55,7 @@ private _eventControl = _dialog displayCtrl SP_EVENT_CONTROL; // this is the mai
 private _menuControlsGroup = _dialog displayCtrl SP_MENU_CONTROLS_GROUP;
 private _modulesControlsGroup = _menuControlsGroup controlsGroupCtrl SP_MODULES_CONTROLS_GROUP;
 private _buttonsBackgroundControl = _modulesControlsGroup controlsGroupCtrl SP_MODULES_BUTTONS_BACKGROUND_CONTROL;
+private _buttonsSeparatorControl = _modulesControlsGroup controlsGroupCtrl SP_MODULES_BUTTONS_SEPARATOR_CONTROL;
 
 private _loadingControlsGroup = _dialog displayCtrl SP_LOADING_CONTROLS_GROUP;
 
@@ -153,13 +154,34 @@ SP_var_core_secondaryMouseButton = false;
 /*************************
 ***** fill left menu *****
 *************************/
+#define SEPARATOR_MARGIN (1 / 3)
+private _separatorMargin = 0;
+
 {
+	// if module _x is extra, set separator and additional margin
+	if (getNumber (MODULES >> _x >> "extra") == 1 && { _separatorMargin == 0 }) then {
+		// set separator position
+		private _controlPosition = ctrlPosition _buttonsSeparatorControl;
+		_buttonsSeparatorControl ctrlSetFade 0;
+		_buttonsSeparatorControl ctrlSetPosition [
+			_controlPosition select 0,
+			safeZoneW * SP_MENU_W * (safeZoneW / safeZoneH) * _forEachIndex + safeZoneW * SP_MENU_W * (safeZoneW / safeZoneH) * SEPARATOR_MARGIN,
+			_controlPosition select 2,
+			0
+		];
+		_buttonsSeparatorControl ctrlCommit 0;
+
+		// set margin
+		_separatorMargin = SEPARATOR_MARGIN * 2;
+	};
+
+	// create button
 	private _menuButton = _dialog ctrlCreate ["MenuButton", -1, _modulesControlsGroup];
 	SP_var_menuButtonsControls pushBack _menuButton;
 	private _controlPosition = ctrlPosition _menuButton;
 	_menuButton ctrlSetPosition [
 		0,
-		safeZoneW * SP_MENU_W * (safeZoneW / safeZoneH) * _forEachIndex,
+		safeZoneW * SP_MENU_W * (safeZoneW / safeZoneH) * _forEachIndex + safeZoneW * SP_MENU_W * (safeZoneW / safeZoneH) * _separatorMargin,
 		_controlPosition select 2,
 		_controlPosition select 3
 	];

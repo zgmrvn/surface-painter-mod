@@ -144,7 +144,7 @@ class RscDisplaySurfacePainter {
 					x = 0;
 					y = safeZoneW * SP_MENU_W * (safeZoneW / safeZoneH);
 					w = safeZoneW * SP_MENU_W;
-					h = 0;
+					h = safeZoneH - safeZoneW * SP_MENU_W * (safeZoneW / safeZoneH);
 
 					class Controls {
 						class Background: RscStatic {

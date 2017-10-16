@@ -204,16 +204,6 @@ private _separatorMargin = 0;
 	};
 } forEach _modules;
 
-// resize menu according to the number of buttons
-private _controlPosition = ctrlPosition _modulesControlsGroup;
-_modulesControlsGroup ctrlSetPosition [
-	0,
-	_controlPosition select 1,
-	_controlPosition select 2,
-	safeZoneW * SP_MENU_W * (safeZoneW / safeZoneH) * (count _modules)
-];
-_modulesControlsGroup ctrlCommit 0;
-
 
 
 

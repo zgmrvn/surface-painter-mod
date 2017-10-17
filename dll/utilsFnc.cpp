@@ -4,7 +4,7 @@
 File: utilsFnc.cpp
 
 System: sp
-Status: Version 1.0.1
+Status: Version 1.0.2
 Language: C++
 
 License: GNU Public License

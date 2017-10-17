@@ -4,7 +4,7 @@
 File: spV2.cpp
 
 System: sp
-Status: Version 1.0.1
+Status: Version 1.0.2
 Language: C++
 
 License: GNU Public License
@@ -24,6 +24,7 @@ Description:
 
 #include "stdafx.h"
 #include <iostream>
+#include <iomanip>    // std::fill, std::setw
 #include <fstream>		// std::ifstream & ofstream
 #include <sstream>		// std::stringstream
 #include <string>
@@ -32,6 +33,7 @@ Description:
 #include <Windows.h>	// DllMain & GetModuleHandleExA
 #include <thread>
 #include "dirent.h"		// Directory manipulations (linux adaptation)
+#include <ctime>      // time, localtime
 
 #define FREEIMAGE_LIB
 #include "FreeImage.h"
@@ -41,13 +43,14 @@ Description:
 
 
 // DLL version for Arma 3 log:
-#define CURRENT_VERSION "1.0.1"
+#define CURRENT_VERSION "1.0.2"
 
 
 /* Global variables */
 sSystemState sys_state;
 std::vector<sProject> projects;
 std::vector<sPxModif> modifs;
+std::vector<std::string> objectsList;
 
 
 /* Functions declarations */
@@ -158,7 +161,7 @@ void buildMasksPath()
 
 	if (pos != std::string::npos) {
 		path.erase(pos, lgt);
-		sys_state.masks_path = path + "masks\\";
+		sys_state.projects_path = path + "projects\\";
 	}
 }
 
@@ -167,11 +170,11 @@ void buildMasksPath()
 void buildMasksDir()
 {
 	DIR *dr;
-	const char *masks_path = sys_state.masks_path.c_str();
+	const char *masks_path = sys_state.projects_path.c_str();
 
 	// If directory doesn't exists: create it
 	if ((dr = opendir(masks_path)) == NULL) {
-		std::wstring wide_string = std::wstring(sys_state.masks_path.begin(), sys_state.masks_path.end());
+		std::wstring wide_string = std::wstring(sys_state.projects_path.begin(), sys_state.projects_path.end());
 		const wchar_t *pth = wide_string.c_str();
 
 		CreateDirectory(pth, NULL);
@@ -186,7 +189,7 @@ void scanForProjects()
 {
 	DIR *dr;
 	struct dirent *ent;
-	const char *masks_path = sys_state.masks_path.c_str();
+	const char *masks_path = sys_state.projects_path.c_str();
 
 	
 	// Open directory and list valid image files (TIFF):
@@ -211,7 +214,7 @@ void scanForProjects()
 				project_name = match[1].str();
 
 				if (checkImageLayers(project_name.c_str(), sys_state) == IMGPROCESS_SUCCESS) {
-					file_path = sys_state.masks_path + fname;
+					file_path = sys_state.projects_path + fname;
 					projects.push_back({ project_name, file_path });
 				}
 			}
@@ -252,8 +255,6 @@ void cleanStrFromArma(std::string &str)
 /* RVExtensionVersion */
 void __stdcall RVExtensionVersion(char *output, int outputSize)
 {
-	initModule();
-
 	snprintf(output, outputSize, "%s", CURRENT_VERSION);
 }
 
@@ -266,20 +267,22 @@ void __stdcall RVExtension(char *output, int outputSize, const char *function)
 
 	
 	// callExtension "scanForProjects"
-	if (sfunc.compare("scanForProjects") == 0) {
-		if (sys_state.fi_initialized) {
-			scanForProjects();
+  if (sfunc.compare("scanForProjects") == 0) {
+    scanForProjects();
 
-			for (uint16_t n = 0; n < projects.size(); n++) {
-				str += projects[n].name + "|";
-			}
-		}
-		else
-			str = "Module not initialized.";
+    for (uint16_t n = 0; n < projects.size(); n++) {
+      str += projects[n].name + "|";
+    }
+  }
+  // callExtension "clearObjects"
+  else if (sfunc.compare("clearObjects") == 0) {
+    objectsList.clear();
+    str = "Objects list cleared.";
+  }
+  else
+    str = "Function [" + sfunc + "] not recongnized.";
 
-		snprintf(output, outputSize, "%s", str.c_str());
-		return;
-	}
+  snprintf(output, outputSize, "%s", str.c_str());
 }
 
 
@@ -363,8 +366,8 @@ int __stdcall RVExtensionArgs(char *output, int outputSize, const char *function
 	int ret_code = 0;
 
 
-	// callExtension ["addModifs",[...]]
-	if (sfunc.compare("addModifs") == 0) {
+	// callExtension ["pushPixels",[...]]
+	if (sfunc.compare("pushPixels") == 0) {
 		if (argsCnt == 0) {
 			str = "Expected 1 parameter at least.";
 			ret_code = SP_ERRORS::INVALID_PARAMS_COUNT;
@@ -377,10 +380,11 @@ int __stdcall RVExtensionArgs(char *output, int outputSize, const char *function
 				addPixelModif(tmp_arg, modifs);
 			}
 
-			char nb_modifs[16];
-			_itoa_s(modifs.size(), nb_modifs, 10);
 
-			str = std::string(nb_modifs) + " modifications added.";
+      std::stringstream sstr;
+      sstr << modifs.size() + " modifications added.";
+
+			str = sstr.str();
 			ret_code = SP_SUCCESS;
 		}
 
@@ -389,15 +393,14 @@ int __stdcall RVExtensionArgs(char *output, int outputSize, const char *function
 	}
 
 
-	// callExtension ["applyModifs",["project_name"]]
-	if (sfunc.compare("applyModifs") == 0) {
+	// callExtension ["writePixels",["project_name"]]
+	if (sfunc.compare("writePixels") == 0) {
 		
 		if (sys_state.is_working) {
 			str = "System is already performing a task on project [" + sys_state.project_name + "]. Please retry later.";
 			ret_code = SP_ERR;
 		}
 		else {
-			//fnc_applyModifs(args, argsCnt);
 			std::thread th(fnc_applyModifs, args, argsCnt);
 
 			if (th.joinable()) {
@@ -467,10 +470,11 @@ int __stdcall RVExtensionArgs(char *output, int outputSize, const char *function
 			else {
 				int ret;
 				sInfos infos;
-				if ((ret = readImageInfos(prj->filepath.c_str(), infos)) == IMGPROCESS_SUCCESS) {
-					char width[8];
-					_itoa_s(infos.w, width, 10);
-					str = width;
+				
+        if ((ret = readImageInfos(prj->filepath.c_str(), infos)) == IMGPROCESS_SUCCESS) {
+          std::stringstream sstr;
+          sstr << infos.w;
+					str = sstr.str();
 					ret_code = SP_SUCCESS;
 				}
 				else {
@@ -518,14 +522,15 @@ int __stdcall RVExtensionArgs(char *output, int outputSize, const char *function
 
 				if ((ret = readImageLayers(prj->name.c_str(), sys_state, colors)) == IMGPROCESS_SUCCESS) {
 					for (size_t i = 0; i < colors.size(); i++) {
-						std::stringstream tmp_str;
-						tmp_str << colors[i].name << ";"
-							<< (uint32_t)colors[i].val.rgbtRed << ":"
-							<< (uint32_t)colors[i].val.rgbtGreen << ":"
-							<< (uint32_t)colors[i].val.rgbtBlue << "|";
-						str += tmp_str.str();
+						std::stringstream sstr;
+						sstr << colors[i].name << ";"
+							<< (uint16_t)colors[i].val.rgbtRed << ":"
+							<< (uint16_t)colors[i].val.rgbtGreen << ":"
+							<< (uint16_t)colors[i].val.rgbtBlue << "|";
+						str += sstr.str();
 					}
 					ret_code = SP_SUCCESS;
+
 				}
 				else {
 					ret_code = SP_ERR;
@@ -586,6 +591,123 @@ int __stdcall RVExtensionArgs(char *output, int outputSize, const char *function
 		snprintf(output, outputSize, "%s", str.c_str());
 		return ret_code;
 	}
+
+
+  // callExtension ["pushObjects",[...]]:
+  if (sfunc.compare("pushObjects") == 0) {
+    if (argsCnt == 0) {
+      str = "Expected 1 parameter at least.";
+      ret_code = SP_ERRORS::INVALID_PARAMS_COUNT;
+    }
+    else {
+
+      uint32_t nb_added = 0;
+
+      for (size_t i = 0; i < argsCnt; i++) {
+        std::string arg(args[i]);
+        cleanStrFromArma(arg);
+
+        std::vector<std::string> ar = splitStrBy(arg, ';');
+        if (ar.size() >= 1) {
+          cleanStrFromArma(ar[0]);
+        }
+
+        std::string f_arg;
+        for (size_t o = 0; o < ar.size(); o++) {
+          f_arg += ar[o] + ";";
+        }
+
+        objectsList.push_back(f_arg);
+        nb_added++;
+      }
+
+      std::stringstream sstr;
+      sstr << nb_added << " objects added.";
+      str = sstr.str();
+
+      ret_code = SP_SUCCESS;
+    }
+
+
+    snprintf(output, outputSize, "%s", str.c_str());
+    return ret_code;
+  }
+
+
+  // callExtension ["writeObjects",[project_name]]:
+  if (sfunc.compare("writeObjects") == 0) {
+    
+    // build current datetime string:
+    time_t now = time(0);
+    struct tm ltm;
+    localtime_s(&ltm, &now);
+
+    std::stringstream sstr_datetime;
+
+    sstr_datetime << std::setfill('0') << std::setw(2) << ltm.tm_hour << "-"
+      << std::setfill('0') << std::setw(2) << ltm.tm_min << "-"
+      << std::setfill('0') << std::setw(2) << ltm.tm_sec << "_"
+      << std::setfill('0') << std::setw(2) << ltm.tm_mday << "-"
+      << std::setfill('0') << std::setw(2) << (ltm.tm_mon + 1) << "-"
+      << (1900 + ltm.tm_year) << ".txt";
+
+
+    // build filename:
+    std::string filename = sys_state.projects_path;
+
+    if (argsCnt == 1) {
+      std::string name(args[0]);
+      cleanStrFromArma(name);
+
+      if (!name.empty()) {
+        
+        sProject *prj = getProjectByName(name);
+        if (prj == NULL) {
+          str = "Project [" + name + "] not found.";
+          ret_code = SP_ERR;
+
+          snprintf(output, outputSize, "%s", str.c_str());
+          return ret_code;
+        }
+        else
+          filename += name + "_";
+      }
+
+    }
+
+    filename += sstr_datetime.str();
+    
+
+    // open file and write datas:
+    std::ofstream out(filename.c_str());
+
+    if (out.bad() || !out.is_open()) {
+      str = "Failed to opened destination file: " + filename;
+      ret_code = SP_ERR;
+    }
+    else {
+
+      std::string w_str;
+      for (size_t i = 0; i < objectsList.size(); i++) {
+        w_str = objectsList[i] + "\n";
+        out.write(w_str.c_str(), w_str.length());
+      }
+
+      out.close();
+
+      std::stringstream sstr;
+      sstr << objectsList.size() << " objects wrote into file: " << filename;
+      str = sstr.str();
+
+      objectsList.clear();
+
+      ret_code = SP_SUCCESS;
+    }
+
+
+    snprintf(output, outputSize, "%s", str.c_str());
+    return ret_code;
+  }
 
 
 	return 0;

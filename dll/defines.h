@@ -4,7 +4,7 @@
 File: defines.h
 
 System: sp
-Status: Version 1.0.1
+Status: Version 1.0.2
 Language: C++
 
 License: GNU Public License
@@ -49,7 +49,7 @@ typedef struct _sProject {		// Store project informations
 typedef struct _sSystemState {	// Store system status
 	bool fi_initialized;
 	bool is_working;
-	std::string masks_path;
+  std::string projects_path;
 	std::string project_name;
 	std::string ret_str;
 	int ret_code;

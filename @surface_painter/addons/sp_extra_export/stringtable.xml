@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project name="Surface Painter">
+	<Package name="Export">
+
+		<container name="Options">
+
+			<Key ID="STR_SP_EXPORT_HEADER">
+				<Original>Export</Original>
+			</Key>
+
+			<Key ID="STR_SP_EXPORT_COPY_TO_CLIPBOARD">
+				<Original>Copy to clipboard</Original>
+				<French>Copier presse-papier</French>
+			</Key>
+
+			<Key ID="STR_SP_EXPORT_EXPORT_TXT">
+				<Original>Export .txt</Original>
+				<French>Exporter .txt</French>
+			</Key>
+
+		</container>
+
+		<container name="Notifications">
+
+			<Key ID="STR_SP_EXPORT_NOTIFICATION_NO_OBJECT">
+				<Original>There are no object to copy.</Original>
+				<French>Il n'y a aucun objet à copier.</French>
+			</Key>
+
+			<Key ID="STR_SP_EXPORT_NOTIFICATION_OBJECTS_COPIED">
+				<Original>Objects were copied to clipboard.</Original>
+				<French>Les objects ont été copiés dans le presse-papier.</French>
+			</Key>
+
+			<Key ID="STR_SP_EXPORT_NOTIFICATION_OBJECTS_WRITTEN">
+				<Original>Objects were written in Surface Painter's projects directory.</Original>
+				<French>Les objects ont été copiés dans le répertoire des projets de Surface Painter.</French>
+			</Key>
+
+		</container>
+
+	</Package>
+</Project>

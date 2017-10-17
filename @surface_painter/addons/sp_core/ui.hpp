@@ -51,7 +51,7 @@ class RscData: RscText {
 
 
 // menu button
-class MenuButton: RscControlsGroup {
+class MenuButton: RscControlsGroupNoScrollbars {
 	x = 0;
 	y = 0;
 	w = safeZoneW * SP_MENU_W;
@@ -87,7 +87,7 @@ class RscDisplaySurfacePainter {
 	};
 
 	class Controls {
-		class Menu: RscControlsGroup {
+		class Menu: RscControlsGroupNoScrollbars {
 			idc = SP_MENU_CONTROLS_GROUP;
 
 			x = safeZoneX;
@@ -109,7 +109,7 @@ class RscDisplaySurfacePainter {
 					sizeEx = 0;
 				};
 
-				class Logo: RscControlsGroup {
+				class Logo: RscControlsGroupNoScrollbars {
 					x = 0;
 					y = 0;
 					w = safeZoneW * SP_MENU_W;
@@ -138,7 +138,7 @@ class RscDisplaySurfacePainter {
 					};
 				};
 
-				class Modules: RscControlsGroup {
+				class Modules: RscControlsGroupNoScrollbars {
 					idc = SP_MODULES_CONTROLS_GROUP;
 
 					x = 0;
@@ -177,7 +177,7 @@ class RscDisplaySurfacePainter {
 			};
 		};
 
-		class Loading: RscControlsGroup {
+		class Loading: RscControlsGroupNoScrollbars {
 			idc = SP_LOADING_CONTROLS_GROUP;
 
 			x = safeZoneX;

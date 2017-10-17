@@ -113,6 +113,7 @@ class CfgSurfacePainter {
 
 class RscListBox;
 class RscControlsGroup;
+class RscControlsGroupNoScrollbars;
 class rscPicture;
 class RscText;
 

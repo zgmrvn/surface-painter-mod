@@ -1,4 +1,6 @@
-#define SP_MENU_W		pixelW * 16
+#define SP_UI_SCALE (pixelGrid * 0.003)
+
+#define SP_MENU_W SP_UI_SCALE
 
 // generics
 /*

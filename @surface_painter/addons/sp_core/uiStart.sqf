@@ -93,7 +93,7 @@ SP_var_while = false;
 		// camera behaviour
 		#include "cam\keyDownCameraMouvments.sqf";
 
-		true
+		nil
 	}];
 
 	_eventCtrl ctrlAddEventHandler ["KeyUp", {
@@ -105,7 +105,7 @@ SP_var_while = false;
 		// camera behaviour
 		#include "cam\keyUpCameraMouvments.sqf"
 
-		true
+		nil
 	}];
 
 	// on mouse button down

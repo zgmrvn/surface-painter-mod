@@ -59,6 +59,11 @@ typedef struct _sSystemState {	// Store system status
 	std::string exec_duration;
 } sSystemState;
 
+typedef struct _sSpRet {  // Store a complexe function return value
+  int code;
+  std::string msg;
+} sSpRet;
+
 
 #define SP_SUCCESS	1
 #define SP_ERR		-1

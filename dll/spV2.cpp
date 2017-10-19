@@ -602,7 +602,10 @@ int __stdcall RVExtensionArgs(char *output, int outputSize, const char *function
 
         std::string f_arg;
         for (size_t o = 0; o < ar.size(); o++) {
-          f_arg += ar[o] + ";";
+          f_arg += ar[o];
+
+          if ((o + 1) < ar.size())
+            f_arg += ";";
         }
 
         objectsList.push_back(f_arg);
@@ -622,79 +625,20 @@ int __stdcall RVExtensionArgs(char *output, int outputSize, const char *function
   }
 
 
-  // callExtension ["writeObjects",[project_name]]:
-  if (sfunc.compare("writeObjects") == 0) {
-    
-    // build current datetime string:
-    time_t now = time(0);
-    struct tm ltm;
-    localtime_s(&ltm, &now);
+  // callExtension ["writeObjectsTxt",[project_name]]:
+  if (sfunc.compare("writeObjectsTxt") == 0) {
+    sSpRet ret = fnc_writeObjects(args, argsCnt, 1);
 
-    std::stringstream sstr_datetime;
+    snprintf(output, outputSize, "%s", ret.msg.c_str());
+    return ret.code;
+  }
 
-    sstr_datetime << std::setfill('0') << std::setw(2) << ltm.tm_hour << "-"
-      << std::setfill('0') << std::setw(2) << ltm.tm_min << "-"
-      << std::setfill('0') << std::setw(2) << ltm.tm_sec << "_"
-      << std::setfill('0') << std::setw(2) << ltm.tm_mday << "-"
-      << std::setfill('0') << std::setw(2) << (ltm.tm_mon + 1) << "-"
-      << (1900 + ltm.tm_year) << ".txt";
+  // callExtension ["writeObjectsLbt",[project_name]]:
+  if (sfunc.compare("writeObjectsLbt") == 0) {
+    sSpRet ret = fnc_writeObjects(args, argsCnt, 2);
 
-
-    // build filename:
-    std::string filename = sys_state.projects_path;
-
-    if (argsCnt == 1) {
-      std::string name(args[0]);
-      cleanStrFromArma(name);
-
-      if (!name.empty()) {
-        
-        sProject *prj = getProjectByName(name);
-        if (prj == NULL) {
-          str = "Project [" + name + "] not found.";
-          ret_code = SP_ERR;
-
-          snprintf(output, outputSize, "%s", str.c_str());
-          return ret_code;
-        }
-        else
-          filename += name + "_";
-      }
-
-    }
-
-    filename += sstr_datetime.str();
-    
-
-    // open file and write datas:
-    std::ofstream out(filename.c_str());
-
-    if (out.bad() || !out.is_open()) {
-      str = "Failed to opened destination file: " + filename;
-      ret_code = SP_ERR;
-    }
-    else {
-
-      std::string w_str;
-      for (size_t i = 0; i < objectsList.size(); i++) {
-        w_str = objectsList[i] + "\n";
-        out.write(w_str.c_str(), w_str.length());
-      }
-
-      out.close();
-
-      std::stringstream sstr;
-      sstr << objectsList.size() << " objects wrote into file: " << filename;
-      str = sstr.str();
-
-      objectsList.clear();
-
-      ret_code = SP_SUCCESS;
-    }
-
-
-    snprintf(output, outputSize, "%s", str.c_str());
-    return ret_code;
+    snprintf(output, outputSize, "%s", ret.msg.c_str());
+    return ret.code;
   }
 
 

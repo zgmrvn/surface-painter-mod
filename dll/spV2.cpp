@@ -40,32 +40,19 @@ Description:
 
 #include "defines.h"
 #include "ImgProcess.h"
+#include "SpObjects.h"
 
 
 // DLL version for Arma 3 log:
-#define CURRENT_VERSION "1.0.2"
+#define CURRENT_VERSION "1.0.3"
 
 
 /* Global variables */
-sSystemState sys_state;
-std::vector<sProject> projects;
+extern sSystemState sys_state;
+extern std::vector<sProject> projects;
 std::vector<sPxModif> modifs;
-std::vector<std::string> objectsList;
+extern std::vector<std::string> objectsList;
 
-
-/* Functions declarations */
-bool initModule();
-bool deInitModule();
-
-void buildMasksPath();
-void buildMasksDir();
-
-void scanForProjects();
-sProject* getProjectByName(std::string name);
-
-void cleanStrFromArma(std::string &str);
-
-void fnc_applyModifs(const char **args, int argsCnt);
 
 
 // DLL entry point:
@@ -356,6 +343,7 @@ void fnc_applyModifs(const char **args, int argsCnt)
 	
 	sys_state.exec_duration = std::string(exec_duration.str());
 }
+
 
 
 /* RVExtensionArgs */

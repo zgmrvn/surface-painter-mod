@@ -13,7 +13,10 @@ E-mail: hashlych@gmail.com
 
 Description:
   Header file for general purpose.
-  Used by utilsFnc.cpp and spV2.cpp
+  Used by:
+    utilsFnc
+    spV2
+    SpObjects
 
 ----------------------------------------------------------------------------
 */
@@ -64,7 +67,18 @@ enum SP_ERRORS {SYSTEM_IS_WORKING = 50, INVALID_PARAMS_COUNT, PROJECT_NOT_FOUND}
 
 
 /* Functions declarations */
+void cleanStrFromArma(std::string &str);
 std::vector<std::string> splitStrBy(std::string str, char delimit);
 void writeToLog(std::string slog);
+sProject* getProjectByName(std::string name);
+void fnc_applyModifs(const char **args, int argsCnt);
+
+bool initModule();
+bool deInitModule();
+
+void buildMasksPath();
+void buildMasksDir();
+
+void scanForProjects();
 
 #endif

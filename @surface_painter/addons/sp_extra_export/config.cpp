@@ -7,7 +7,7 @@ class CfgPatches {
 		name = "Surface Painter - Extra - Export";
 		units[] = {};
 		weapons[] = {};
-		version = 1.1.1;
+		version = 1.1.2;
 		requiredaddons[] = {"SP_Core"};
 	};
 };

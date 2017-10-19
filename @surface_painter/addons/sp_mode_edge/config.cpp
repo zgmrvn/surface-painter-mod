@@ -7,7 +7,7 @@ class CfgPatches {
 		name = "Surface Painter - Mode - Edge";
 		units[] = {};
 		weapons[] = {};
-		version = 1.1.1;
+		version = 1.1.2;
 		requiredaddons[] = {"SP_Core", "SP_Tool_Circle", "SP_Tool_Pool"};
 	};
 };

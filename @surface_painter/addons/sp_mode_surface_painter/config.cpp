@@ -7,7 +7,7 @@ class CfgPatches {
 		name = "Surface Painter - Mode - Surface Painter";
 		units[] = {};
 		weapons[] = {};
-		version = 1.1.1;
+		version = 1.1.2;
 		requiredaddons[] = {"A3_Structures_F_Mil_Helipads", "SP_Core"};
 	};
 };

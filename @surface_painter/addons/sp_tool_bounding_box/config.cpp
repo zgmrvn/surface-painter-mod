@@ -4,7 +4,7 @@ class CfgPatches {
 		name = "Surface Painter - Tool - Bounding Box";
 		units[] = {};
 		weapons[] = {};
-		version = 1.1.1;
+		version = 1.1.2;
 		requiredaddons[] = {"SP_Core"};
 	};
 };

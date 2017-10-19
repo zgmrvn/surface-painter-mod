@@ -22,6 +22,7 @@ class CfgFunctions {
 		class SurfacePainterExtraExportFunctions {
 			file = "x\surface_painter\addons\sp_extra_export\functions";
 			class Export_ObjectToTbFormat {};
+			class Export_ObjectToLbtFormat {};
 		};
 	};
 };

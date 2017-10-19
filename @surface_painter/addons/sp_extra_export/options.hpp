@@ -16,11 +16,11 @@ class CopyToClipboard: OptionButton {
 	};
 };
 
-class ExportTxt: OptionButton {
+class ExportLbt: OptionButton {
 	class values {
 		class Text: Main {
 			typeName = "STRING";
-			value = $STR_SP_EXPORT_EXPORT_TXT;
+			value = $STR_SP_EXPORT_EXPORT_LBT;
 		};
 	};
 };

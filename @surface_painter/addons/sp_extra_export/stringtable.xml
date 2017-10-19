@@ -13,9 +13,9 @@
 				<French>Copier presse-papier</French>
 			</Key>
 
-			<Key ID="STR_SP_EXPORT_EXPORT_TXT">
-				<Original>Export .txt</Original>
-				<French>Exporter .txt</French>
+			<Key ID="STR_SP_EXPORT_EXPORT_LBT">
+				<Original>Export .lbt</Original>
+				<French>Exporter .lbt</French>
 			</Key>
 
 		</container>

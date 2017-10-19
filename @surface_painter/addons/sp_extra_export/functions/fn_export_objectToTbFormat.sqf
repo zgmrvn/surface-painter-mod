@@ -38,7 +38,7 @@ _roll = _roll toFixed DECIMALS_ANG;
 _yaw = _yaw toFixed DECIMALS_ANG;
 
 // scale
-private _scale = (_this getVariable "Sp_var_scale") toFixed DECIMALS_SCALE;
+private _scale = (_this getVariable "SP_var_scale") toFixed DECIMALS_SCALE;
 
 // final string
 private _final = format ["""%1"";%2;%3;%4;%5;%6;%7;%8;",

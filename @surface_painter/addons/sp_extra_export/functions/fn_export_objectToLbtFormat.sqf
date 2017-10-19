@@ -44,7 +44,7 @@ private _dir   = vectorDir _this;
 private _aside = _dir vectorCrossProduct _up;
 
 // scale
-private _scale = (_this getVariable "Sp_var_scale");
+private _scale = (_this getVariable "SP_var_scale");
 _up = _up vectorMultiply _scale;
 _dir = _dir vectorMultiply _scale;
 _aside = _aside vectorMultiply _scale;
